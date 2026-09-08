@@ -21,6 +21,202 @@
     "text": "2. Elliptic PDEs: The Poisson Equation on a Discrete Grid\nConsider the 2D Poisson equation on a square domain: \\[\\nabla^2 \\phi = \\frac{\\partial^2 \\phi}{\\partial x^2} + \\frac{\\partial^2 \\phi}{\\partial y^2} = -\\frac{\\rho(x, y)}{\\varepsilon_0}\\]\nWe discretize the domain with grid spacing \\(\\Delta x = \\Delta y = h\\): \\[x_i = i h, \\qquad y_j = j h, \\qquad \\phi_{i,j} \\approx \\phi(x_i, y_j)\\]\nUsing second-order central difference approximations: \\[\\left. \\frac{\\partial^2 \\phi}{\\partial x^2} \\right|_{i,j} \\approx \\frac{\\phi_{i+1,j} - 2\\phi_{i,j} + \\phi_{i-1,j}}{h^2}\\] \\[\\left. \\frac{\\partial^2 \\phi}{\\partial y^2} \\right|_{i,j} \\approx \\frac{\\phi_{i,j+1} - 2\\phi_{i,j} + \\phi_{i,j-1}}{h^2}\\]\nAdding both terms yields the 5-point discrete Laplacian stencil: \\[\\frac{\\phi_{i+1,j} + \\phi_{i-1,j} + \\phi_{i,j+1} + \\phi_{i,j-1} - 4\\phi_{i,j}}{h^2} = -\\frac{\\rho_{i,j}}{\\varepsilon_0}\\]\nSolving for the central value \\(\\phi_{i,j}\\): \\[\\boxed{\\phi_{i,j} = \\frac{1}{4} \\left( \\phi_{i+1,j} + \\phi_{i-1,j} + \\phi_{i,j+1} + \\phi_{i,j-1} \\right) + \\frac{h^2}{4\\varepsilon_0} \\rho_{i,j}}\\]\n\nIterative Relaxation Schemes\n\nJacobi Iteration: Computes the \\((k+1)\\)-th grid state strictly using values from the \\(k\\)-th iteration: \\[\\phi_{i,j}^{(k+1)} = \\frac{1}{4} \\left( \\phi_{i+1,j}^{(k)} + \\phi_{i-1,j}^{(k)} + \\phi_{i,j+1}^{(k)} + \\phi_{i,j-1}^{(k)} \\right) + \\frac{h^2}{4\\varepsilon_0} \\rho_{i,j}\\]\nGauss-Seidel Iteration: Immediately uses updated values as soon as they are computed: \\[\\phi_{i,j}^{(k+1)} = \\frac{1}{4} \\left( \\phi_{i+1,j}^{(k)} + \\phi_{i-1,j}^{(k+1)} + \\phi_{i,j+1}^{(k)} + \\phi_{i,j-1}^{(k+1)} \\right) + \\frac{h^2}{4\\varepsilon_0} \\rho_{i,j}\\] Converges twice as fast as Jacobi.\nSuccessive Over-Relaxation (SOR): Accelerates convergence by extrapolating with parameter \\(\\omega \\in (1, 2)\\): \\[\\phi_{i,j}^{(k+1)} = (1 - \\omega) \\phi_{i,j}^{(k)} + \\omega \\phi_{i,j}^{\\text{GS}}\\] Optimal parameter for an \\(N \\times N\\) grid: \\(\\omega_{\\text{opt}} \\approx \\frac{2}{1 + \\pi / N}\\)."
   },
   {
+    "objectID": "syllabus.html",
+    "href": "syllabus.html",
+    "title": "Syllabus & Course Rules",
+    "section": "",
+    "text": "The only crucial prerequisite is programming using basic Python at the level of PHYB57. If you are rusty in Python, refresh your practical skills ASAP.\nThis course assumes you are interested in: 1. Intermediate and advanced numerical methods used in physical sciences. 2. HPC (High Performance Computing), including parallelization of algorithms. 3. Coding in one of the HPC languages more powerful than Python.\nAfter this course, you will understand programs in both C(++) and modern Fortran. You will be required to actively express your ideas in one of those languages. You must acquire passive knowledge of C(++) AND Fortran, and active knowledge of C(++) OR Fortran."
+  },
+  {
+    "objectID": "syllabus.html#prerequisites-languages",
+    "href": "syllabus.html#prerequisites-languages",
+    "title": "Syllabus & Course Rules",
+    "section": "",
+    "text": "The only crucial prerequisite is programming using basic Python at the level of PHYB57. If you are rusty in Python, refresh your practical skills ASAP.\nThis course assumes you are interested in: 1. Intermediate and advanced numerical methods used in physical sciences. 2. HPC (High Performance Computing), including parallelization of algorithms. 3. Coding in one of the HPC languages more powerful than Python.\nAfter this course, you will understand programs in both C(++) and modern Fortran. You will be required to actively express your ideas in one of those languages. You must acquire passive knowledge of C(++) AND Fortran, and active knowledge of C(++) OR Fortran."
+  },
+  {
+    "objectID": "syllabus.html#detailed-contents-of-the-course",
+    "href": "syllabus.html#detailed-contents-of-the-course",
+    "title": "Syllabus & Course Rules",
+    "section": "📜 Detailed Contents of the Course",
+    "text": "📜 Detailed Contents of the Course\n\n1. Structure and scope of the course. Numerical Computing in Physical Sciences: History and Contemporary efforts.\n2. HPC: need for speed, why and how. History and modernity: microprocessors, Unix, Linux, and Internet. Intro to Linux (CentOS).\n3. Connectivity (ssh & sftp, traceroute & ping). Basic Linux shells and commands. Recommended compilers (GNU, Intel, Nvidia). Simple C/F95 vs Python benchmarks.\n4. C and Fortran 95 - compilers, basic usage. Numerical puzzle of 711. Kruskal counts and linked lists. Integration with Python.\n5. More Fortran. Monte Carlo method. Parallel execution on CPU using OpenMP fork-join method in loops.\n6. Modern computing in the era of Integrated Circuits. Appearence of barriers to single-thread computing. Moore’s law.\n7. CPU and MIC (Xeon Phi). Supercomputers and supercomputing. More C. Multi-dimensional arrays in C vs. Fortran.\n8. Parallelization via OpenMP in C and F. Segmentation faults. Bottlenecks (Computation vs RAM bandwidth). Graphics in Fortran/C (DISLIN).\n9. Computations with CPU vs. MIC vs. CUDA. Automatic vectorization. N-body integration methods. Basic Neural Net: teaching a broom to stand upside down.\n10. Interaction of protoplanets with 3D particle and gas disks. Eulerian vs. Lagrangian methods. Fourier integral & discrete transform (FFT). Aliasing. Simple GPU programs in CUDA Fortran.\n11. Simple GPU programs in CUDA C/C++. Introduction to MPI. What are NNs and why do they work. Machine Learning. Optimum Search: Simplex (Nelder-Mead) method.\n12. Presentation of your A4 group projects."
+  },
+  {
+    "objectID": "syllabus.html#academic-integrity",
+    "href": "syllabus.html#academic-integrity",
+    "title": "Syllabus & Course Rules",
+    "section": "🎓 Academic Integrity",
+    "text": "🎓 Academic Integrity\nThe Code of Behaviour on Academic Matters at UofT should be respected. Misrepresentation of authorship, e.g., cheating that the assigned work is yours and original while you merely rephrase somebody’s code, is plagiarism. Using generative AI to plagiarize solutions of an assignment or test is a serious offense. Do not use it, unless it’s clearly stated as needed."
+  },
+  {
+    "objectID": "syllabus.html#accommodations",
+    "href": "syllabus.html#accommodations",
+    "title": "Syllabus & Course Rules",
+    "section": "🏥 Accommodations",
+    "text": "🏥 Accommodations\nTransfer of points for personal or medical emergencies is offered, following the UofT rules of self-declaration on ACORN (maximum one per term). Please send a medical note (Verification of Illness Form, VOI) or self-declaration for the 1st absence, and VOI for any further absences.\nIf you skip more than 1/2 of term work using VOIs, you will be advised to drop the course."
+  },
+  {
+    "objectID": "code/index.html",
+    "href": "code/index.html",
+    "title": "The Code Page",
+    "section": "",
+    "text": "As a registered PHYD57 student, you are free to copy and develop the programs below to do more things, change their output style, etc. Knowledge of basic structures and methods used in these codes is a course requirement."
+  },
+  {
+    "objectID": "code/index.html#python-refresher-introductory-methods",
+    "href": "code/index.html#python-refresher-introductory-methods",
+    "title": "The Code Page",
+    "section": "🐍 Python Refresher & Introductory Methods",
+    "text": "🐍 Python Refresher & Introductory Methods\n\nsimple_vectors-03.py: Compares Python loops vs NumPy array operations.\nsimple_IO.py / simple_stat.py: Basic I/O and statistics in Python.\nplot_exp_approx-1.py / plot_cos_approx-1.py: Taylor series expansion and plotting with Matplotlib.\nsimple_mtc_pi.py: Calculation of Pi by Monte Carlo.\nsimple_bisec.py / simple_newton.py: Bisection and Newton’s methods for root finding."
+  },
+  {
+    "objectID": "code/index.html#high-performance-computing-hpc-cfortran",
+    "href": "code/index.html#high-performance-computing-hpc-cfortran",
+    "title": "The Code Page",
+    "section": "🚀 High Performance Computing (HPC) & C/Fortran",
+    "text": "🚀 High Performance Computing (HPC) & C/Fortran\n\nlaplacian-5t.py: Image processing using the heat/diffusion Laplace operator stencil (NumPy).\nifor-laplace3-dp.f90 / pgf-laplace3-dp.f95: Laplace stencil in Fortran (CPU vs GPU compilation).\n711-brute.py / 711-brute.c / 711-brute.f95: Cracking the 711 puzzle using brute force across Python, C, and Fortran.\nsimpler-nb-1.f90: Loop over a 2D array in Fortran demonstrating throughput and RAM bandwidth limits."
+  },
+  {
+    "objectID": "code/index.html#calling-c-from-python",
+    "href": "code/index.html#calling-c-from-python",
+    "title": "The Code Page",
+    "section": "🔄 Calling C from Python",
+    "text": "🔄 Calling C from Python\n\nlibfunc.c & use_libc.c: Building and linking a shared C library.\nfun_lib0.c & callingC-0-py2.py: Calling a compiled C library from Python via ctypes."
+  },
+  {
+    "objectID": "code/index.html#graphics-in-fortranc-dislin",
+    "href": "code/index.html#graphics-in-fortranc-dislin",
+    "title": "The Code Page",
+    "section": "🎨 Graphics in Fortran/C (DISLIN)",
+    "text": "🎨 Graphics in Fortran/C (DISLIN)\n\nvolcano-disl.f90: F90 code generating DISLIN graphics directly from Fortran. Showcases OpenMP parallelization scheduling and critical sections."
+  },
+  {
+    "objectID": "code/index.html#cuda-c-and-cuda-fortran",
+    "href": "code/index.html#cuda-c-and-cuda-fortran",
+    "title": "The Code Page",
+    "section": "⚡ CUDA C and CUDA Fortran",
+    "text": "⚡ CUDA C and CUDA Fortran\n\nsimple_saxpy_cuda.cu: SAXPY (Single-Precision A*X Plus Y) in CUDA C.\ncuda-perf.f95: Fortran 95 version with CUDA diagnostics showing bandwidth and compute performance.\ntetraDg-3.f95: GPU version of the tetrahedra problem using CUDA Fortran."
+  },
+  {
+    "objectID": "code/index.html#machine-learning-neural-networks",
+    "href": "code/index.html#machine-learning-neural-networks",
+    "title": "The Code Page",
+    "section": "🧠 Machine Learning & Neural Networks",
+    "text": "🧠 Machine Learning & Neural Networks\n\ninv-pend-ctrl-3orig+plt.f95: Sequential Fortran code solving the inverted broomstick problem using a simple Neural Network (3 hidden neurons, 1 output)."
+  },
+  {
+    "objectID": "assignments/project-1-poisson-solver.html",
+    "href": "assignments/project-1-poisson-solver.html",
+    "title": "Project 1: 2D Electrostatic Potential Solver via SOR",
+    "section": "",
+    "text": "Solve the electrostatic potential \\(\\phi(x, y)\\) inside a grounded rectangular conductive box with two interior charged plates held at \\(\\pm 100\\text{ V}\\).\n\nImplement Jacobi, Gauss-Seidel, and SOR numerical relaxation schemes.\nMeasure the number of iterations required to reach an error tolerance \\(\\epsilon = 10^{-6}\\) as a function of grid size \\(N \\in \\{32, 64, 128\\}\\).\nCompute the electric field \\(\\mathbf{E} = -\\boldsymbol{\\nabla}\\phi\\) using 2nd-order central differences and plot field lines."
+  },
+  {
+    "objectID": "assignments/project-1-poisson-solver.html#objective",
+    "href": "assignments/project-1-poisson-solver.html#objective",
+    "title": "Project 1: 2D Electrostatic Potential Solver via SOR",
+    "section": "",
+    "text": "Solve the electrostatic potential \\(\\phi(x, y)\\) inside a grounded rectangular conductive box with two interior charged plates held at \\(\\pm 100\\text{ V}\\).\n\nImplement Jacobi, Gauss-Seidel, and SOR numerical relaxation schemes.\nMeasure the number of iterations required to reach an error tolerance \\(\\epsilon = 10^{-6}\\) as a function of grid size \\(N \\in \\{32, 64, 128\\}\\).\nCompute the electric field \\(\\mathbf{E} = -\\boldsymbol{\\nabla}\\phi\\) using 2nd-order central differences and plot field lines."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "PHYD57: Advanced Computational Methods in Physics",
+    "section": "",
+    "text": "This page provides the sole access to all the materials, up-to-date SYLLABUS, texts of assignments, and preliminary grades. Quercus will be used for: submission of your term work, announcements via email, and posting of recordings."
+  },
+  {
+    "objectID": "index.html#brief-intro",
+    "href": "index.html#brief-intro",
+    "title": "PHYD57: Advanced Computational Methods in Physics",
+    "section": "📝 Brief Intro",
+    "text": "📝 Brief Intro\nYou already know basic programming in Python. Now is the time to learn some history and physics behind our technical civilization, where computing is helping us everywhere. Powerful operating systems (Linux) and HPC languages (C/C++, Fortran) will be discussed and tried out, along with networking and the principles of parallel programming (OpenMP, CUDA) that enable large-scale physical simulations."
+  },
+  {
+    "objectID": "index.html#course-schedule",
+    "href": "index.html#course-schedule",
+    "title": "PHYD57: Advanced Computational Methods in Physics",
+    "section": "📅 Course Schedule",
+    "text": "📅 Course Schedule\n\nLecturer: Prof. Pawel Artymowicz (Email: pawel.artymowicz@utoronto.ca | Office: SW 506G)\nLectures: Fridays, 11:00 to 14:00 (L1..L12, 2 hrs with a break), HLB108.\nTutorials: Immediately following lectures (T1..T10), 1 hr.\nOffice Hours: Immediately after the tutorial on Fridays.\nDeadlines: Sets of assignments/projects (A1-A4) are due at 11 am on specific dates.\n\n\n2025 Calendar\n\n\n\nDate\nEvent\nComments\n\n\n\n\nSept 11\nL1, T1\n\n\n\nSept 18\nL2z\nSynchronous online (Zoom)\n\n\nSept 25\nL3, T2\n\n\n\nOct 2\nL4, T3\nA1 Due\n\n\nOct 9\nL5, T4\n\n\n\nOct 16\nL6, T5\nA2 Due (Form groups for A4 by this date)\n\n\nOct 23\nL7, T6\nMidterm in class (11:10-12:10)\n\n\nOct 30\n–\nReading Week\n\n\nNov 6\nL8, T7\n\n\n\nNov 13\nL9, T8\n\n\n\nNov 20\nL10\nA3 Due\n\n\nNov 27\nL11, T9\n\n\n\nDec 4\nL12, T10\nA4 Group Project Due\n\n\nDec ??\nFinal*\n3hr in-person final exam"
+  },
+  {
+    "objectID": "index.html#course-grading-scheme",
+    "href": "index.html#course-grading-scheme",
+    "title": "PHYD57: Advanced Computational Methods in Physics",
+    "section": "📊 Course Grading Scheme",
+    "text": "📊 Course Grading Scheme\n\n\n\nComponent\nWeight\n\n\n\n\n3 sets of assignments A1-A3\n21% (7% each)\n\n\nGroup project (Assignment A4)\n23%\n\n\nMidterm exam\n16% (8% Probl + 8% Quiz)\n\n\nFinal exam\n40% (23% Probl + 17% Quiz)\n\n\n\n\n\n📖 Syllabus & Course Rules\nDetailed course outline, academic integrity, HPC language prerequisites, and accommodations.\n\n\n💻 The Code Page\nContinuously updated codes discussed in lectures (Python, C, Fortran, CUDA, OpenMP).\n\n\n🚀 Assignments & Exams\nAssignment sets, Group Project topics, Midterm and Final exam preparation guidelines.\n\n\n🔗 Books & Links\nTextbooks, Linux tutorials, language references, and supercomputing history."
+  },
+  {
+    "objectID": "assignments/index.html",
+    "href": "assignments/index.html",
+    "title": "Assignments & Exams",
+    "section": "",
+    "text": "The deadline is at the beginning of the meeting (11 am) on lecture days marked in the syllabus. Submission format is explained in the text of assignment 1. - Late Policy: Submission late by more than 3 hr earns 50% of points. There are no extensions.\n\n\n\nSet #1: Due 2 Oct.\nSet #2: Due 16 Oct.\nSet #3: Due 20 Nov.\nSet #4: Group research project. Presentation on 4 Dec."
+  },
+  {
+    "objectID": "assignments/index.html#home-assignments",
+    "href": "assignments/index.html#home-assignments",
+    "title": "Assignments & Exams",
+    "section": "",
+    "text": "The deadline is at the beginning of the meeting (11 am) on lecture days marked in the syllabus. Submission format is explained in the text of assignment 1. - Late Policy: Submission late by more than 3 hr earns 50% of points. There are no extensions.\n\n\n\nSet #1: Due 2 Oct.\nSet #2: Due 16 Oct.\nSet #3: Due 20 Nov.\nSet #4: Group research project. Presentation on 4 Dec."
+  },
+  {
+    "objectID": "assignments/index.html#group-project-a4-suggested-topics",
+    "href": "assignments/index.html#group-project-a4-suggested-topics",
+    "title": "Assignments & Exams",
+    "section": "🤝 Group Project (A4) Suggested Topics",
+    "text": "🤝 Group Project (A4) Suggested Topics\n\nMachine Learning from very noisy data: econophysics, algorithmic trading, etc.\nPanel simulation of ideal aerodynamics (e.g. airliner losing a wing part).\nPlanetary system dynamics and stability: The Trappist-1 system.\nSPH: Particle simulation of fluid dynamics on CPU or Xeon Phi.\nN-body simulation of collapsing galaxy with massive black holes using FFT gravity solver on GPU.\nStructural dynamics: build a virtual Golden Gate bridge.\nSpeech enhancement: making noisy recordings more understandable.\nSimulation of phase transitions in spin lattice.\nMie theory of scattering with application to glories and specters.\nYour group’s proposal (requires lecturer approval)."
+  },
+  {
+    "objectID": "assignments/index.html#midterm-exam",
+    "href": "assignments/index.html#midterm-exam",
+    "title": "Assignments & Exams",
+    "section": "📝 Midterm Exam",
+    "text": "📝 Midterm Exam\n\nFormat: 16% of total grade (8% Problems + 8% Quiz).\nAllowed Materials: Your own handwritten notes (limit is 8 pages: either 8 single-sided or 4 double-sided sheets).\nPrep: Review past midterms and lecture notes."
+  },
+  {
+    "objectID": "assignments/index.html#final-exam",
+    "href": "assignments/index.html#final-exam",
+    "title": "Assignments & Exams",
+    "section": "📝 Final Exam",
+    "text": "📝 Final Exam\n\nFormat: 40% of total grade (23% Problems + 17% Quiz).\nPart 1 (Computer-Free): 1.5 hours. Quiz + written problems. Bring a calculator. Use of any remote help (browser, AI, phone) is forbidden.\nPart 2 (Computing): You must bring a computer (laptop or tablet) to edit, compile, and run programs in C(++) or Fortran, or connect via SSH to art-1 or art-2 servers.\nAllowed Materials: Handwritten notes (limit 8 pages).\n\nNote: Writing simple kernels in CUDA or using OpenMP directives for parallelization may be required."
+  },
+  {
+    "objectID": "references/index.html",
+    "href": "references/index.html",
+    "title": "Books & Links",
+    "section": "",
+    "text": "Books discussed below should be available in the UofT library in electronic form.\nFor Introductory/General Reading: - N. Schroeghofer, “Lessons in Scientific Computing”, CRC 2019. (Focus on HPC languages vs Python). - S. Linge, H. Langtangen, “Programming for Computations - Python”, Springer 2019.\nFor Lectures L2+ (Fortran & Advanced Python): - J. Izaac and J. Wang, “Computational Quantum Mechanics”, Springer 2018. - P. Turner, T. Arildsen, K. Kavanagh, “Applied Scientific Computing with Python”, Springer 2018."
+  },
+  {
+    "objectID": "references/index.html#textbooks",
+    "href": "references/index.html#textbooks",
+    "title": "Books & Links",
+    "section": "",
+    "text": "Books discussed below should be available in the UofT library in electronic form.\nFor Introductory/General Reading: - N. Schroeghofer, “Lessons in Scientific Computing”, CRC 2019. (Focus on HPC languages vs Python). - S. Linge, H. Langtangen, “Programming for Computations - Python”, Springer 2019.\nFor Lectures L2+ (Fortran & Advanced Python): - J. Izaac and J. Wang, “Computational Quantum Mechanics”, Springer 2018. - P. Turner, T. Arildsen, K. Kavanagh, “Applied Scientific Computing with Python”, Springer 2018."
+  },
+  {
+    "objectID": "references/index.html#linux-systems",
+    "href": "references/index.html#linux-systems",
+    "title": "Books & Links",
+    "section": "🐧 Linux & Systems",
+    "text": "🐧 Linux & Systems\nYou are encouraged to install Linux (Rocky, Red Hat, Ubuntu) or use MacOS (Unix-based) for this course. - CentOS / Rocky Linux: Familiarize yourself with CLI (bash, tcsh) and SSH tools like PuTTY. - Linux Information Project - Explanations of commands, “bit”, “byte”, and history. - Bash Programming Intro HOWTO"
+  },
+  {
+    "objectID": "references/index.html#networking-parallel-computing",
+    "href": "references/index.html#networking-parallel-computing",
+    "title": "Books & Links",
+    "section": "🌐 Networking & Parallel Computing",
+    "text": "🌐 Networking & Parallel Computing\n\nOpenMP: Look up the “Hands-on intro to OpenMP” (SC08).\nCUDA:\n\nCUDA C Programming Guide (Nvidia).\nCUFFT library description for Fast Fourier Transforms on GPU.\n\nMPI: For node-to-node communication (not explicitly required, but good to know)."
+  },
+  {
+    "objectID": "references/index.html#history",
+    "href": "references/index.html#history",
+    "title": "Books & Links",
+    "section": "📜 History",
+    "text": "📜 History\n\nHistory of computing, Alan Turing, Marian Rejewski, and the decoding of the ENIGMA machine during WWII.\nThe evolution of supercomputers (e.g. Fugaku exaflop computing)."
+  },
+  {
     "objectID": "code/hpc-pde-solvers-cpp-fortran.html",
     "href": "code/hpc-pde-solvers-cpp-fortran.html",
     "title": "High-Performance PDE Solvers: C++, Fortran 90 & Interactive Heat Diffusion",
@@ -49,52 +245,24 @@
     "text": "3. Fortran 90: High-Performance 2D Advection Solver\n! advection_2d.f90\n! Compile: gfortran -O3 -std=f2018 advection_2d.f90 -o advection_sim\nprogram advection_solver\n    implicit none\n    integer, parameter :: N = 256\n    real(8) :: u(0:N, 0:N), u_new(0:N, 0:N)\n    real(8) :: c_x, c_y, dx, dy, dt\n    integer :: i, j, step, n_steps\n\n    dx = 1.0d0 / dble(N)\n    dy = 1.0d0 / dble(N)\n    c_x = 1.0d0; c_y = 1.0d0\n    dt = 0.4d0 * dx / sqrt(c_x**2 + c_y**2) ! CFL stability criterion\n\n    ! Initialize 2D Gaussian pulse\n    do j = 0, N\n        do i = 0, N\n            u(i, j) = exp(-((i*dx - 0.3d0)**2 + (j*dy - 0.3d0)**2) / 0.02d0)\n        end do\n    end do\n\n    n_steps = 500\n    ! Lax-Wendroff 2D advection scheme\n    do step = 1, n_steps\n        do j = 1, N - 1\n            do i = 1, N - 1\n                u_new(i, j) = u(i, j) - 0.5d0 * (c_x * dt / dx) * (u(i+1, j) - u(i-1, j)) &\n                                      - 0.5d0 * (c_y * dt / dy) * (u(i, j+1) - u(i, j-1))\n            end do\n        end do\n        u = u_new\n    end do\n\n    print *, \"2D Advection successfully integrated for \", n_steps, \" time steps.\"\nend program advection_solver"
   },
   {
-    "objectID": "assignments/project-1-poisson-solver.html",
-    "href": "assignments/project-1-poisson-solver.html",
-    "title": "Project 1: 2D Electrostatic Potential Solver via SOR",
-    "section": "",
-    "text": "Solve the electrostatic potential \\(\\phi(x, y)\\) inside a grounded rectangular conductive box with two interior charged plates held at \\(\\pm 100\\text{ V}\\).\n\nImplement Jacobi, Gauss-Seidel, and SOR numerical relaxation schemes.\nMeasure the number of iterations required to reach an error tolerance \\(\\epsilon = 10^{-6}\\) as a function of grid size \\(N \\in \\{32, 64, 128\\}\\).\nCompute the electric field \\(\\mathbf{E} = -\\boldsymbol{\\nabla}\\phi\\) using 2nd-order central differences and plot field lines."
-  },
-  {
-    "objectID": "assignments/project-1-poisson-solver.html#objective",
-    "href": "assignments/project-1-poisson-solver.html#objective",
-    "title": "Project 1: 2D Electrostatic Potential Solver via SOR",
-    "section": "",
-    "text": "Solve the electrostatic potential \\(\\phi(x, y)\\) inside a grounded rectangular conductive box with two interior charged plates held at \\(\\pm 100\\text{ V}\\).\n\nImplement Jacobi, Gauss-Seidel, and SOR numerical relaxation schemes.\nMeasure the number of iterations required to reach an error tolerance \\(\\epsilon = 10^{-6}\\) as a function of grid size \\(N \\in \\{32, 64, 128\\}\\).\nCompute the electric field \\(\\mathbf{E} = -\\boldsymbol{\\nabla}\\phi\\) using 2nd-order central differences and plot field lines."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "PHYD57H3: Advanced Computational Methods in Physics",
-    "section": "",
-    "text": "Comprehensive portal for computational physics, large-scale simulations, vectorization, multi-threading (OpenMP/MPI), and numerical solutions to physical field equations in Python, C, and Fortran."
-  },
-  {
-    "objectID": "index.html#course-curriculum-numerical-methods",
-    "href": "index.html#course-curriculum-numerical-methods",
-    "title": "PHYD57H3: Advanced Computational Methods in Physics",
-    "section": "Course Curriculum & Numerical Methods",
-    "text": "Course Curriculum & Numerical Methods\n\n\n\n\n\n\n\n\n\nModule\nScientific Topics\nNumerical Algorithms\nLanguages & Frameworks\n\n\n\n\n01: Advanced ODEs\nPlanetary orbits, chaotic attractors, stiff chemical kinetics\nAdaptive RK45, Symplectic Velocity-Verlet, Radau/BDF\nPython, NumPy, SciPy\n\n\n02: Elliptic PDEs\nElectrostatic & Gravitational Potentials (\\(\\nabla^2 \\phi = \\rho\\))\nFinite difference, Successive Over-Relaxation (SOR), Multigrid\nC / Python\n\n\n03: Parabolic PDEs\nHeat conduction, diffusion, quantum Schrödinger evolution\nFTCS stability, Crank-Nicolson implicit method\nPython, C\n\n\n04: Hyperbolic PDEs\nSound waves, shock waves, electromagnetism\nLax-Friedrichs, Godunov, flux limiters\nFortran / C\n\n\n05: N-Body & Fluids\nGalactic collisions, fluid dynamics\nBarnes-Hut tree code, Particle-Mesh (PM), Smoothed Particle Hydrodynamics (SPH)\nPython, OpenMP\n\n\n06: HPC & Parallelism\nShared and distributed memory scaling\nOpenMP multithreading, MPI message passing, cache profiling\nLinux, GCC, Slurm"
-  },
-  {
-    "objectID": "assignments/index.html",
-    "href": "assignments/index.html",
-    "title": "Computational Physics Projects",
-    "section": "",
-    "text": "Project 1: 2D Electrostatic Potential Solver via SOR\n\n\nImplementing successive over-relaxation and analyzing spectral radius convergence rates.\n\n\n\n\n\n\n\n\nSep 8, 2026\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "code/index.html",
-    "href": "code/index.html",
-    "title": "Computational Code & HPC Workflows",
-    "section": "",
-    "text": "High-Performance PDE Solvers: C++, Fortran 90 & Interactive Heat Diffusion\n\n\nMulti-threaded OpenMP Gauss-Seidel SOR in C++, Fortran 90 spectral solvers, and client-side Canvas relaxation.\n\n\n\n\n\n\n\n\nSep 8, 2026\n\n\n\n\n\nNo matching items"
-  },
-  {
     "objectID": "notes/index.html",
     "href": "notes/index.html",
-    "title": "Computational Physics Lecture Notes",
+    "title": "Lecture Notes",
     "section": "",
-    "text": "Numerical Solutions of PDEs: Elliptic, Parabolic, and Hyperbolic Fields\n\n\nFinite difference discretization, von Neumann stability analysis, and iterative relaxation methods.\n\n\n\n\n\n\n\n\nSep 8, 2026\n\n\n\n\n\nNo matching items"
+    "text": "Programs discussed in lecture notes are available from the Code Page."
+  },
+  {
+    "objectID": "notes/index.html#lectures-outline",
+    "href": "notes/index.html#lectures-outline",
+    "title": "Lecture Notes",
+    "section": "📖 Lectures Outline",
+    "text": "📖 Lectures Outline\nYou are expected to take your own notes of what’s happening on the blackboard, while this page will serve the PDFs of on-screen presentations (slides).\nNote: The links to lecture slides will be activated and posted here progressively.\n\n[Lecture 1]\n[Lecture 2]\n[Lecture 3]\n[Lecture 4]\n[Lecture 5]\n[Lecture 6]\n[Lecture 7]\n[Lecture 8]\n[Lecture 9]\n[Lecture 10]\n[Lecture 11]\n[Lecture 12]"
+  },
+  {
+    "objectID": "notes/index.html#neural-networks-in-astronomy",
+    "href": "notes/index.html#neural-networks-in-astronomy",
+    "title": "Lecture Notes",
+    "section": "🧠 Neural Networks in Astronomy",
+    "text": "🧠 Neural Networks in Astronomy\nTwo papers recommended for Neural Networks in application to Astronomy: - NNs-spect.pdf - NN-exoplanets.pdf"
   }
 ]

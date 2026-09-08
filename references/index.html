@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Assignments &amp; Exams – PHYD57: Advanced Computational Methods in Physics</title>
+<title>Books &amp; Links – PHYD57: Advanced Computational Methods in Physics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -172,7 +172,7 @@ window.Quarto = {
 <span class="menu-text">Lecture Notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../assignments/index.html" aria-current="page"> 
+    <a class="nav-link" href="../assignments/index.html"> 
 <span class="menu-text">Assignments &amp; Exams</span></a>
   </li>  
   <li class="nav-item">
@@ -180,7 +180,7 @@ window.Quarto = {
 <span class="menu-text">The Code Page</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../references/index.html"> 
+    <a class="nav-link active" href="../references/index.html" aria-current="page"> 
 <span class="menu-text">Books &amp; Links</span></a>
   </li>  
 </ul>
@@ -199,13 +199,10 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#home-assignments" id="toc-home-assignments" class="nav-link active" data-scroll-target="#home-assignments">📝 Home Assignments</a>
-  <ul class="collapse">
-  <li><a href="#schedule" id="toc-schedule" class="nav-link" data-scroll-target="#schedule">Schedule</a></li>
-  </ul></li>
-  <li><a href="#group-project-a4-suggested-topics" id="toc-group-project-a4-suggested-topics" class="nav-link" data-scroll-target="#group-project-a4-suggested-topics">🤝 Group Project (A4) Suggested Topics</a></li>
-  <li><a href="#midterm-exam" id="toc-midterm-exam" class="nav-link" data-scroll-target="#midterm-exam">📝 Midterm Exam</a></li>
-  <li><a href="#final-exam" id="toc-final-exam" class="nav-link" data-scroll-target="#final-exam">📝 Final Exam</a></li>
+  <li><a href="#textbooks" id="toc-textbooks" class="nav-link active" data-scroll-target="#textbooks">📚 Textbooks</a></li>
+  <li><a href="#linux-systems" id="toc-linux-systems" class="nav-link" data-scroll-target="#linux-systems">🐧 Linux &amp; Systems</a></li>
+  <li><a href="#networking-parallel-computing" id="toc-networking-parallel-computing" class="nav-link" data-scroll-target="#networking-parallel-computing">🌐 Networking &amp; Parallel Computing</a></li>
+  <li><a href="#history" id="toc-history" class="nav-link" data-scroll-target="#history">📜 History</a></li>
   </ul>
 </nav>
     </div>
@@ -214,7 +211,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Assignments &amp; Exams</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Books &amp; Links</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -231,51 +228,34 @@ window.Quarto = {
 </header>
 
 
-<section id="home-assignments" class="level2">
-<h2 class="anchored" data-anchor-id="home-assignments">📝 Home Assignments</h2>
-<p>The deadline is at the beginning of the meeting (11 am) on lecture days marked in the syllabus. Submission format is explained in the text of assignment 1. - <strong>Late Policy:</strong> Submission late by more than 3 hr earns 50% of points. There are no extensions.</p>
-<section id="schedule" class="level3">
-<h3 class="anchored" data-anchor-id="schedule">Schedule</h3>
+<section id="textbooks" class="level2">
+<h2 class="anchored" data-anchor-id="textbooks">📚 Textbooks</h2>
+<p>Books discussed below should be available in the UofT library in electronic form.</p>
+<p><strong>For Introductory/General Reading:</strong> - N. Schroeghofer, <em>“Lessons in Scientific Computing”</em>, CRC 2019. (Focus on HPC languages vs Python). - S. Linge, H. Langtangen, <em>“Programming for Computations - Python”</em>, Springer 2019.</p>
+<p><strong>For Lectures L2+ (Fortran &amp; Advanced Python):</strong> - J. Izaac and J. Wang, <em>“Computational Quantum Mechanics”</em>, Springer 2018. - P. Turner, T. Arildsen, K. Kavanagh, <em>“Applied Scientific Computing with Python”</em>, Springer 2018.</p>
+</section>
+<section id="linux-systems" class="level2">
+<h2 class="anchored" data-anchor-id="linux-systems">🐧 Linux &amp; Systems</h2>
+<p>You are encouraged to install Linux (Rocky, Red Hat, Ubuntu) or use MacOS (Unix-based) for this course. - <strong>CentOS / Rocky Linux:</strong> Familiarize yourself with CLI (bash, tcsh) and SSH tools like PuTTY. - <a href="http://www.linfo.org/">Linux Information Project</a> - Explanations of commands, “bit”, “byte”, and history. - <a href="http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html#toc7">Bash Programming Intro HOWTO</a></p>
+</section>
+<section id="networking-parallel-computing" class="level2">
+<h2 class="anchored" data-anchor-id="networking-parallel-computing">🌐 Networking &amp; Parallel Computing</h2>
 <ul>
-<li><strong>Set #1:</strong> Due 2 Oct.</li>
-<li><strong>Set #2:</strong> Due 16 Oct.</li>
-<li><strong>Set #3:</strong> Due 20 Nov.</li>
-<li><strong>Set #4:</strong> Group research project. Presentation on 4 Dec.</li>
+<li><strong>OpenMP:</strong> Look up the “Hands-on intro to OpenMP” (SC08).</li>
+<li><strong>CUDA:</strong>
+<ul>
+<li>CUDA C Programming Guide (Nvidia).</li>
+<li>CUFFT library description for Fast Fourier Transforms on GPU.</li>
+</ul></li>
+<li><strong>MPI:</strong> For node-to-node communication (not explicitly required, but good to know).</li>
 </ul>
 </section>
-</section>
-<section id="group-project-a4-suggested-topics" class="level2">
-<h2 class="anchored" data-anchor-id="group-project-a4-suggested-topics">🤝 Group Project (A4) Suggested Topics</h2>
+<section id="history" class="level2">
+<h2 class="anchored" data-anchor-id="history">📜 History</h2>
 <ul>
-<li>Machine Learning from very noisy data: econophysics, algorithmic trading, etc.</li>
-<li>Panel simulation of ideal aerodynamics (e.g.&nbsp;airliner losing a wing part).</li>
-<li>Planetary system dynamics and stability: The Trappist-1 system.</li>
-<li>SPH: Particle simulation of fluid dynamics on CPU or Xeon Phi.</li>
-<li>N-body simulation of collapsing galaxy with massive black holes using FFT gravity solver on GPU.</li>
-<li>Structural dynamics: build a virtual Golden Gate bridge.</li>
-<li>Speech enhancement: making noisy recordings more understandable.</li>
-<li>Simulation of phase transitions in spin lattice.</li>
-<li>Mie theory of scattering with application to glories and specters.</li>
-<li>Your group’s proposal (requires lecturer approval).</li>
+<li>History of computing, Alan Turing, Marian Rejewski, and the decoding of the ENIGMA machine during WWII.</li>
+<li>The evolution of supercomputers (e.g.&nbsp;Fugaku exaflop computing).</li>
 </ul>
-</section>
-<section id="midterm-exam" class="level2">
-<h2 class="anchored" data-anchor-id="midterm-exam">📝 Midterm Exam</h2>
-<ul>
-<li><strong>Format:</strong> 16% of total grade (8% Problems + 8% Quiz).</li>
-<li><strong>Allowed Materials:</strong> Your own handwritten notes (limit is 8 pages: either 8 single-sided or 4 double-sided sheets).</li>
-<li><strong>Prep:</strong> Review past midterms and lecture notes.</li>
-</ul>
-</section>
-<section id="final-exam" class="level2">
-<h2 class="anchored" data-anchor-id="final-exam">📝 Final Exam</h2>
-<ul>
-<li><strong>Format:</strong> 40% of total grade (23% Problems + 17% Quiz).</li>
-<li><strong>Part 1 (Computer-Free):</strong> 1.5 hours. Quiz + written problems. Bring a calculator. Use of any remote help (browser, AI, phone) is forbidden.</li>
-<li><strong>Part 2 (Computing):</strong> You must bring a computer (laptop or tablet) to edit, compile, and run programs in C(++) or Fortran, or connect via SSH to <code>art-1</code> or <code>art-2</code> servers.</li>
-<li><strong>Allowed Materials:</strong> Handwritten notes (limit 8 pages).</li>
-</ul>
-<p><em>Note: Writing simple kernels in CUDA or using OpenMP directives for parallelization may be required.</em></p>
 
 
 
@@ -736,43 +716,36 @@ window.Quarto = {
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Assignments &amp; Exams"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Books &amp; Links"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## 📝 Home Assignments</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>The deadline is at the beginning of the meeting (11 am) on lecture days marked in the syllabus. Submission format is explained in the text of assignment 1. </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Late Policy:** Submission late by more than 3 hr earns 50% of points. There are no extensions. </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">### Schedule</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Set #1:** Due 2 Oct.</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Set #2:** Due 16 Oct.</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Set #3:** Due 20 Nov.</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Set #4:** Group research project. Presentation on 4 Dec.</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🤝 Group Project (A4) Suggested Topics</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Machine Learning from very noisy data: econophysics, algorithmic trading, etc.</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Panel simulation of ideal aerodynamics (e.g. airliner losing a wing part).</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Planetary system dynamics and stability: The Trappist-1 system.</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>SPH: Particle simulation of fluid dynamics on CPU or Xeon Phi.</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>N-body simulation of collapsing galaxy with massive black holes using FFT gravity solver on GPU.</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Structural dynamics: build a virtual Golden Gate bridge.</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Speech enhancement: making noisy recordings more understandable.</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Simulation of phase transitions in spin lattice.</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Mie theory of scattering with application to glories and specters.</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Your group's proposal (requires lecturer approval).</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## 📝 Midterm Exam</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Format:** 16% of total grade (8% Problems + 8% Quiz).</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Allowed Materials:** Your own handwritten notes (limit is 8 pages: either 8 single-sided or 4 double-sided sheets).</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Prep:** Review past midterms and lecture notes.</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## 📝 Final Exam</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Format:** 40% of total grade (23% Problems + 17% Quiz). </span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Part 1 (Computer-Free):** 1.5 hours. Quiz + written problems. Bring a calculator. Use of any remote help (browser, AI, phone) is forbidden.</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Part 2 (Computing):** You must bring a computer (laptop or tablet) to edit, compile, and run programs in C(++) or Fortran, or connect via SSH to <span class="in">`art-1`</span> or <span class="in">`art-2`</span> servers.</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Allowed Materials:** Handwritten notes (limit 8 pages).</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>*Note: Writing simple kernels in CUDA or using OpenMP directives for parallelization may be required.*</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## 📚 Textbooks</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Books discussed below should be available in the UofT library in electronic form.</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>**For Introductory/General Reading:**</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>N. Schroeghofer, *"Lessons in Scientific Computing"*, CRC 2019. (Focus on HPC languages vs Python).</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>S. Linge, H. Langtangen, *"Programming for Computations - Python"*, Springer 2019.</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>**For Lectures L2+ (Fortran &amp; Advanced Python):**</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>J. Izaac and J. Wang, *"Computational Quantum Mechanics"*, Springer 2018.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>P. Turner, T. Arildsen, K. Kavanagh, *"Applied Scientific Computing with Python"*, Springer 2018.</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🐧 Linux &amp; Systems</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>You are encouraged to install Linux (Rocky, Red Hat, Ubuntu) or use MacOS (Unix-based) for this course.</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**CentOS / Rocky Linux:** Familiarize yourself with CLI (bash, tcsh) and SSH tools like PuTTY.</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Linux Information Project</span><span class="co">](http://www.linfo.org/)</span> - Explanations of commands, "bit", "byte", and history.</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Bash Programming Intro HOWTO</span><span class="co">](http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html#toc7)</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🌐 Networking &amp; Parallel Computing</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**OpenMP:** Look up the "Hands-on intro to OpenMP" (SC08).</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**CUDA:** </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>CUDA C Programming Guide (Nvidia).</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>CUFFT library description for Fast Fourier Transforms on GPU.</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**MPI:** For node-to-node communication (not explicitly required, but good to know).</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## 📜 History</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>History of computing, Alan Turing, Marian Rejewski, and the decoding of the ENIGMA machine during WWII.</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The evolution of supercomputers (e.g. Fugaku exaflop computing).</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

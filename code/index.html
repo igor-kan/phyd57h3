@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Optimized C++, Fortran 90, and OpenMP numerical physics routines.">
 
-<title>Computational Code &amp; HPC Workflows – PHYD57H3: Advanced Computational Methods in Physics</title>
+<title>The Code Page – PHYD57: Advanced Computational Methods in Physics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -72,8 +71,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -111,35 +108,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
@@ -182,7 +150,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">PHYD57H3: Advanced Computational Methods in Physics</span>
+    <span class="navbar-title">PHYD57: Advanced Computational Methods in Physics</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -196,16 +164,24 @@ window.Quarto = {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> 
+<span class="menu-text">Syllabus &amp; Rules</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../notes/index.html"> 
 <span class="menu-text">Lecture Notes</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../assignments/index.html"> 
-<span class="menu-text">Computational Projects</span></a>
+<span class="menu-text">Assignments &amp; Exams</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="../code/index.html" aria-current="page"> 
-<span class="menu-text">Code &amp; High-Performance Computing</span></a>
+<span class="menu-text">The Code Page</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../references/index.html"> 
+<span class="menu-text">Books &amp; Links</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -215,28 +191,35 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#python-refresher-introductory-methods" id="toc-python-refresher-introductory-methods" class="nav-link active" data-scroll-target="#python-refresher-introductory-methods">🐍 Python Refresher &amp; Introductory Methods</a></li>
+  <li><a href="#high-performance-computing-hpc-cfortran" id="toc-high-performance-computing-hpc-cfortran" class="nav-link" data-scroll-target="#high-performance-computing-hpc-cfortran">🚀 High Performance Computing (HPC) &amp; C/Fortran</a></li>
+  <li><a href="#calling-c-from-python" id="toc-calling-c-from-python" class="nav-link" data-scroll-target="#calling-c-from-python">🔄 Calling C from Python</a></li>
+  <li><a href="#graphics-in-fortranc-dislin" id="toc-graphics-in-fortranc-dislin" class="nav-link" data-scroll-target="#graphics-in-fortranc-dislin">🎨 Graphics in Fortran/C (DISLIN)</a></li>
+  <li><a href="#cuda-c-and-cuda-fortran" id="toc-cuda-c-and-cuda-fortran" class="nav-link" data-scroll-target="#cuda-c-and-cuda-fortran">⚡ CUDA C and CUDA Fortran</a></li>
+  <li><a href="#machine-learning-neural-networks" id="toc-machine-learning-neural-networks" class="nav-link" data-scroll-target="#machine-learning-neural-networks">🧠 Machine Learning &amp; Neural Networks</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Computational Code &amp; HPC Workflows</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
-</div>
-
-<div>
-  <div class="description">
-    Optimized C++, Fortran 90, and OpenMP numerical physics routines.
-  </div>
+<div class="quarto-title-block"><div><h1 class="title">The Code Page</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<p class="subtitle lead">Continuously updated codes discussed in lectures</p>
 </div>
 
 
-<div class="quarto-title-meta column-page">
+
+<div class="quarto-title-meta">
 
     
   
@@ -248,43 +231,60 @@ window.Quarto = {
 </header>
 
 
-
+<p>As a registered PHYD57 student, you are free to copy and develop the programs below to do more things, change their output style, etc. <strong>Knowledge of basic structures and methods used in these codes is a course requirement.</strong></p>
+<section id="python-refresher-introductory-methods" class="level2">
+<h2 class="anchored" data-anchor-id="python-refresher-introductory-methods">🐍 Python Refresher &amp; Introductory Methods</h2>
+<ul>
+<li><code>simple_vectors-03.py</code>: Compares Python loops vs NumPy array operations.</li>
+<li><code>simple_IO.py</code> / <code>simple_stat.py</code>: Basic I/O and statistics in Python.</li>
+<li><code>plot_exp_approx-1.py</code> / <code>plot_cos_approx-1.py</code>: Taylor series expansion and plotting with Matplotlib.</li>
+<li><code>simple_mtc_pi.py</code>: Calculation of Pi by Monte Carlo.</li>
+<li><code>simple_bisec.py</code> / <code>simple_newton.py</code>: Bisection and Newton’s methods for root finding.</li>
+</ul>
+</section>
+<section id="high-performance-computing-hpc-cfortran" class="level2">
+<h2 class="anchored" data-anchor-id="high-performance-computing-hpc-cfortran">🚀 High Performance Computing (HPC) &amp; C/Fortran</h2>
+<ul>
+<li><code>laplacian-5t.py</code>: Image processing using the heat/diffusion Laplace operator stencil (NumPy).</li>
+<li><code>ifor-laplace3-dp.f90</code> / <code>pgf-laplace3-dp.f95</code>: Laplace stencil in Fortran (CPU vs GPU compilation).</li>
+<li><code>711-brute.py</code> / <code>711-brute.c</code> / <code>711-brute.f95</code>: Cracking the 711 puzzle using brute force across Python, C, and Fortran.</li>
+<li><code>simpler-nb-1.f90</code>: Loop over a 2D array in Fortran demonstrating throughput and RAM bandwidth limits.</li>
+</ul>
+</section>
+<section id="calling-c-from-python" class="level2">
+<h2 class="anchored" data-anchor-id="calling-c-from-python">🔄 Calling C from Python</h2>
+<ul>
+<li><code>libfunc.c</code> &amp; <code>use_libc.c</code>: Building and linking a shared C library.</li>
+<li><code>fun_lib0.c</code> &amp; <code>callingC-0-py2.py</code>: Calling a compiled C library from Python via <code>ctypes</code>.</li>
+</ul>
+</section>
+<section id="graphics-in-fortranc-dislin" class="level2">
+<h2 class="anchored" data-anchor-id="graphics-in-fortranc-dislin">🎨 Graphics in Fortran/C (DISLIN)</h2>
+<ul>
+<li><code>volcano-disl.f90</code>: F90 code generating DISLIN graphics directly from Fortran. Showcases OpenMP parallelization scheduling and critical sections.</li>
+</ul>
+</section>
+<section id="cuda-c-and-cuda-fortran" class="level2">
+<h2 class="anchored" data-anchor-id="cuda-c-and-cuda-fortran">⚡ CUDA C and CUDA Fortran</h2>
+<ul>
+<li><code>simple_saxpy_cuda.cu</code>: SAXPY (Single-Precision A*X Plus Y) in CUDA C.</li>
+<li><code>cuda-perf.f95</code>: Fortran 95 version with CUDA diagnostics showing bandwidth and compute performance.</li>
+<li><code>tetraDg-3.f95</code>: GPU version of the tetrahedra problem using CUDA Fortran.</li>
+</ul>
+</section>
+<section id="machine-learning-neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="machine-learning-neural-networks">🧠 Machine Learning &amp; Neural Networks</h2>
+<ul>
+<li><code>inv-pend-ctrl-3orig+plt.f95</code>: Sequential Fortran code solving the inverted broomstick problem using a simple Neural Network (3 hidden neurons, 1 output).</li>
+</ul>
 
 
 
 <!-- -->
 
+</section>
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="SFBDJTJDQyUyQiUyQiUyQ0ZvcnRyYW4lMkNPcGVuTVAlMkNJbnRlcmFjdGl2ZSUyQ1BERXM=" data-listing-date-sort="1788825600000" data-listing-file-modified-sort="1788894601444" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1622">
-<div class="thumbnail"><a href="../code/hpc-pde-solvers-cpp-fortran.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../code/hpc-pde-solvers-cpp-fortran.html" class="no-external">High-Performance PDE Solvers: C++, Fortran 90 &amp; Interactive Heat Diffusion</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../code/hpc-pde-solvers-cpp-fortran.html" class="no-external">Multi-threaded OpenMP Gauss-Seidel SOR in C++, Fortran 90 spectral solvers, and client-side Canvas relaxation.</a>
-</div>
-<div class="delink listing-description"><a href="../code/hpc-pde-solvers-cpp-fortran.html" class="no-external">
-Observe 2D numerical PDE relaxation in real time on an HTML5 Canvas. The simulation solves the parabolic heat equation: <span class="math display">\[\frac{\partial u}{\partial t} = \alpha \left(…</span>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../code/hpc-pde-solvers-cpp-fortran.html" class="no-external">
-<div class="listing-date">
-Sep 8, 2026
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -737,14 +737,39 @@ Sep 8, 2026
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Computational Code &amp; HPC Workflows"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Optimized C++, Fortran 90, and OpenMP numerical physics routines."</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">listing:</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">  contents: "*.qmd"</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  sort: "date desc"</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">  type: default</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="an">page-layout:</span><span class="co"> full</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "The Code Page"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Continuously updated codes discussed in lectures"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>As a registered PHYD57 student, you are free to copy and develop the programs below to do more things, change their output style, etc. **Knowledge of basic structures and methods used in these codes is a course requirement.**</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🐍 Python Refresher &amp; Introductory Methods</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`simple_vectors-03.py`</span>: Compares Python loops vs NumPy array operations.</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`simple_IO.py`</span> / <span class="in">`simple_stat.py`</span>: Basic I/O and statistics in Python.</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`plot_exp_approx-1.py`</span> / <span class="in">`plot_cos_approx-1.py`</span>: Taylor series expansion and plotting with Matplotlib.</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`simple_mtc_pi.py`</span>: Calculation of Pi by Monte Carlo.</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`simple_bisec.py`</span> / <span class="in">`simple_newton.py`</span>: Bisection and Newton's methods for root finding.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🚀 High Performance Computing (HPC) &amp; C/Fortran</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`laplacian-5t.py`</span>: Image processing using the heat/diffusion Laplace operator stencil (NumPy).</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`ifor-laplace3-dp.f90`</span> / <span class="in">`pgf-laplace3-dp.f95`</span>: Laplace stencil in Fortran (CPU vs GPU compilation).</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`711-brute.py`</span> / <span class="in">`711-brute.c`</span> / <span class="in">`711-brute.f95`</span>: Cracking the 711 puzzle using brute force across Python, C, and Fortran.</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`simpler-nb-1.f90`</span>: Loop over a 2D array in Fortran demonstrating throughput and RAM bandwidth limits.</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🔄 Calling C from Python</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`libfunc.c`</span> &amp; <span class="in">`use_libc.c`</span>: Building and linking a shared C library.</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`fun_lib0.c`</span> &amp; <span class="in">`callingC-0-py2.py`</span>: Calling a compiled C library from Python via <span class="in">`ctypes`</span>.</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🎨 Graphics in Fortran/C (DISLIN)</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`volcano-disl.f90`</span>: F90 code generating DISLIN graphics directly from Fortran. Showcases OpenMP parallelization scheduling and critical sections.</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## ⚡ CUDA C and CUDA Fortran</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`simple_saxpy_cuda.cu`</span>: SAXPY (Single-Precision A*X Plus Y) in CUDA C.</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`cuda-perf.f95`</span>: Fortran 95 version with CUDA diagnostics showing bandwidth and compute performance.</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`tetraDg-3.f95`</span>: GPU version of the tetrahedra problem using CUDA Fortran.</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🧠 Machine Learning &amp; Neural Networks</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`inv-pend-ctrl-3orig+plt.f95`</span>: Sequential Fortran code solving the inverted broomstick problem using a simple Neural Network (3 hidden neurons, 1 output).</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
