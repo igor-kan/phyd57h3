@@ -1,0 +1,100 @@
+[
+  {
+    "objectID": "notes/finite-difference-pdes.html",
+    "href": "notes/finite-difference-pdes.html",
+    "title": "Numerical Solutions of PDEs: Elliptic, Parabolic, and Hyperbolic Fields",
+    "section": "",
+    "text": "A general linear second-order partial differential equation in two dimensions has the form: \\[A \\frac{\\partial^2 u}{\\partial x^2} + B \\frac{\\partial^2 u}{\\partial x \\partial y} + C \\frac{\\partial^2 u}{\\partial y^2} + D \\frac{\\partial u}{\\partial x} + E \\frac{\\partial u}{\\partial y} + F u = G\\]\nThe physical nature of the problem and its numerical behavior depend on the discriminant \\(\\Delta = B^2 - 4AC\\):\n\n\n\n\n\n\n\n\n\n\nType\nCondition\nCanonical Equation\nPhysical Examples\nNumerical Methods\n\n\n\n\nElliptic\n\\(B^2 - 4AC &lt; 0\\)\nLaplace / Poisson: \\(\\nabla^2 u = \\rho\\)\nElectrostatic potential, steady gravitational fields\nRelaxation (Jacobi, Gauss-Seidel, SOR), Multigrid, FFT\n\n\nParabolic\n\\(B^2 - 4AC = 0\\)\nHeat / Diffusion: \\(\\frac{\\partial u}{\\partial t} = \\alpha \\nabla^2 u\\)\nThermal conduction, viscous diffusion, Schrödinger equation\nFTCS, Crank-Nicolson, ADI (Alternating Direction Implicit)\n\n\nHyperbolic\n\\(B^2 - 4AC &gt; 0\\)\nWave Equation: \\(\\frac{\\partial^2 u}{\\partial t^2} = c^2 \\nabla^2 u\\)\nSound waves, electromagnetic radiation, seismic waves\nLeapfrog, Lax-Wendroff, Godunov methods"
+  },
+  {
+    "objectID": "notes/finite-difference-pdes.html#classification-of-second-order-pdes",
+    "href": "notes/finite-difference-pdes.html#classification-of-second-order-pdes",
+    "title": "Numerical Solutions of PDEs: Elliptic, Parabolic, and Hyperbolic Fields",
+    "section": "",
+    "text": "A general linear second-order partial differential equation in two dimensions has the form: \\[A \\frac{\\partial^2 u}{\\partial x^2} + B \\frac{\\partial^2 u}{\\partial x \\partial y} + C \\frac{\\partial^2 u}{\\partial y^2} + D \\frac{\\partial u}{\\partial x} + E \\frac{\\partial u}{\\partial y} + F u = G\\]\nThe physical nature of the problem and its numerical behavior depend on the discriminant \\(\\Delta = B^2 - 4AC\\):\n\n\n\n\n\n\n\n\n\n\nType\nCondition\nCanonical Equation\nPhysical Examples\nNumerical Methods\n\n\n\n\nElliptic\n\\(B^2 - 4AC &lt; 0\\)\nLaplace / Poisson: \\(\\nabla^2 u = \\rho\\)\nElectrostatic potential, steady gravitational fields\nRelaxation (Jacobi, Gauss-Seidel, SOR), Multigrid, FFT\n\n\nParabolic\n\\(B^2 - 4AC = 0\\)\nHeat / Diffusion: \\(\\frac{\\partial u}{\\partial t} = \\alpha \\nabla^2 u\\)\nThermal conduction, viscous diffusion, Schrödinger equation\nFTCS, Crank-Nicolson, ADI (Alternating Direction Implicit)\n\n\nHyperbolic\n\\(B^2 - 4AC &gt; 0\\)\nWave Equation: \\(\\frac{\\partial^2 u}{\\partial t^2} = c^2 \\nabla^2 u\\)\nSound waves, electromagnetic radiation, seismic waves\nLeapfrog, Lax-Wendroff, Godunov methods"
+  },
+  {
+    "objectID": "notes/finite-difference-pdes.html#elliptic-pdes-the-poisson-equation-on-a-discrete-grid",
+    "href": "notes/finite-difference-pdes.html#elliptic-pdes-the-poisson-equation-on-a-discrete-grid",
+    "title": "Numerical Solutions of PDEs: Elliptic, Parabolic, and Hyperbolic Fields",
+    "section": "2. Elliptic PDEs: The Poisson Equation on a Discrete Grid",
+    "text": "2. Elliptic PDEs: The Poisson Equation on a Discrete Grid\nConsider the 2D Poisson equation on a square domain: \\[\\nabla^2 \\phi = \\frac{\\partial^2 \\phi}{\\partial x^2} + \\frac{\\partial^2 \\phi}{\\partial y^2} = -\\frac{\\rho(x, y)}{\\varepsilon_0}\\]\nWe discretize the domain with grid spacing \\(\\Delta x = \\Delta y = h\\): \\[x_i = i h, \\qquad y_j = j h, \\qquad \\phi_{i,j} \\approx \\phi(x_i, y_j)\\]\nUsing second-order central difference approximations: \\[\\left. \\frac{\\partial^2 \\phi}{\\partial x^2} \\right|_{i,j} \\approx \\frac{\\phi_{i+1,j} - 2\\phi_{i,j} + \\phi_{i-1,j}}{h^2}\\] \\[\\left. \\frac{\\partial^2 \\phi}{\\partial y^2} \\right|_{i,j} \\approx \\frac{\\phi_{i,j+1} - 2\\phi_{i,j} + \\phi_{i,j-1}}{h^2}\\]\nAdding both terms yields the 5-point discrete Laplacian stencil: \\[\\frac{\\phi_{i+1,j} + \\phi_{i-1,j} + \\phi_{i,j+1} + \\phi_{i,j-1} - 4\\phi_{i,j}}{h^2} = -\\frac{\\rho_{i,j}}{\\varepsilon_0}\\]\nSolving for the central value \\(\\phi_{i,j}\\): \\[\\boxed{\\phi_{i,j} = \\frac{1}{4} \\left( \\phi_{i+1,j} + \\phi_{i-1,j} + \\phi_{i,j+1} + \\phi_{i,j-1} \\right) + \\frac{h^2}{4\\varepsilon_0} \\rho_{i,j}}\\]\n\nIterative Relaxation Schemes\n\nJacobi Iteration: Computes the \\((k+1)\\)-th grid state strictly using values from the \\(k\\)-th iteration: \\[\\phi_{i,j}^{(k+1)} = \\frac{1}{4} \\left( \\phi_{i+1,j}^{(k)} + \\phi_{i-1,j}^{(k)} + \\phi_{i,j+1}^{(k)} + \\phi_{i,j-1}^{(k)} \\right) + \\frac{h^2}{4\\varepsilon_0} \\rho_{i,j}\\]\nGauss-Seidel Iteration: Immediately uses updated values as soon as they are computed: \\[\\phi_{i,j}^{(k+1)} = \\frac{1}{4} \\left( \\phi_{i+1,j}^{(k)} + \\phi_{i-1,j}^{(k+1)} + \\phi_{i,j+1}^{(k)} + \\phi_{i,j-1}^{(k+1)} \\right) + \\frac{h^2}{4\\varepsilon_0} \\rho_{i,j}\\] Converges twice as fast as Jacobi.\nSuccessive Over-Relaxation (SOR): Accelerates convergence by extrapolating with parameter \\(\\omega \\in (1, 2)\\): \\[\\phi_{i,j}^{(k+1)} = (1 - \\omega) \\phi_{i,j}^{(k)} + \\omega \\phi_{i,j}^{\\text{GS}}\\] Optimal parameter for an \\(N \\times N\\) grid: \\(\\omega_{\\text{opt}} \\approx \\frac{2}{1 + \\pi / N}\\)."
+  },
+  {
+    "objectID": "code/hpc-pde-solvers-cpp-fortran.html",
+    "href": "code/hpc-pde-solvers-cpp-fortran.html",
+    "title": "High-Performance PDE Solvers: C++, Fortran 90 & Interactive Heat Diffusion",
+    "section": "",
+    "text": "Observe 2D numerical PDE relaxation in real time on an HTML5 Canvas. The simulation solves the parabolic heat equation: \\[\\frac{\\partial u}{\\partial t} = \\alpha \\left( \\frac{\\partial^2 u}{\\partial x^2} + \\frac{\\partial^2 u}{\\partial y^2} \\right)\\] using a 5-point finite difference stencil directly inside your web browser:\n\n\nCode\nviewof diffusivity = Inputs.range([0.05, 0.45], {value: 0.22, step: 0.01, label: \"Thermal Diffusivity (α Δt / Δx²)\"})\nviewof sourceTemp = Inputs.range([50, 500], {value: 300, step: 10, label: \"Central Source Temperature (°C)\"})\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCode\nheatCanvas = {\n  const N = 60;\n  const size = 360;\n  const ctx = DOM.context2d(size, size);\n  const cell = size / N;\n\n  // Initialize grid\n  let u = Array.from({length: N}, () =&gt; new Float32Array(N));\n  let u_new = Array.from({length: N}, () =&gt; new Float32Array(N));\n\n  function step() {\n    const alpha = diffusivity;\n\n    // Apply continuous heat source in the center\n    const mid = Math.floor(N / 2);\n    for (let i = mid - 3; i &lt;= mid + 3; i++) {\n      for (let j = mid - 3; j &lt;= mid + 3; j++) {\n        u[i][j] = sourceTemp;\n      }\n    }\n\n    // 5-point stencil update\n    for (let i = 1; i &lt; N - 1; i++) {\n      for (let j = 1; j &lt; N - 1; j++) {\n        u_new[i][j] = u[i][j] + alpha * (\n          u[i+1][j] + u[i-1][j] + u[i][j+1] + u[i][j-1] - 4 * u[i][j]\n        );\n      }\n    }\n\n    // Copy back\n    for (let i = 1; i &lt; N - 1; i++) {\n      for (let j = 1; j &lt; N - 1; j++) {\n        u[i][j] = u_new[i][j];\n      }\n    }\n\n    // Render heatmap\n    for (let i = 0; i &lt; N; i++) {\n      for (let j = 0; j &lt; N; j++) {\n        const val = Math.min(1.0, u[i][j] / 500);\n        // Colormap (inferno-like)\n        const r = Math.floor(255 * Math.sin(val * Math.PI * 0.5));\n        const g = Math.floor(255 * Math.pow(val, 2));\n        const b = Math.floor(255 * (1 - Math.cos(val * Math.PI * 0.5)) * 0.4);\n        ctx.fillStyle = `rgb(${r},${g},${b})`;\n        ctx.fillRect(i * cell, j * cell, cell, cell);\n      }\n    }\n  }\n\n  const timer = d3.interval(step, 30);\n  invalidation.then(() =&gt; timer.stop());\n\n  return ctx.canvas;\n}"
+  },
+  {
+    "objectID": "code/hpc-pde-solvers-cpp-fortran.html#interactive-2d-heat-diffusion-simulation-observable-js",
+    "href": "code/hpc-pde-solvers-cpp-fortran.html#interactive-2d-heat-diffusion-simulation-observable-js",
+    "title": "High-Performance PDE Solvers: C++, Fortran 90 & Interactive Heat Diffusion",
+    "section": "",
+    "text": "Observe 2D numerical PDE relaxation in real time on an HTML5 Canvas. The simulation solves the parabolic heat equation: \\[\\frac{\\partial u}{\\partial t} = \\alpha \\left( \\frac{\\partial^2 u}{\\partial x^2} + \\frac{\\partial^2 u}{\\partial y^2} \\right)\\] using a 5-point finite difference stencil directly inside your web browser:\n\n\nCode\nviewof diffusivity = Inputs.range([0.05, 0.45], {value: 0.22, step: 0.01, label: \"Thermal Diffusivity (α Δt / Δx²)\"})\nviewof sourceTemp = Inputs.range([50, 500], {value: 300, step: 10, label: \"Central Source Temperature (°C)\"})\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCode\nheatCanvas = {\n  const N = 60;\n  const size = 360;\n  const ctx = DOM.context2d(size, size);\n  const cell = size / N;\n\n  // Initialize grid\n  let u = Array.from({length: N}, () =&gt; new Float32Array(N));\n  let u_new = Array.from({length: N}, () =&gt; new Float32Array(N));\n\n  function step() {\n    const alpha = diffusivity;\n\n    // Apply continuous heat source in the center\n    const mid = Math.floor(N / 2);\n    for (let i = mid - 3; i &lt;= mid + 3; i++) {\n      for (let j = mid - 3; j &lt;= mid + 3; j++) {\n        u[i][j] = sourceTemp;\n      }\n    }\n\n    // 5-point stencil update\n    for (let i = 1; i &lt; N - 1; i++) {\n      for (let j = 1; j &lt; N - 1; j++) {\n        u_new[i][j] = u[i][j] + alpha * (\n          u[i+1][j] + u[i-1][j] + u[i][j+1] + u[i][j-1] - 4 * u[i][j]\n        );\n      }\n    }\n\n    // Copy back\n    for (let i = 1; i &lt; N - 1; i++) {\n      for (let j = 1; j &lt; N - 1; j++) {\n        u[i][j] = u_new[i][j];\n      }\n    }\n\n    // Render heatmap\n    for (let i = 0; i &lt; N; i++) {\n      for (let j = 0; j &lt; N; j++) {\n        const val = Math.min(1.0, u[i][j] / 500);\n        // Colormap (inferno-like)\n        const r = Math.floor(255 * Math.sin(val * Math.PI * 0.5));\n        const g = Math.floor(255 * Math.pow(val, 2));\n        const b = Math.floor(255 * (1 - Math.cos(val * Math.PI * 0.5)) * 0.4);\n        ctx.fillStyle = `rgb(${r},${g},${b})`;\n        ctx.fillRect(i * cell, j * cell, cell, cell);\n      }\n    }\n  }\n\n  const timer = d3.interval(step, 30);\n  invalidation.then(() =&gt; timer.stop());\n\n  return ctx.canvas;\n}"
+  },
+  {
+    "objectID": "code/hpc-pde-solvers-cpp-fortran.html#multi-threaded-c17-openmp-red-black-sor-solver",
+    "href": "code/hpc-pde-solvers-cpp-fortran.html#multi-threaded-c17-openmp-red-black-sor-solver",
+    "title": "High-Performance PDE Solvers: C++, Fortran 90 & Interactive Heat Diffusion",
+    "section": "2. Multi-Threaded C++17 OpenMP Red-Black SOR Solver",
+    "text": "2. Multi-Threaded C++17 OpenMP Red-Black SOR Solver\nGauss-Seidel with Successive Over-Relaxation (SOR) achieves optimal convergence for elliptic PDEs like Poisson’s equation \\(\\nabla^2 \\phi = -\\rho / \\epsilon_0\\). Red-Black checkerboard coloring eliminates data race conditions, allowing perfect multi-core parallel scaling:\n// poisson_sor_openmp.cpp\n// Compile: g++ -O3 -fopenmp -march=native -std=c++17 poisson_sor_openmp.cpp -o sor_solver\n#include &lt;iostream&gt;\n#include &lt;vector&gt;\n#include &lt;cmath&gt;\n#include &lt;omp.h&gt;\n\nconst int N = 512;\nconst double TOLERANCE = 1e-6;\nconst int MAX_ITER = 10000;\n\nint main() {\n    std::vector&lt;std::vector&lt;double&gt;&gt; phi(N, std::vector&lt;double&gt;(N, 0.0));\n    std::vector&lt;std::vector&lt;double&gt;&gt; rho(N, std::vector&lt;double&gt;(N, 0.0));\n\n    // Place point charges\n    rho[N/3][N/3] = 100.0;\n    rho[2*N/3][2*N/3] = -100.0;\n\n    double h = 1.0 / (N - 1);\n    // Optimal over-relaxation parameter: omega = 2 / (1 + sin(pi * h))\n    double omega = 2.0 / (1.0 + std::sin(M_PI * h));\n\n    std::cout &lt;&lt; \"Running Red-Black SOR with \" &lt;&lt; omp_get_max_threads() \n              &lt;&lt; \" OpenMP threads. Omega = \" &lt;&lt; omega &lt;&lt; std::endl;\n\n    double diff = 1.0;\n    int iter = 0;\n\n    while (diff &gt; TOLERANCE && iter &lt; MAX_ITER) {\n        diff = 0.0;\n\n        // 1. Red points: (i + j) % 2 == 0\n        #pragma omp parallel for reduction(max:diff) collapse(2)\n        for (int i = 1; i &lt; N - 1; ++i) {\n            for (int j = 1; j &lt; N - 1; ++j) {\n                if ((i + j) % 2 == 0) {\n                    double target = 0.25 * (phi[i+1][j] + phi[i-1][j] + phi[i][j+1] + phi[i][j-1] + h*h*rho[i][j]);\n                    double delta = std::abs(target - phi[i][j]);\n                    if (delta &gt; diff) diff = delta;\n                    phi[i][j] = (1.0 - omega) * phi[i][j] + omega * target;\n                }\n            }\n        }\n\n        // 2. Black points: (i + j) % 2 == 1\n        #pragma omp parallel for reduction(max:diff) collapse(2)\n        for (int i = 1; i &lt; N - 1; ++i) {\n            for (int j = 1; j &lt; N - 1; ++j) {\n                if ((i + j) % 2 == 1) {\n                    double target = 0.25 * (phi[i+1][j] + phi[i-1][j] + phi[i][j+1] + phi[i][j-1] + h*h*rho[i][j]);\n                    double delta = std::abs(target - phi[i][j]);\n                    if (delta &gt; diff) diff = delta;\n                    phi[i][j] = (1.0 - omega) * phi[i][j] + omega * target;\n                }\n            }\n        }\n\n        iter++;\n    }\n\n    std::cout &lt;&lt; \"Converged in \" &lt;&lt; iter &lt;&lt; \" iterations with max residual = \" &lt;&lt; diff &lt;&lt; std::endl;\n    return 0;\n}"
+  },
+  {
+    "objectID": "code/hpc-pde-solvers-cpp-fortran.html#fortran-90-high-performance-2d-advection-solver",
+    "href": "code/hpc-pde-solvers-cpp-fortran.html#fortran-90-high-performance-2d-advection-solver",
+    "title": "High-Performance PDE Solvers: C++, Fortran 90 & Interactive Heat Diffusion",
+    "section": "3. Fortran 90: High-Performance 2D Advection Solver",
+    "text": "3. Fortran 90: High-Performance 2D Advection Solver\n! advection_2d.f90\n! Compile: gfortran -O3 -std=f2018 advection_2d.f90 -o advection_sim\nprogram advection_solver\n    implicit none\n    integer, parameter :: N = 256\n    real(8) :: u(0:N, 0:N), u_new(0:N, 0:N)\n    real(8) :: c_x, c_y, dx, dy, dt\n    integer :: i, j, step, n_steps\n\n    dx = 1.0d0 / dble(N)\n    dy = 1.0d0 / dble(N)\n    c_x = 1.0d0; c_y = 1.0d0\n    dt = 0.4d0 * dx / sqrt(c_x**2 + c_y**2) ! CFL stability criterion\n\n    ! Initialize 2D Gaussian pulse\n    do j = 0, N\n        do i = 0, N\n            u(i, j) = exp(-((i*dx - 0.3d0)**2 + (j*dy - 0.3d0)**2) / 0.02d0)\n        end do\n    end do\n\n    n_steps = 500\n    ! Lax-Wendroff 2D advection scheme\n    do step = 1, n_steps\n        do j = 1, N - 1\n            do i = 1, N - 1\n                u_new(i, j) = u(i, j) - 0.5d0 * (c_x * dt / dx) * (u(i+1, j) - u(i-1, j)) &\n                                      - 0.5d0 * (c_y * dt / dy) * (u(i, j+1) - u(i, j-1))\n            end do\n        end do\n        u = u_new\n    end do\n\n    print *, \"2D Advection successfully integrated for \", n_steps, \" time steps.\"\nend program advection_solver"
+  },
+  {
+    "objectID": "assignments/project-1-poisson-solver.html",
+    "href": "assignments/project-1-poisson-solver.html",
+    "title": "Project 1: 2D Electrostatic Potential Solver via SOR",
+    "section": "",
+    "text": "Solve the electrostatic potential \\(\\phi(x, y)\\) inside a grounded rectangular conductive box with two interior charged plates held at \\(\\pm 100\\text{ V}\\).\n\nImplement Jacobi, Gauss-Seidel, and SOR numerical relaxation schemes.\nMeasure the number of iterations required to reach an error tolerance \\(\\epsilon = 10^{-6}\\) as a function of grid size \\(N \\in \\{32, 64, 128\\}\\).\nCompute the electric field \\(\\mathbf{E} = -\\boldsymbol{\\nabla}\\phi\\) using 2nd-order central differences and plot field lines."
+  },
+  {
+    "objectID": "assignments/project-1-poisson-solver.html#objective",
+    "href": "assignments/project-1-poisson-solver.html#objective",
+    "title": "Project 1: 2D Electrostatic Potential Solver via SOR",
+    "section": "",
+    "text": "Solve the electrostatic potential \\(\\phi(x, y)\\) inside a grounded rectangular conductive box with two interior charged plates held at \\(\\pm 100\\text{ V}\\).\n\nImplement Jacobi, Gauss-Seidel, and SOR numerical relaxation schemes.\nMeasure the number of iterations required to reach an error tolerance \\(\\epsilon = 10^{-6}\\) as a function of grid size \\(N \\in \\{32, 64, 128\\}\\).\nCompute the electric field \\(\\mathbf{E} = -\\boldsymbol{\\nabla}\\phi\\) using 2nd-order central differences and plot field lines."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "PHYD57H3: Advanced Computational Methods in Physics",
+    "section": "",
+    "text": "Comprehensive portal for computational physics, large-scale simulations, vectorization, multi-threading (OpenMP/MPI), and numerical solutions to physical field equations in Python, C, and Fortran."
+  },
+  {
+    "objectID": "index.html#course-curriculum-numerical-methods",
+    "href": "index.html#course-curriculum-numerical-methods",
+    "title": "PHYD57H3: Advanced Computational Methods in Physics",
+    "section": "Course Curriculum & Numerical Methods",
+    "text": "Course Curriculum & Numerical Methods\n\n\n\n\n\n\n\n\n\nModule\nScientific Topics\nNumerical Algorithms\nLanguages & Frameworks\n\n\n\n\n01: Advanced ODEs\nPlanetary orbits, chaotic attractors, stiff chemical kinetics\nAdaptive RK45, Symplectic Velocity-Verlet, Radau/BDF\nPython, NumPy, SciPy\n\n\n02: Elliptic PDEs\nElectrostatic & Gravitational Potentials (\\(\\nabla^2 \\phi = \\rho\\))\nFinite difference, Successive Over-Relaxation (SOR), Multigrid\nC / Python\n\n\n03: Parabolic PDEs\nHeat conduction, diffusion, quantum Schrödinger evolution\nFTCS stability, Crank-Nicolson implicit method\nPython, C\n\n\n04: Hyperbolic PDEs\nSound waves, shock waves, electromagnetism\nLax-Friedrichs, Godunov, flux limiters\nFortran / C\n\n\n05: N-Body & Fluids\nGalactic collisions, fluid dynamics\nBarnes-Hut tree code, Particle-Mesh (PM), Smoothed Particle Hydrodynamics (SPH)\nPython, OpenMP\n\n\n06: HPC & Parallelism\nShared and distributed memory scaling\nOpenMP multithreading, MPI message passing, cache profiling\nLinux, GCC, Slurm"
+  },
+  {
+    "objectID": "assignments/index.html",
+    "href": "assignments/index.html",
+    "title": "Computational Physics Projects",
+    "section": "",
+    "text": "Project 1: 2D Electrostatic Potential Solver via SOR\n\n\nImplementing successive over-relaxation and analyzing spectral radius convergence rates.\n\n\n\n\n\n\n\n\nSep 8, 2026\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "code/index.html",
+    "href": "code/index.html",
+    "title": "Computational Code & HPC Workflows",
+    "section": "",
+    "text": "High-Performance PDE Solvers: C++, Fortran 90 & Interactive Heat Diffusion\n\n\nMulti-threaded OpenMP Gauss-Seidel SOR in C++, Fortran 90 spectral solvers, and client-side Canvas relaxation.\n\n\n\n\n\n\n\n\nSep 8, 2026\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "notes/index.html",
+    "href": "notes/index.html",
+    "title": "Computational Physics Lecture Notes",
+    "section": "",
+    "text": "Numerical Solutions of PDEs: Elliptic, Parabolic, and Hyperbolic Fields\n\n\nFinite difference discretization, von Neumann stability analysis, and iterative relaxation methods.\n\n\n\n\n\n\n\n\nSep 8, 2026\n\n\n\n\n\nNo matching items"
+  }
+]
