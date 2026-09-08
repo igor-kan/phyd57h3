@@ -1,9 +1,9 @@
 ---
 title: "Computational Code & HPC Workflows"
-description: "Optimized Python, C, and OpenMP numerical physics routines."
-format:
-  html:
-    toc: true
+description: "Optimized C++, Fortran 90, and OpenMP numerical physics routines."
+listing:
+  contents: "*.qmd"
+  sort: "date desc"
+  type: default
+page-layout: full
 ---
-
-This section provides production-grade scientific computing scripts for PHYD57.

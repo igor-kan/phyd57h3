@@ -4,6 +4,8 @@ project:
 
 website:
   title: "PHYD57H3: Advanced Computational Methods in Physics"
+  site-url: "https://igor-kan.github.io/phyd57h3"
+  repo-url: "https://github.com/igor-kan/phyd57h3"
   description: "Numerical analysis, PDEs, N-body dynamics, fluid mechanics, high-performance computing (HPC), and scientific machine learning at UTSC."
   navbar:
     left:
@@ -23,3 +25,6 @@ format:
     toc: true
     toc-depth: 3
     math: true
+    code-fold: show
+    code-tools: true
+    code-copy: true
