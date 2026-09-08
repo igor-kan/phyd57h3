@@ -1,0 +1,38 @@
+---
+title: "Syllabus & Course Rules"
+subtitle: "Course Structure, Languages, and HPC Computing"
+---
+
+## 💻 Prerequisites & Languages
+The only crucial prerequisite is programming using basic Python at the level of PHYB57. If you are rusty in Python, refresh your practical skills ASAP. 
+
+This course assumes you are interested in:
+1. Intermediate and advanced numerical methods used in physical sciences.
+2. HPC (High Performance Computing), including parallelization of algorithms.
+3. Coding in one of the HPC languages more powerful than Python.
+
+After this course, you will understand programs in both **C(++)** and **modern Fortran**. You will be required to actively express your ideas in **one** of those languages. You must acquire passive knowledge of C(++) AND Fortran, and active knowledge of C(++) OR Fortran.
+
+## 📜 Detailed Contents of the Course
+
+- **1.** Structure and scope of the course. Numerical Computing in Physical Sciences: History and Contemporary efforts.
+- **2.** HPC: need for speed, why and how. History and modernity: microprocessors, Unix, Linux, and Internet. Intro to Linux (CentOS).
+- **3.** Connectivity (ssh & sftp, traceroute & ping). Basic Linux shells and commands. Recommended compilers (GNU, Intel, Nvidia). Simple C/F95 vs Python benchmarks.
+- **4.** C and Fortran 95 - compilers, basic usage. Numerical puzzle of 711. Kruskal counts and linked lists. Integration with Python.
+- **5.** More Fortran. Monte Carlo method. Parallel execution on CPU using OpenMP fork-join method in loops.
+- **6.** Modern computing in the era of Integrated Circuits. Appearence of barriers to single-thread computing. Moore's law.
+- **7.** CPU and MIC (Xeon Phi). Supercomputers and supercomputing. More C. Multi-dimensional arrays in C vs. Fortran.
+- **8.** Parallelization via OpenMP in C and F. Segmentation faults. Bottlenecks (Computation vs RAM bandwidth). Graphics in Fortran/C (DISLIN).
+- **9.** Computations with CPU vs. MIC vs. CUDA. Automatic vectorization. N-body integration methods. Basic Neural Net: teaching a broom to stand upside down.
+- **10.** Interaction of protoplanets with 3D particle and gas disks. Eulerian vs. Lagrangian methods. Fourier integral & discrete transform (FFT). Aliasing. Simple GPU programs in CUDA Fortran.
+- **11.** Simple GPU programs in CUDA C/C++. Introduction to MPI. What are NNs and why do they work. Machine Learning. Optimum Search: Simplex (Nelder-Mead) method.
+- **12.** Presentation of your A4 group projects.
+
+## 🎓 Academic Integrity
+The Code of Behaviour on Academic Matters at UofT should be respected. Misrepresentation of authorship, e.g., cheating that the assigned work is yours and original while you merely rephrase somebody's code, is plagiarism. 
+**Using generative AI to plagiarize solutions of an assignment or test is a serious offense. Do not use it, unless it's clearly stated as needed.**
+
+## 🏥 Accommodations
+Transfer of points for personal or medical emergencies is offered, following the UofT rules of self-declaration on ACORN (maximum one per term). Please send a medical note (Verification of Illness Form, VOI) or self-declaration for the 1st absence, and VOI for any further absences. 
+
+*If you skip more than 1/2 of term work using VOIs, you will be advised to drop the course.*

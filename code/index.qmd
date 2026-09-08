@@ -1,9 +1,34 @@
 ---
-title: "Computational Code & HPC Workflows"
-description: "Optimized C++, Fortran 90, and OpenMP numerical physics routines."
-listing:
-  contents: "*.qmd"
-  sort: "date desc"
-  type: default
-page-layout: full
+title: "The Code Page"
+subtitle: "Continuously updated codes discussed in lectures"
 ---
+
+As a registered PHYD57 student, you are free to copy and develop the programs below to do more things, change their output style, etc. **Knowledge of basic structures and methods used in these codes is a course requirement.**
+
+## 🐍 Python Refresher & Introductory Methods
+- `simple_vectors-03.py`: Compares Python loops vs NumPy array operations.
+- `simple_IO.py` / `simple_stat.py`: Basic I/O and statistics in Python.
+- `plot_exp_approx-1.py` / `plot_cos_approx-1.py`: Taylor series expansion and plotting with Matplotlib.
+- `simple_mtc_pi.py`: Calculation of Pi by Monte Carlo.
+- `simple_bisec.py` / `simple_newton.py`: Bisection and Newton's methods for root finding.
+
+## 🚀 High Performance Computing (HPC) & C/Fortran
+- `laplacian-5t.py`: Image processing using the heat/diffusion Laplace operator stencil (NumPy).
+- `ifor-laplace3-dp.f90` / `pgf-laplace3-dp.f95`: Laplace stencil in Fortran (CPU vs GPU compilation).
+- `711-brute.py` / `711-brute.c` / `711-brute.f95`: Cracking the 711 puzzle using brute force across Python, C, and Fortran.
+- `simpler-nb-1.f90`: Loop over a 2D array in Fortran demonstrating throughput and RAM bandwidth limits.
+
+## 🔄 Calling C from Python
+- `libfunc.c` & `use_libc.c`: Building and linking a shared C library.
+- `fun_lib0.c` & `callingC-0-py2.py`: Calling a compiled C library from Python via `ctypes`.
+
+## 🎨 Graphics in Fortran/C (DISLIN)
+- `volcano-disl.f90`: F90 code generating DISLIN graphics directly from Fortran. Showcases OpenMP parallelization scheduling and critical sections.
+
+## ⚡ CUDA C and CUDA Fortran
+- `simple_saxpy_cuda.cu`: SAXPY (Single-Precision A*X Plus Y) in CUDA C.
+- `cuda-perf.f95`: Fortran 95 version with CUDA diagnostics showing bandwidth and compute performance.
+- `tetraDg-3.f95`: GPU version of the tetrahedra problem using CUDA Fortran.
+
+## 🧠 Machine Learning & Neural Networks
+- `inv-pend-ctrl-3orig+plt.f95`: Sequential Fortran code solving the inverted broomstick problem using a simple Neural Network (3 hidden neurons, 1 output).

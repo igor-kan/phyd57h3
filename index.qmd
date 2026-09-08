@@ -1,41 +1,69 @@
 ---
-title: "PHYD57H3: Advanced Computational Methods in Physics"
-subtitle: "Numerical analysis, partial differential equations, N-body particle systems, fluid dynamics, and high-performance computing in Linux."
+title: "PHYD57: Advanced Computational Methods in Physics"
+subtitle: "Welcome to the course that will help you become a more knowledgeable and better scientific programmer!"
 page-layout: full
 ---
 
 ::: {.hero-banner}
-# PHYD57H3: Advanced Computational Methods in Physics
-### Department of Physical and Environmental Sciences — UTSC
-Comprehensive portal for computational physics, large-scale simulations, vectorization, multi-threading (OpenMP/MPI), and numerical solutions to physical field equations in Python, C, and Fortran.
+# PHYD57: Advanced Computational Methods in Physics
+### Fall 2025 | University of Toronto Scarborough
+This page provides the **sole access to all the materials**, up-to-date SYLLABUS, texts of assignments, and preliminary grades. Quercus will be used for: submission of your term work, announcements via email, and posting of recordings.
 :::
+
+## 📝 Brief Intro
+You already know basic programming in Python. Now is the time to learn some history and physics behind our technical civilization, where computing is helping us everywhere. Powerful operating systems (Linux) and HPC languages (C/C++, Fortran) will be discussed and tried out, along with networking and the principles of parallel programming (OpenMP, CUDA) that enable large-scale physical simulations.
+
+## 📅 Course Schedule
+- **Lecturer:** Prof. Pawel Artymowicz (Email: pawel.artymowicz@utoronto.ca | Office: SW 506G)
+- **Lectures:** Fridays, 11:00 to 14:00 (L1..L12, 2 hrs with a break), HLB108.
+- **Tutorials:** Immediately following lectures (T1..T10), 1 hr.
+- **Office Hours:** Immediately after the tutorial on Fridays.
+- **Deadlines:** Sets of assignments/projects (A1-A4) are due at 11 am on specific dates.
+
+### 2025 Calendar
+| Date | Event | Comments |
+| :--- | :--- | :--- |
+| **Sept 11** | L1, T1 | |
+| **Sept 18** | L2z | Synchronous online (Zoom) |
+| **Sept 25** | L3, T2 | |
+| **Oct 2** | L4, T3 | **A1 Due** |
+| **Oct 9** | L5, T4 | |
+| **Oct 16** | L6, T5 | **A2 Due** (Form groups for A4 by this date) |
+| **Oct 23** | L7, T6 | **Midterm in class (11:10-12:10)** |
+| **Oct 30** | -- | *Reading Week* |
+| **Nov 6** | L8, T7 | |
+| **Nov 13** | L9, T8 | |
+| **Nov 20** | L10 | **A3 Due** |
+| **Nov 27** | L11, T9 | |
+| **Dec 4** | L12, T10 | **A4 Group Project Due** |
+| **Dec ??** | Final* | 3hr in-person final exam |
+
+## 📊 Course Grading Scheme
+| Component | Weight |
+| :--- | :--- |
+| 3 sets of assignments A1-A3 | 21% (7% each) |
+| Group project (Assignment A4) | 23% |
+| Midterm exam | 16% (8% Probl + 8% Quiz) |
+| Final exam | 40% (23% Probl + 17% Quiz) |
 
 ::: {.card-grid}
 ::: {.course-card}
-### 💻 [Lecture Notes](notes/index.qmd)
-In-depth treatment of ODE integration (Runge-Kutta, Symplectic Verlet), elliptic/parabolic/hyperbolic PDEs, spectral methods (FFT), and Monte Carlo algorithms.
+### 📖 [Syllabus & Course Rules](syllabus.qmd)
+Detailed course outline, academic integrity, HPC language prerequisites, and accommodations.
 :::
 
 ::: {.course-card}
-### 🚀 [Computational Projects](assignments/index.qmd)
-Full implementations of gravitational N-body integrators, 2D Navier-Stokes fluid simulations, Poisson potential solvers, and machine learning physics surrogates.
+### 💻 [The Code Page](code/index.qmd)
+Continuously updated codes discussed in lectures (Python, C, Fortran, CUDA, OpenMP).
 :::
 
 ::: {.course-card}
-### ⚙️ [HPC & Code Lab](code/index.qmd)
-High-performance computing workflows: parallel computing with OpenMP and MPI, SIMD vectorization, memory cache optimization, and Python/C interoperability.
+### 🚀 [Assignments & Exams](assignments/index.qmd)
+Assignment sets, Group Project topics, Midterm and Final exam preparation guidelines.
+:::
+
+::: {.course-card}
+### 🔗 [Books & Links](references/index.qmd)
+Textbooks, Linux tutorials, language references, and supercomputing history.
 :::
 :::
-
----
-
-## Course Curriculum & Numerical Methods
-
-| Module | Scientific Topics | Numerical Algorithms | Languages & Frameworks |
-| :--- | :--- | :--- | :--- |
-| **01: Advanced ODEs** | Planetary orbits, chaotic attractors, stiff chemical kinetics | Adaptive RK45, Symplectic Velocity-Verlet, Radau/BDF | Python, NumPy, SciPy |
-| **02: Elliptic PDEs** | Electrostatic & Gravitational Potentials ($\nabla^2 \phi = \rho$) | Finite difference, Successive Over-Relaxation (SOR), Multigrid | C / Python |
-| **03: Parabolic PDEs** | Heat conduction, diffusion, quantum Schrödinger evolution | FTCS stability, Crank-Nicolson implicit method | Python, C |
-| **04: Hyperbolic PDEs** | Sound waves, shock waves, electromagnetism | Lax-Friedrichs, Godunov, flux limiters | Fortran / C |
-| **05: N-Body & Fluids** | Galactic collisions, fluid dynamics | Barnes-Hut tree code, Particle-Mesh (PM), Smoothed Particle Hydrodynamics (SPH) | Python, OpenMP |
-| **06: HPC & Parallelism** | Shared and distributed memory scaling | OpenMP multithreading, MPI message passing, cache profiling | Linux, GCC, Slurm |

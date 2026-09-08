@@ -1,9 +1,28 @@
 ---
-title: "Computational Physics Lecture Notes"
-description: "Numerical algorithms, partial differential equations, and scientific computing theory."
-listing:
-  contents: "*.qmd"
-  sort: "date desc"
-  type: default
-page-layout: full
+title: "Lecture Notes"
 ---
+
+Programs discussed in lecture notes are available from the [Code Page](../code/index.qmd). 
+
+## 📖 Lectures Outline
+You are expected to take your own notes of what's happening on the blackboard, while this page will serve the PDFs of on-screen presentations (slides).
+
+*Note: The links to lecture slides will be activated and posted here progressively.*
+
+- [Lecture 1]
+- [Lecture 2]
+- [Lecture 3]
+- [Lecture 4]
+- [Lecture 5]
+- [Lecture 6]
+- [Lecture 7]
+- [Lecture 8]
+- [Lecture 9]
+- [Lecture 10]
+- [Lecture 11]
+- [Lecture 12]
+
+## 🧠 Neural Networks in Astronomy
+Two papers recommended for Neural Networks in application to Astronomy:
+- `NNs-spect.pdf`
+- `NN-exoplanets.pdf`
