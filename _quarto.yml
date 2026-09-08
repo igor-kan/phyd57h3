@@ -1,0 +1,25 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "PHYD57H3: Advanced Physics Laboratory"
+  description: "Experimental physics notebook, uncertainty propagation, measurement reports, and instrument control."
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: experiments/index.qmd
+        text: Experiments
+      - href: techniques/index.qmd
+        text: Lab Techniques & Error Analysis
+      - href: analysis/index.qmd
+        text: Python Data Analysis
+
+format:
+  html:
+    theme: sandstone
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    math: true

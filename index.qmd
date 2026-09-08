@@ -1,0 +1,28 @@
+---
+title: "PHYD57H3: Advanced Physics Laboratory"
+subtitle: "Experimental modern physics, quantum phenomena, precision metrology, and statistical data reduction."
+page-layout: full
+---
+
+::: {.hero-banner}
+# PHYD57H3: Advanced Physics Laboratory
+### Department of Physical and Environmental Sciences — UTSC
+Research-grade laboratory portal documenting experimental protocols, raw data analysis, systematic error budgets, and Python instrumentation pipelines.
+:::
+
+::: {.card-grid}
+::: {.course-card}
+### 🔬 [Experiments](experiments/index.qmd)
+Detailed laboratory logs, apparatus schematics, calibration curves, and analysis for core experimental suites (Muon decay, Quantum Hall Effect, Optical Pumping).
+:::
+
+::: {.course-card}
+### 📐 [Error Analysis & Metrology](techniques/index.qmd)
+Propagation of covariant uncertainties, Gaussian/Poisson counting statistics, weighted least-squares $\chi^2$ fitting, and goodness-of-fit tests.
+:::
+
+::: {.course-card}
+### 💻 [Analysis Pipelines](analysis/index.qmd)
+Python scripts utilizing NumPy, SciPy, and Matplotlib for non-linear curve fitting, Fourier filtering, and automated peak detection.
+:::
+:::
