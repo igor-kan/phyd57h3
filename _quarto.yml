@@ -3,24 +3,24 @@ project:
   output-dir: _site
 
 website:
-  title: "PHYD57: Advanced Computational Methods in Physics"
+  title: "PHYD57H3: Advanced Computational Methods in Physics"
   site-url: "https://igor-kan.github.io/phyd57h3"
   repo-url: "https://github.com/igor-kan/phyd57h3"
-  description: "Advanced Computational Methods in Physics at UTSC - High Performance Computing (HPC), C/C++, Fortran, OpenMP, CUDA."
+  description: "Advanced Computational Methods in Physics at UTSC: High Performance Computing (HPC), Linux, C/C++, Fortran, OpenMP, CUDA, and numerical algorithms."
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - href: syllabus.qmd
-        text: Syllabus & Rules
       - href: notes/index.qmd
         text: Lecture Notes
-      - href: assignments/index.qmd
-        text: Assignments & Exams
-      - href: code/index.qmd
-        text: The Code Page
-      - href: references/index.qmd
-        text: Books & Links
+      - href: problems/index.qmd
+        text: Problem Sets
+      - href: simulations/index.qmd
+        text: Code & Simulations
+      - href: reference/index.qmd
+        text: Reference & Math
+  page-footer: 
+    left: "<span style='font-size: 0.8em;'>&copy; 2026 Igor Kan</span>"
 
 format:
   html:
@@ -32,3 +32,4 @@ format:
     code-fold: show
     code-tools: true
     code-copy: true
+    date-format: "YYYY-MM-DD"

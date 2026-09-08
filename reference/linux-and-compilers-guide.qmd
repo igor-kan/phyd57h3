@@ -1,0 +1,31 @@
+---
+title: "Linux Environment, Shells & Compiler Toolchains"
+subtitle: "Bash/tcsh scripting, cluster SSH access, stack size limits, and compiler optimization flags."
+date: "2025-09-11"
+categories: ["Reference", "Linux", "Compilers", "HPC"]
+---
+
+## 🐧 Cluster Remote Access & File Transfer
+- **SSH Connection:** `ssh -X phyd57@art-1.utsc.utoronto.ca`
+- **Secure Copy (sftp / scp):** `scp -r phyd57@art-2.utsc.utoronto.ca:/home/phyd57/game/jpgs .`
+
+### Stack vs. Heap Allocation
+Large arrays declared statically inside functions are allocated on the **stack**, triggering segmentation faults when exceeding stack memory limits.
+- **In `tcsh`:** `limit stacksize 4000m`
+- **In `bash`:** `ulimit -s unlimited`
+
+---
+
+## 🛠️ Compiler Toolchains & Flags
+
+### 1. GNU Compiler Collection (GCC)
+- C/C++: `gcc -O3 -fopenmp -march=native -lm main.c -o main.x`
+- Fortran: `gfortran -O3 -fopenmp -march=native main.f90 -o main.x`
+
+### 2. Intel OneAPI / Classic Compilers
+- C/C++: `icc -O2 -qopenmp -xHost main.c -o main.x` (or `icx`)
+- Fortran: `ifort -O2 -qopenmp -xHost main.f90 -o main.x` (or `ifx`)
+
+### 3. NVIDIA HPC SDK (PGI Compilers)
+- CUDA C/C++: `nvcc -O3 -arch=sm_70 main.cu -o main.x`
+- CUDA Fortran: `nvfortran -O3 -cuda -gpu=cc70,cc80 main.f95 -o main.x`

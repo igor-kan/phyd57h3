@@ -1,6 +1,6 @@
 ---
-title: "PHYD57 Lecture Notes & Syllabus"
-subtitle: "High-performance computing architectures, modern Fortran, C/C++, OpenMP multithreading, and GPU CUDA."
+title: "PHYD57 Reference & Computational Tools"
+subtitle: "Linux commands, compiler manuals, OpenMP/CUDA syntax cheatsheets, and literature bibliography."
 listing:
   contents: "*.qmd"
   sort:
@@ -19,4 +19,4 @@ listing:
 page-layout: full
 ---
 
-This section houses the official course syllabus and lecture notes for PHYD57. Use the category filters below to locate specific lecture modules.
+Quick-reference toolkits, Linux shell commands, compiler optimization flags, and external literature references for PHYD57.

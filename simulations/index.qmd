@@ -1,0 +1,26 @@
+---
+title: "Computational Physics Code & Simulations"
+subtitle: "Interactive simulations, high-performance C/Fortran implementations, CUDA kernels, and PDE solvers."
+listing:
+  contents: "*.qmd"
+  sort:
+    - "date desc"
+    - "title asc"
+  type: default
+  categories: true
+  sort-ui: [title, date, date-modified]
+  filter-ui: [title, date, categories]
+  fields: [date, date-modified, title, subtitle, categories, reading-time]
+  field-display-names:
+    date: "Created"
+    date-modified: "Modified"
+    reading-time: "Read Time"
+  page-size: 15
+page-layout: full
+---
+
+This section hosts computational codebases, benchmark suites, and interactive physics simulations for PHYD57:
+
+* **Interactive PDE Simulations:** In-browser HTML5 Canvas implementations of 2D wave equations, double-slit diffraction, and heat diffusion.
+* **HPC Parallel Solvers:** 5-point Laplace stencils, SAXPY benchmarks, and OpenMP multi-threaded solvers in C and Modern Fortran.
+* **GPU CUDA Kernels:** Fast Fourier Transform (CUFFT) convolution solvers, N-body particle simulators, and GPU acceleration.

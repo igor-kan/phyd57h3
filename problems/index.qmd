@@ -1,0 +1,27 @@
+---
+title: "PHYD57 Problem Sets & Projects"
+subtitle: "Computational assignments (A1–A3), group capstone research (A4), and exam preparation."
+listing:
+  contents: "*.qmd"
+  sort:
+    - "date desc"
+    - "title asc"
+  type: default
+  categories: true
+  sort-ui: [title, date, date-modified]
+  filter-ui: [title, date, categories]
+  fields: [date, date-modified, title, subtitle, categories, reading-time]
+  field-display-names:
+    date: "Created"
+    date-modified: "Modified"
+    reading-time: "Read Time"
+  page-size: 15
+page-layout: full
+---
+
+This section features official computational problem sets, instructions for the capstone group project, and exam preparation packages for PHYD57.
+
+### Submission Policies
+- Deadlines are strictly at 11:00 AM on lecture Fridays via Quercus.
+- Submissions late by >3 hours earn 50% penalty. No extensions.
+- Code must include clear comments explaining algorithm steps.

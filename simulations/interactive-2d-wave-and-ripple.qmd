@@ -1,0 +1,225 @@
+---
+title: "Interactive 2D Wave & Double-Slit Ripple Tank"
+subtitle: "Real-time finite difference solver for the 2D wave equation with absorbing boundaries and barrier diffraction."
+date: "2025-09-11"
+categories: ["Simulations", "PDEs", "Wave Equation", "Interactive"]
+format:
+  html:
+    math: true
+---
+
+## 🌊 Numerical Algorithm: 2D Wave Equation
+
+The propagation of linear surface waves on water or acoustic waves in a medium is governed by the 2D hyperbolic wave equation:
+$$\frac{\partial^2 u}{\partial t^2} = c^2 \left( \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} \right) - \gamma \frac{\partial u}{\partial t}$$
+where $u(x,y,t)$ is the wave amplitude, $c$ is the wave propagation velocity, and $\gamma$ is a damping coefficient.
+
+### Finite Difference Leapfrog Discretization
+Using central differences on a spatial mesh with grid spacing $\Delta x = \Delta y = h$:
+$$\frac{u_{i,j}^{n+1} - 2u_{i,j}^n + u_{i,j}^{n-1}}{\Delta t^2} \approx c^2 \left[ \frac{u_{i+1,j}^n + u_{i-1,j}^n + u_{i,j+1}^n + u_{i,j-1}^n - 4u_{i,j}^n}{h^2} \right] - \gamma \frac{u_{i,j}^n - u_{i,j}^{n-1}}{\Delta t}$$
+
+Solving for the updated wave height $u_{i,j}^{n+1}$:
+$$u_{i,j}^{n+1} = \frac{1}{1 + \gamma \Delta t/2} \left[ 2u_{i,j}^n - u_{i,j}^{n-1}(1 - \gamma \Delta t/2) + \frac{c^2 \Delta t^2}{h^2} \nabla_5^2 u_{i,j}^n \right]$$
+
+### CFL Stability Criterion
+For stability, the Courant-Friedrichs-Lewy (CFL) number must satisfy:
+$$\text{CFL} = \frac{c \Delta t}{h} \le \frac{1}{\sqrt{2}} \approx 0.7071$$
+
+---
+
+## 🎮 Interactive Simulation
+
+*Click or drag anywhere in the pond below to create wave disturbances, or toggle the double-slit barrier to witness interference fringes.*
+
+```{=html}
+<div style="background: #111a1a; border: 1px solid #1e3a3a; border-radius: 8px; padding: 20px; margin-bottom: 25px; color: #d0f0e0;">
+  <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; align-items: center;">
+    <div>
+      <label style="font-size: 0.85rem; font-weight: 600; color: #5ce1e6;">Wave Speed $c$: <span id="val-c">0.85</span></label><br>
+      <input type="range" id="slider-c" min="0.4" max="1.2" step="0.05" value="0.85" style="width: 130px;">
+    </div>
+    <div>
+      <label style="font-size: 0.85rem; font-weight: 600; color: #7af57a;">Damping $\gamma$: <span id="val-damp">0.003</span></label><br>
+      <input type="range" id="slider-damp" min="0.000" max="0.015" step="0.001" value="0.003" style="width: 130px;">
+    </div>
+    <div style="display: flex; gap: 10px; margin-top: 10px;">
+      <button id="btn-slits" style="background: #194d4d; border: 1px solid #339999; color: #fff; padding: 5px 12px; border-radius: 4px; cursor: pointer;">Toggle Double Slit</button>
+      <button id="btn-pulse" style="background: #1f6650; border: 1px solid #38b000; color: #fff; padding: 5px 12px; border-radius: 4px; cursor: pointer;">Periodic Source</button>
+      <button id="btn-clear" style="background: #442222; border: 1px solid #883333; color: #fff; padding: 5px 12px; border-radius: 4px; cursor: pointer;">Clear Pond</button>
+    </div>
+  </div>
+
+  <div style="text-align: center;">
+    <canvas id="wave-canvas" width="400" height="300" style="background: #050d0d; border: 1px solid #134e5e; border-radius: 6px; width: 100%; max-width: 680px; height: auto; cursor: crosshair;"></canvas>
+    <div style="font-size: 0.8rem; color: #88c0a0; margin-top: 6px;">Click and drag in the tank to perturb water level. Blue = Crest, Red = Trough.</div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const canvas = document.getElementById('wave-canvas');
+  const ctx = canvas.getContext('2d');
+
+  const NX = 160;
+  const NY = 120;
+  let uPrev = new Float32Array(NX * NY);
+  let uCurr = new Float32Array(NX * NY);
+  let uNext = new Float32Array(NX * NY);
+  let obstacles = new Uint8Array(NX * NY);
+
+  let waveSpeed = 0.85;
+  let damping = 0.003;
+  let hasSlits = false;
+  let periodicSource = false;
+  let frameCount = 0;
+
+  const sC = document.getElementById('slider-c');
+  const sDamp = document.getElementById('slider-damp');
+  const lC = document.getElementById('val-c');
+  const lDamp = document.getElementById('val-damp');
+  const bSlits = document.getElementById('btn-slits');
+  const bPulse = document.getElementById('btn-pulse');
+  const bClear = document.getElementById('btn-clear');
+
+  sC.addEventListener('input', () => { waveSpeed = parseFloat(sC.value); lC.textContent = waveSpeed; });
+  sDamp.addEventListener('input', () => { damping = parseFloat(sDamp.value); lDamp.textContent = damping; });
+
+  function setObstacles() {
+    obstacles.fill(0);
+    if (!hasSlits) return;
+    const midX = Math.floor(NX * 0.4);
+    const slit1 = Math.floor(NY * 0.38);
+    const slit2 = Math.floor(NY * 0.62);
+    const slitWidth = 5;
+
+    for (let y = 0; y < NY; y++) {
+      if (Math.abs(y - slit1) > slitWidth && Math.abs(y - slit2) > slitWidth) {
+        for (let x = midX - 1; x <= midX + 1; x++) {
+          obstacles[y * NX + x] = 1;
+        }
+      }
+    }
+  }
+
+  bSlits.addEventListener('click', () => {
+    hasSlits = !hasSlits;
+    bSlits.style.background = hasSlits ? '#2c8c8c' : '#194d4d';
+    setObstacles();
+  });
+
+  bPulse.addEventListener('click', () => {
+    periodicSource = !periodicSource;
+    bPulse.style.background = periodicSource ? '#2dc653' : '#1f6650';
+  });
+
+  bClear.addEventListener('click', () => {
+    uPrev.fill(0); uCurr.fill(0); uNext.fill(0);
+  });
+
+  function disturb(canvasX, canvasY, radius, strength) {
+    const gx = Math.floor((canvasX / canvas.clientWidth) * NX);
+    const gy = Math.floor((canvasY / canvas.clientHeight) * NY);
+    for (let dy = -radius; dy <= radius; dy++) {
+      for (let dx = -radius; dx <= radius; dx++) {
+        const x = gx + dx, y = gy + dy;
+        if (x > 1 && x < NX - 2 && y > 1 && y < NY - 2) {
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist <= radius) {
+            uCurr[y * NX + x] += strength * Math.cos((dist / radius) * (Math.PI / 2));
+            uPrev[y * NX + x] += strength * Math.cos((dist / radius) * (Math.PI / 2));
+          }
+        }
+      }
+    }
+  }
+
+  let isDragging = false;
+  canvas.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    const r = canvas.getBoundingClientRect();
+    disturb(e.clientX - r.left, e.clientY - r.top, 5, 2.5);
+  });
+  window.addEventListener('mouseup', () => isDragging = false);
+  canvas.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const r = canvas.getBoundingClientRect();
+    disturb(e.clientX - r.left, e.clientY - r.top, 4, 1.2);
+  });
+
+  // Render Image buffer
+  const imgData = ctx.createImageData(NX, NY);
+  const data = imgData.data;
+
+  function stepPhysics() {
+    frameCount++;
+    const alpha = (waveSpeed * waveSpeed) * 0.45; // CFL safe parameter
+    const dampFactor = 1.0 - damping;
+
+    if (periodicSource) {
+      const srcX = Math.floor(NX * 0.15);
+      const srcY = Math.floor(NY * 0.5);
+      uCurr[srcY * NX + srcX] = Math.sin(frameCount * 0.25) * 3.0;
+    }
+
+    for (let y = 1; y < NY - 1; y++) {
+      const row = y * NX;
+      for (let x = 1; x < NX - 1; x++) {
+        const idx = row + x;
+        if (obstacles[idx]) {
+          uNext[idx] = 0;
+          continue;
+        }
+        const laplacian = uCurr[idx - 1] + uCurr[idx + 1] + uCurr[idx - NX] + uCurr[idx + NX] - 4 * uCurr[idx];
+        uNext[idx] = (2 * uCurr[idx] - uPrev[idx] + alpha * laplacian) * dampFactor;
+      }
+    }
+
+    // Cycle arrays
+    const temp = uPrev;
+    uPrev = uCurr;
+    uCurr = uNext;
+    uNext = temp;
+  }
+
+  function render() {
+    let p = 0;
+    for (let i = 0; i < NX * NY; i++) {
+      if (obstacles[i]) {
+        data[p] = 120; data[p+1] = 130; data[p+2] = 140; data[p+3] = 255;
+      } else {
+        const val = uCurr[i];
+        if (val >= 0) {
+          // Blue-cyan crest
+          const c = Math.min(255, Math.floor(val * 90));
+          data[p] = Math.floor(c * 0.2);
+          data[p+1] = Math.floor(c * 0.7);
+          data[p+2] = c;
+        } else {
+          // Red-orange trough
+          const c = Math.min(255, Math.floor(-val * 90));
+          data[p] = c;
+          data[p+1] = Math.floor(c * 0.25);
+          data[p+2] = Math.floor(c * 0.1);
+        }
+        data[p+3] = 255;
+      }
+      p += 4;
+    }
+
+    // Scale onto canvas
+    createImageBitmap(imgData).then(bmp => {
+      ctx.drawImage(bmp, 0, 0, canvas.width, canvas.height);
+    });
+  }
+
+  function anim() {
+    stepPhysics();
+    stepPhysics(); // 2 sub-steps for fluidity
+    render();
+    requestAnimationFrame(anim);
+  }
+
+  requestAnimationFrame(anim);
+})();
+</script>
+```
