@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-08">
+<meta name="dcterms.date" content="2025-09-11">
 
-<title>Project 1: 2D Electrostatic Potential Solver via SOR – PHYD57: Advanced Computational Methods in Physics</title>
+<title>Linux Environment, Shells &amp; Compiler Toolchains – PHYD57H3: Advanced Computational Methods in Physics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -151,7 +151,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">PHYD57: Advanced Computational Methods in Physics</span>
+    <span class="navbar-title">PHYD57H3: Advanced Computational Methods in Physics</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -165,24 +165,20 @@ window.Quarto = {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../syllabus.html"> 
-<span class="menu-text">Syllabus &amp; Rules</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../notes/index.html"> 
 <span class="menu-text">Lecture Notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../assignments/index.html"> 
-<span class="menu-text">Assignments &amp; Exams</span></a>
+    <a class="nav-link" href="../problems/index.html"> 
+<span class="menu-text">Problem Sets</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../code/index.html"> 
-<span class="menu-text">The Code Page</span></a>
+    <a class="nav-link" href="../simulations/index.html"> 
+<span class="menu-text">Code &amp; Simulations</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../references/index.html"> 
-<span class="menu-text">Books &amp; Links</span></a>
+    <a class="nav-link" href="../reference/index.html"> 
+<span class="menu-text">Reference &amp; Math</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -200,7 +196,16 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
+  <li><a href="#cluster-remote-access-file-transfer" id="toc-cluster-remote-access-file-transfer" class="nav-link active" data-scroll-target="#cluster-remote-access-file-transfer">🐧 Cluster Remote Access &amp; File Transfer</a>
+  <ul class="collapse">
+  <li><a href="#stack-vs.-heap-allocation" id="toc-stack-vs.-heap-allocation" class="nav-link" data-scroll-target="#stack-vs.-heap-allocation">Stack vs.&nbsp;Heap Allocation</a></li>
+  </ul></li>
+  <li><a href="#compiler-toolchains-flags" id="toc-compiler-toolchains-flags" class="nav-link" data-scroll-target="#compiler-toolchains-flags">🛠️ Compiler Toolchains &amp; Flags</a>
+  <ul class="collapse">
+  <li><a href="#gnu-compiler-collection-gcc" id="toc-gnu-compiler-collection-gcc" class="nav-link" data-scroll-target="#gnu-compiler-collection-gcc">1. GNU Compiler Collection (GCC)</a></li>
+  <li><a href="#intel-oneapi-classic-compilers" id="toc-intel-oneapi-classic-compilers" class="nav-link" data-scroll-target="#intel-oneapi-classic-compilers">2. Intel OneAPI / Classic Compilers</a></li>
+  <li><a href="#nvidia-hpc-sdk-pgi-compilers" id="toc-nvidia-hpc-sdk-pgi-compilers" class="nav-link" data-scroll-target="#nvidia-hpc-sdk-pgi-compilers">3. NVIDIA HPC SDK (PGI Compilers)</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -209,12 +214,13 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Project 1: 2D Electrostatic Potential Solver via SOR</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
-<p class="subtitle lead">Implementing successive over-relaxation and analyzing spectral radius convergence rates.</p>
+<div class="quarto-title-block"><div><h1 class="title">Linux Environment, Shells &amp; Compiler Toolchains</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<p class="subtitle lead">Bash/tcsh scripting, cluster SSH access, stack size limits, and compiler optimization flags.</p>
   <div class="quarto-categories">
-    <div class="quarto-category">Poisson Solver</div>
-    <div class="quarto-category">Relaxation</div>
-    <div class="quarto-category">Python</div>
+    <div class="quarto-category">Reference</div>
+    <div class="quarto-category">Linux</div>
+    <div class="quarto-category">Compilers</div>
+    <div class="quarto-category">HPC</div>
   </div>
   </div>
 
@@ -226,7 +232,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 8, 2026</p>
+      <p class="date">2025-09-11</p>
     </div>
   </div>
   
@@ -238,19 +244,46 @@ window.Quarto = {
 </header>
 
 
-<section id="objective" class="level2">
-<h2 class="anchored" data-anchor-id="objective">Objective</h2>
-<p>Solve the electrostatic potential <span class="math inline">\(\phi(x, y)\)</span> inside a grounded rectangular conductive box with two interior charged plates held at <span class="math inline">\(\pm 100\text{ V}\)</span>.</p>
-<ol type="1">
-<li>Implement Jacobi, Gauss-Seidel, and SOR numerical relaxation schemes.</li>
-<li>Measure the number of iterations required to reach an error tolerance <span class="math inline">\(\epsilon = 10^{-6}\)</span> as a function of grid size <span class="math inline">\(N \in \{32, 64, 128\}\)</span>.</li>
-<li>Compute the electric field <span class="math inline">\(\mathbf{E} = -\boldsymbol{\nabla}\phi\)</span> using 2nd-order central differences and plot field lines.</li>
-</ol>
+<section id="cluster-remote-access-file-transfer" class="level2">
+<h2 class="anchored" data-anchor-id="cluster-remote-access-file-transfer">🐧 Cluster Remote Access &amp; File Transfer</h2>
+<ul>
+<li><strong>SSH Connection:</strong> <code>ssh -X phyd57@art-1.utsc.utoronto.ca</code></li>
+<li><strong>Secure Copy (sftp / scp):</strong> <code>scp -r phyd57@art-2.utsc.utoronto.ca:/home/phyd57/game/jpgs .</code></li>
+</ul>
+<section id="stack-vs.-heap-allocation" class="level3">
+<h3 class="anchored" data-anchor-id="stack-vs.-heap-allocation">Stack vs.&nbsp;Heap Allocation</h3>
+<p>Large arrays declared statically inside functions are allocated on the <strong>stack</strong>, triggering segmentation faults when exceeding stack memory limits. - <strong>In <code>tcsh</code>:</strong> <code>limit stacksize 4000m</code> - <strong>In <code>bash</code>:</strong> <code>ulimit -s unlimited</code></p>
+<hr>
+</section>
+</section>
+<section id="compiler-toolchains-flags" class="level2">
+<h2 class="anchored" data-anchor-id="compiler-toolchains-flags">🛠️ Compiler Toolchains &amp; Flags</h2>
+<section id="gnu-compiler-collection-gcc" class="level3">
+<h3 class="anchored" data-anchor-id="gnu-compiler-collection-gcc">1. GNU Compiler Collection (GCC)</h3>
+<ul>
+<li>C/C++: <code>gcc -O3 -fopenmp -march=native -lm main.c -o main.x</code></li>
+<li>Fortran: <code>gfortran -O3 -fopenmp -march=native main.f90 -o main.x</code></li>
+</ul>
+</section>
+<section id="intel-oneapi-classic-compilers" class="level3">
+<h3 class="anchored" data-anchor-id="intel-oneapi-classic-compilers">2. Intel OneAPI / Classic Compilers</h3>
+<ul>
+<li>C/C++: <code>icc -O2 -qopenmp -xHost main.c -o main.x</code> (or <code>icx</code>)</li>
+<li>Fortran: <code>ifort -O2 -qopenmp -xHost main.f90 -o main.x</code> (or <code>ifx</code>)</li>
+</ul>
+</section>
+<section id="nvidia-hpc-sdk-pgi-compilers" class="level3">
+<h3 class="anchored" data-anchor-id="nvidia-hpc-sdk-pgi-compilers">3. NVIDIA HPC SDK (PGI Compilers)</h3>
+<ul>
+<li>CUDA C/C++: <code>nvcc -O3 -arch=sm_70 main.cu -o main.x</code></li>
+<li>CUDA Fortran: <code>nvfortran -O3 -cuda -gpu=cc70,cc80 main.f95 -o main.x</code></li>
+</ul>
 
 
 
 <!-- -->
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -706,24 +739,51 @@ window.Quarto = {
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Project 1: 2D Electrostatic Potential Solver via SOR"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Implementing successive over-relaxation and analyzing spectral radius convergence rates."</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2026-09-08"</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> ["Poisson Solver", "Relaxation", "Python"]</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">    math: true</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Objective</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>Solve the electrostatic potential $\phi(x, y)$ inside a grounded rectangular conductive box with two interior charged plates held at $\pm 100\text{ V}$.</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Implement Jacobi, Gauss-Seidel, and SOR numerical relaxation schemes.</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Measure the number of iterations required to reach an error tolerance $\epsilon = 10^{-6}$ as a function of grid size $N \in <span class="sc">\{</span>32, 64, 128<span class="sc">\}</span>$.</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Compute the electric field $\mathbf{E} = -\boldsymbol{\nabla}\phi$ using 2nd-order central differences and plot field lines.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Linux Environment, Shells &amp; Compiler Toolchains"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Bash/tcsh scripting, cluster SSH access, stack size limits, and compiler optimization flags."</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2025-09-11"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> ["Reference", "Linux", "Compilers", "HPC"]</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🐧 Cluster Remote Access &amp; File Transfer</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**SSH Connection:** <span class="in">`ssh -X phyd57@art-1.utsc.utoronto.ca`</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Secure Copy (sftp / scp):** <span class="in">`scp -r phyd57@art-2.utsc.utoronto.ca:/home/phyd57/game/jpgs .`</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">### Stack vs. Heap Allocation</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>Large arrays declared statically inside functions are allocated on the **stack**, triggering segmentation faults when exceeding stack memory limits.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**In `tcsh`:** <span class="in">`limit stacksize 4000m`</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**In `bash`:** <span class="in">`ulimit -s unlimited`</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🛠️ Compiler Toolchains &amp; Flags</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. GNU Compiler Collection (GCC)</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>C/C++: <span class="in">`gcc -O3 -fopenmp -march=native -lm main.c -o main.x`</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fortran: <span class="in">`gfortran -O3 -fopenmp -march=native main.f90 -o main.x`</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. Intel OneAPI / Classic Compilers</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>C/C++: <span class="in">`icc -O2 -qopenmp -xHost main.c -o main.x`</span> (or <span class="in">`icx`</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fortran: <span class="in">`ifort -O2 -qopenmp -xHost main.f90 -o main.x`</span> (or <span class="in">`ifx`</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. NVIDIA HPC SDK (PGI Compilers)</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>CUDA C/C++: <span class="in">`nvcc -O3 -arch=sm_70 main.cu -o main.x`</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>CUDA Fortran: <span class="in">`nvfortran -O3 -cuda -gpu=cc70,cc80 main.f95 -o main.x`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><span style="font-size: 0.8em;">© 2026 Igor Kan</span></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
 
 
 

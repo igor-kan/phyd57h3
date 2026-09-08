@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2025-10-09">
 
-<title>The Code Page – PHYD57: Advanced Computational Methods in Physics</title>
+<title>OpenMP Multithreading &amp; Shared-Memory Architecture – PHYD57H3: Advanced Computational Methods in Physics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -150,7 +151,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">PHYD57: Advanced Computational Methods in Physics</span>
+    <span class="navbar-title">PHYD57H3: Advanced Computational Methods in Physics</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -164,24 +165,20 @@ window.Quarto = {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../syllabus.html"> 
-<span class="menu-text">Syllabus &amp; Rules</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../notes/index.html"> 
 <span class="menu-text">Lecture Notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../assignments/index.html"> 
-<span class="menu-text">Assignments &amp; Exams</span></a>
+    <a class="nav-link" href="../problems/index.html"> 
+<span class="menu-text">Problem Sets</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../code/index.html" aria-current="page"> 
-<span class="menu-text">The Code Page</span></a>
+    <a class="nav-link" href="../simulations/index.html"> 
+<span class="menu-text">Code &amp; Simulations</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../references/index.html"> 
-<span class="menu-text">Books &amp; Links</span></a>
+    <a class="nav-link" href="../reference/index.html"> 
+<span class="menu-text">Reference &amp; Math</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -199,12 +196,15 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#python-refresher-introductory-methods" id="toc-python-refresher-introductory-methods" class="nav-link active" data-scroll-target="#python-refresher-introductory-methods">🐍 Python Refresher &amp; Introductory Methods</a></li>
-  <li><a href="#high-performance-computing-hpc-cfortran" id="toc-high-performance-computing-hpc-cfortran" class="nav-link" data-scroll-target="#high-performance-computing-hpc-cfortran">🚀 High Performance Computing (HPC) &amp; C/Fortran</a></li>
-  <li><a href="#calling-c-from-python" id="toc-calling-c-from-python" class="nav-link" data-scroll-target="#calling-c-from-python">🔄 Calling C from Python</a></li>
-  <li><a href="#graphics-in-fortranc-dislin" id="toc-graphics-in-fortranc-dislin" class="nav-link" data-scroll-target="#graphics-in-fortranc-dislin">🎨 Graphics in Fortran/C (DISLIN)</a></li>
-  <li><a href="#cuda-c-and-cuda-fortran" id="toc-cuda-c-and-cuda-fortran" class="nav-link" data-scroll-target="#cuda-c-and-cuda-fortran">⚡ CUDA C and CUDA Fortran</a></li>
-  <li><a href="#machine-learning-neural-networks" id="toc-machine-learning-neural-networks" class="nav-link" data-scroll-target="#machine-learning-neural-networks">🧠 Machine Learning &amp; Neural Networks</a></li>
+  <li><a href="#the-fork-join-parallel-execution-model" id="toc-the-fork-join-parallel-execution-model" class="nav-link active" data-scroll-target="#the-fork-join-parallel-execution-model">1. The Fork-Join Parallel Execution Model</a>
+  <ul class="collapse">
+  <li><a href="#parallel-for-loops" id="toc-parallel-for-loops" class="nav-link" data-scroll-target="#parallel-for-loops">Parallel For-Loops</a></li>
+  </ul></li>
+  <li><a href="#race-conditions-synchronization" id="toc-race-conditions-synchronization" class="nav-link" data-scroll-target="#race-conditions-synchronization">2. Race Conditions &amp; Synchronization</a>
+  <ul class="collapse">
+  <li><a href="#remedial-constructs" id="toc-remedial-constructs" class="nav-link" data-scroll-target="#remedial-constructs">Remedial Constructs:</a></li>
+  </ul></li>
+  <li><a href="#computational-vs.-bandwidth-limitations" id="toc-computational-vs.-bandwidth-limitations" class="nav-link" data-scroll-target="#computational-vs.-bandwidth-limitations">3. Computational vs.&nbsp;Bandwidth Limitations</a></li>
   </ul>
 </nav>
     </div>
@@ -213,15 +213,26 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">The Code Page</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
-<p class="subtitle lead">Continuously updated codes discussed in lectures</p>
-</div>
+<div class="quarto-title-block"><div><h1 class="title">OpenMP Multithreading &amp; Shared-Memory Architecture</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<p class="subtitle lead">Fork-join parallelism, race conditions, reduction clauses, and memory bandwidth limits on multicore CPUs.</p>
+  <div class="quarto-categories">
+    <div class="quarto-category">HPC</div>
+    <div class="quarto-category">Parallel Computing</div>
+    <div class="quarto-category">OpenMP</div>
+  </div>
+  </div>
 
 
 
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2025-10-09</p>
+    </div>
+  </div>
   
     
   </div>
@@ -231,52 +242,41 @@ window.Quarto = {
 </header>
 
 
-<p>As a registered PHYD57 student, you are free to copy and develop the programs below to do more things, change their output style, etc. <strong>Knowledge of basic structures and methods used in these codes is a course requirement.</strong></p>
-<section id="python-refresher-introductory-methods" class="level2">
-<h2 class="anchored" data-anchor-id="python-refresher-introductory-methods">🐍 Python Refresher &amp; Introductory Methods</h2>
-<ul>
-<li><code>simple_vectors-03.py</code>: Compares Python loops vs NumPy array operations.</li>
-<li><code>simple_IO.py</code> / <code>simple_stat.py</code>: Basic I/O and statistics in Python.</li>
-<li><code>plot_exp_approx-1.py</code> / <code>plot_cos_approx-1.py</code>: Taylor series expansion and plotting with Matplotlib.</li>
-<li><code>simple_mtc_pi.py</code>: Calculation of Pi by Monte Carlo.</li>
-<li><code>simple_bisec.py</code> / <code>simple_newton.py</code>: Bisection and Newton’s methods for root finding.</li>
-</ul>
+<section id="the-fork-join-parallel-execution-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-fork-join-parallel-execution-model">1. The Fork-Join Parallel Execution Model</h2>
+<p>OpenMP uses the <strong>fork-join</strong> model of parallel execution: - The master thread executes sequential sections of code. - When an <code>#pragma omp parallel</code> (C/C++) or <code>!$omp parallel</code> (Fortran) construct is encountered, the master thread creates or forks a team of worker threads. - At the end of the parallel construct, an implicit barrier synchronizes the team and worker threads join back.</p>
+<section id="parallel-for-loops" class="level3">
+<h3 class="anchored" data-anchor-id="parallel-for-loops">Parallel For-Loops</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#pragma omp parallel for schedule(static) reduction(+:total_sum)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    total_sum <span class="op">+=</span> compute_energy<span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode fortran code-with-copy"><code class="sourceCode fortranfixed"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">!$omp parallel do schedule(static) reduction(+:total_sum)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">do</span> i <span class="kw">=</span> <span class="dv">1</span>, N</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    total_sum <span class="kw">=</span> total_sum <span class="kw">+</span> compute_energy(i)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">end do</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">!$omp end parallel do</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
 </section>
-<section id="high-performance-computing-hpc-cfortran" class="level2">
-<h2 class="anchored" data-anchor-id="high-performance-computing-hpc-cfortran">🚀 High Performance Computing (HPC) &amp; C/Fortran</h2>
-<ul>
-<li><code>laplacian-5t.py</code>: Image processing using the heat/diffusion Laplace operator stencil (NumPy).</li>
-<li><code>ifor-laplace3-dp.f90</code> / <code>pgf-laplace3-dp.f95</code>: Laplace stencil in Fortran (CPU vs GPU compilation).</li>
-<li><code>711-brute.py</code> / <code>711-brute.c</code> / <code>711-brute.f95</code>: Cracking the 711 puzzle using brute force across Python, C, and Fortran.</li>
-<li><code>simpler-nb-1.f90</code>: Loop over a 2D array in Fortran demonstrating throughput and RAM bandwidth limits.</li>
-</ul>
 </section>
-<section id="calling-c-from-python" class="level2">
-<h2 class="anchored" data-anchor-id="calling-c-from-python">🔄 Calling C from Python</h2>
+<section id="race-conditions-synchronization" class="level2">
+<h2 class="anchored" data-anchor-id="race-conditions-synchronization">2. Race Conditions &amp; Synchronization</h2>
+<p>A <strong>race condition</strong> occurs when multiple threads concurrently access the same memory location, and at least one access is a write, without synchronization.</p>
+<section id="remedial-constructs" class="level3">
+<h3 class="anchored" data-anchor-id="remedial-constructs">Remedial Constructs:</h3>
 <ul>
-<li><code>libfunc.c</code> &amp; <code>use_libc.c</code>: Building and linking a shared C library.</li>
-<li><code>fun_lib0.c</code> &amp; <code>callingC-0-py2.py</code>: Calling a compiled C library from Python via <code>ctypes</code>.</li>
+<li><strong>Critical Sections (<code>#pragma omp critical</code>):</strong> Enforces mutually exclusive execution of a code block. Beware: high contention drops throughput dramatically.</li>
+<li><strong>Atomic Directives (<code>#pragma omp atomic</code>):</strong> Leverages hardware atomic CPU instructions (e.g.&nbsp;<code>LOCK XADD</code>) for simple scalar updates with minimal overhead.</li>
+<li><strong>Reduction (<code>reduction(op:var)</code>):</strong> Generates private copies per thread, accumulating into private registers and combining results upon loop termination.</li>
 </ul>
+<hr>
 </section>
-<section id="graphics-in-fortranc-dislin" class="level2">
-<h2 class="anchored" data-anchor-id="graphics-in-fortranc-dislin">🎨 Graphics in Fortran/C (DISLIN)</h2>
-<ul>
-<li><code>volcano-disl.f90</code>: F90 code generating DISLIN graphics directly from Fortran. Showcases OpenMP parallelization scheduling and critical sections.</li>
-</ul>
 </section>
-<section id="cuda-c-and-cuda-fortran" class="level2">
-<h2 class="anchored" data-anchor-id="cuda-c-and-cuda-fortran">⚡ CUDA C and CUDA Fortran</h2>
-<ul>
-<li><code>simple_saxpy_cuda.cu</code>: SAXPY (Single-Precision A*X Plus Y) in CUDA C.</li>
-<li><code>cuda-perf.f95</code>: Fortran 95 version with CUDA diagnostics showing bandwidth and compute performance.</li>
-<li><code>tetraDg-3.f95</code>: GPU version of the tetrahedra problem using CUDA Fortran.</li>
-</ul>
-</section>
-<section id="machine-learning-neural-networks" class="level2">
-<h2 class="anchored" data-anchor-id="machine-learning-neural-networks">🧠 Machine Learning &amp; Neural Networks</h2>
-<ul>
-<li><code>inv-pend-ctrl-3orig+plt.f95</code>: Sequential Fortran code solving the inverted broomstick problem using a simple Neural Network (3 hidden neurons, 1 output).</li>
-</ul>
+<section id="computational-vs.-bandwidth-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="computational-vs.-bandwidth-limitations">3. Computational vs.&nbsp;Bandwidth Limitations</h2>
+<p>For simple array sweeps (like the 5-point Laplace stencil or SAXPY <span class="math inline">\(y = ax + y\)</span>), modern CPUs can execute multiple floating point operations per cycle (SIMD AVX-512 / AVX2). However, performance is almost always throttled by the memory bus bandwidth (<span class="math inline">\(\sim 100-150\text{ GB/s}\)</span> on dual-channel DDR4/DDR5).</p>
+<p><span class="math display">\[\text{Arithmetic Intensity} = \frac{\text{FLOPs performed}}{\text{Bytes transferred from RAM}}\]</span></p>
+<p>When arithmetic intensity is low, optimization level <code>-O3</code> yields no additional speedup over <code>-O2</code> because the memory bus is already saturated.</p>
 
 
 
@@ -736,42 +736,71 @@ window.Quarto = {
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "The Code Page"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Continuously updated codes discussed in lectures"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>As a registered PHYD57 student, you are free to copy and develop the programs below to do more things, change their output style, etc. **Knowledge of basic structures and methods used in these codes is a course requirement.**</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🐍 Python Refresher &amp; Introductory Methods</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`simple_vectors-03.py`</span>: Compares Python loops vs NumPy array operations.</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`simple_IO.py`</span> / <span class="in">`simple_stat.py`</span>: Basic I/O and statistics in Python.</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`plot_exp_approx-1.py`</span> / <span class="in">`plot_cos_approx-1.py`</span>: Taylor series expansion and plotting with Matplotlib.</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`simple_mtc_pi.py`</span>: Calculation of Pi by Monte Carlo.</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`simple_bisec.py`</span> / <span class="in">`simple_newton.py`</span>: Bisection and Newton's methods for root finding.</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🚀 High Performance Computing (HPC) &amp; C/Fortran</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`laplacian-5t.py`</span>: Image processing using the heat/diffusion Laplace operator stencil (NumPy).</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`ifor-laplace3-dp.f90`</span> / <span class="in">`pgf-laplace3-dp.f95`</span>: Laplace stencil in Fortran (CPU vs GPU compilation).</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`711-brute.py`</span> / <span class="in">`711-brute.c`</span> / <span class="in">`711-brute.f95`</span>: Cracking the 711 puzzle using brute force across Python, C, and Fortran.</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`simpler-nb-1.f90`</span>: Loop over a 2D array in Fortran demonstrating throughput and RAM bandwidth limits.</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🔄 Calling C from Python</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`libfunc.c`</span> &amp; <span class="in">`use_libc.c`</span>: Building and linking a shared C library.</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`fun_lib0.c`</span> &amp; <span class="in">`callingC-0-py2.py`</span>: Calling a compiled C library from Python via <span class="in">`ctypes`</span>.</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🎨 Graphics in Fortran/C (DISLIN)</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`volcano-disl.f90`</span>: F90 code generating DISLIN graphics directly from Fortran. Showcases OpenMP parallelization scheduling and critical sections.</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## ⚡ CUDA C and CUDA Fortran</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`simple_saxpy_cuda.cu`</span>: SAXPY (Single-Precision A*X Plus Y) in CUDA C.</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`cuda-perf.f95`</span>: Fortran 95 version with CUDA diagnostics showing bandwidth and compute performance.</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`tetraDg-3.f95`</span>: GPU version of the tetrahedra problem using CUDA Fortran.</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🧠 Machine Learning &amp; Neural Networks</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`inv-pend-ctrl-3orig+plt.f95`</span>: Sequential Fortran code solving the inverted broomstick problem using a simple Neural Network (3 hidden neurons, 1 output).</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "OpenMP Multithreading &amp; Shared-Memory Architecture"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Fork-join parallelism, race conditions, reduction clauses, and memory bandwidth limits on multicore CPUs."</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2025-10-09"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> ["HPC", "Parallel Computing", "OpenMP"]</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. The Fork-Join Parallel Execution Model</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>OpenMP uses the **fork-join** model of parallel execution:</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The master thread executes sequential sections of code.</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>When an <span class="in">`#pragma omp parallel`</span> (C/C++) or <span class="in">`!$omp parallel`</span> (Fortran) construct is encountered, the master thread creates or forks a team of worker threads.</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>At the end of the parallel construct, an implicit barrier synchronizes the team and worker threads join back.</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">### Parallel For-Loops</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="in">```c</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="pp">#pragma omp parallel for schedule(static) reduction(+:total_sum)</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> N<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    total_sum <span class="op">+=</span> compute_energy<span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="in">```fortran</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="in">!$omp parallel do schedule(static) reduction(+:total_sum)</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="in">do i = 1, N</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="in">    total_sum = total_sum + compute_energy(i)</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="in">end do</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="in">!$omp end parallel do</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Race Conditions &amp; Synchronization</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>A **race condition** occurs when multiple threads concurrently access the same memory location, and at least one access is a write, without synchronization.</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="fu">### Remedial Constructs:</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Critical Sections (`#pragma omp critical`):** Enforces mutually exclusive execution of a code block. Beware: high contention drops throughput dramatically.</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Atomic Directives (`#pragma omp atomic`):** Leverages hardware atomic CPU instructions (e.g. <span class="in">`LOCK XADD`</span>) for simple scalar updates with minimal overhead.</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Reduction (`reduction(op:var)`):** Generates private copies per thread, accumulating into private registers and combining results upon loop termination.</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Computational vs. Bandwidth Limitations</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>For simple array sweeps (like the 5-point Laplace stencil or SAXPY $y = ax + y$), modern CPUs can execute multiple floating point operations per cycle (SIMD AVX-512 / AVX2). However, performance is almost always throttled by the memory bus bandwidth ($\sim 100-150\text{ GB/s}$ on dual-channel DDR4/DDR5).</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>$$\text{Arithmetic Intensity} = \frac{\text{FLOPs performed}}{\text{Bytes transferred from RAM}}$$</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>When arithmetic intensity is low, optimization level <span class="in">`-O3`</span> yields no additional speedup over <span class="in">`-O2`</span> because the memory bus is already saturated.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><span style="font-size: 0.8em;">© 2026 Igor Kan</span></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
 
 
 

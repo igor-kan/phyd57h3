@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-08">
+<meta name="dcterms.date" content="2025-09-11">
 
-<title>Numerical Solutions of PDEs: Elliptic, Parabolic, and Hyperbolic Fields – PHYD57H3: Advanced Computational Methods in Physics</title>
+<title>Computational Physics Sources &amp; Bibliography – PHYD57H3: Advanced Computational Methods in Physics</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -196,11 +196,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#classification-of-second-order-pdes" id="toc-classification-of-second-order-pdes" class="nav-link active" data-scroll-target="#classification-of-second-order-pdes">1. Classification of Second-Order PDEs</a></li>
-  <li><a href="#elliptic-pdes-the-poisson-equation-on-a-discrete-grid" id="toc-elliptic-pdes-the-poisson-equation-on-a-discrete-grid" class="nav-link" data-scroll-target="#elliptic-pdes-the-poisson-equation-on-a-discrete-grid">2. Elliptic PDEs: The Poisson Equation on a Discrete Grid</a>
-  <ul class="collapse">
-  <li><a href="#iterative-relaxation-schemes" id="toc-iterative-relaxation-schemes" class="nav-link" data-scroll-target="#iterative-relaxation-schemes">Iterative Relaxation Schemes</a></li>
-  </ul></li>
+  <li><a href="#textbooks" id="toc-textbooks" class="nav-link active" data-scroll-target="#textbooks">📚 Textbooks</a></li>
+  <li><a href="#hpc-resources-toolchains" id="toc-hpc-resources-toolchains" class="nav-link" data-scroll-target="#hpc-resources-toolchains">🌐 HPC Resources &amp; Toolchains</a></li>
   </ul>
 </nav>
     </div>
@@ -209,12 +206,12 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Numerical Solutions of PDEs: Elliptic, Parabolic, and Hyperbolic Fields</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
-<p class="subtitle lead">Finite difference discretization, von Neumann stability analysis, and iterative relaxation methods.</p>
+<div class="quarto-title-block"><div><h1 class="title">Computational Physics Sources &amp; Bibliography</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<p class="subtitle lead">Textbooks, online documentation, and HPC references for PHYD57.</p>
   <div class="quarto-categories">
-    <div class="quarto-category">PDEs</div>
-    <div class="quarto-category">Finite Difference</div>
-    <div class="quarto-category">Numerical Analysis</div>
+    <div class="quarto-category">Reference</div>
+    <div class="quarto-category">Bibliography</div>
+    <div class="quarto-category">Sources</div>
   </div>
   </div>
 
@@ -226,7 +223,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2026-09-08</p>
+      <p class="date">2025-09-11</p>
     </div>
   </div>
   
@@ -238,73 +235,30 @@ window.Quarto = {
 </header>
 
 
-<section id="classification-of-second-order-pdes" class="level2">
-<h2 class="anchored" data-anchor-id="classification-of-second-order-pdes">1. Classification of Second-Order PDEs</h2>
-<p>A general linear second-order partial differential equation in two dimensions has the form: <span class="math display">\[A \frac{\partial^2 u}{\partial x^2} + B \frac{\partial^2 u}{\partial x \partial y} + C \frac{\partial^2 u}{\partial y^2} + D \frac{\partial u}{\partial x} + E \frac{\partial u}{\partial y} + F u = G\]</span></p>
-<p>The physical nature of the problem and its numerical behavior depend on the discriminant <span class="math inline">\(\Delta = B^2 - 4AC\)</span>:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Type</th>
-<th style="text-align: left;">Condition</th>
-<th style="text-align: left;">Canonical Equation</th>
-<th style="text-align: left;">Physical Examples</th>
-<th style="text-align: left;">Numerical Methods</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><strong>Elliptic</strong></td>
-<td style="text-align: left;"><span class="math inline">\(B^2 - 4AC &lt; 0\)</span></td>
-<td style="text-align: left;">Laplace / Poisson: <span class="math inline">\(\nabla^2 u = \rho\)</span></td>
-<td style="text-align: left;">Electrostatic potential, steady gravitational fields</td>
-<td style="text-align: left;">Relaxation (Jacobi, Gauss-Seidel, SOR), Multigrid, FFT</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>Parabolic</strong></td>
-<td style="text-align: left;"><span class="math inline">\(B^2 - 4AC = 0\)</span></td>
-<td style="text-align: left;">Heat / Diffusion: <span class="math inline">\(\frac{\partial u}{\partial t} = \alpha \nabla^2 u\)</span></td>
-<td style="text-align: left;">Thermal conduction, viscous diffusion, Schrödinger equation</td>
-<td style="text-align: left;">FTCS, Crank-Nicolson, ADI (Alternating Direction Implicit)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>Hyperbolic</strong></td>
-<td style="text-align: left;"><span class="math inline">\(B^2 - 4AC &gt; 0\)</span></td>
-<td style="text-align: left;">Wave Equation: <span class="math inline">\(\frac{\partial^2 u}{\partial t^2} = c^2 \nabla^2 u\)</span></td>
-<td style="text-align: left;">Sound waves, electromagnetic radiation, seismic waves</td>
-<td style="text-align: left;">Leapfrog, Lax-Wendroff, Godunov methods</td>
-</tr>
-</tbody>
-</table>
+<section id="textbooks" class="level2">
+<h2 class="anchored" data-anchor-id="textbooks">📚 Textbooks</h2>
+<ol type="1">
+<li><strong>Schoerghofer, N. (2019)</strong>. <em>Lessons in Scientific Computing</em>. CRC Press.</li>
+<li><strong>Izaac, J., &amp; Wang, J. (2018)</strong>. <em>Computational Quantum Mechanics</em>. Springer.</li>
+<li><strong>Turner, P., Arildsen, T., &amp; Kavanagh, K. (2018)</strong>. <em>Applied Scientific Computing with Python</em>. Springer.</li>
+<li><strong>Linge, S., &amp; Langtangen, H. P. (2019)</strong>. <em>Programming for Computations - Python</em> (2nd ed.). Springer.</li>
+<li><strong>Fatica, M., &amp; Ruetsch, G. (2013)</strong>. <em>CUDA Fortran for Scientists and Engineers</em>. Morgan Kaufmann.</li>
+</ol>
 <hr>
 </section>
-<section id="elliptic-pdes-the-poisson-equation-on-a-discrete-grid" class="level2">
-<h2 class="anchored" data-anchor-id="elliptic-pdes-the-poisson-equation-on-a-discrete-grid">2. Elliptic PDEs: The Poisson Equation on a Discrete Grid</h2>
-<p>Consider the 2D Poisson equation on a square domain: <span class="math display">\[\nabla^2 \phi = \frac{\partial^2 \phi}{\partial x^2} + \frac{\partial^2 \phi}{\partial y^2} = -\frac{\rho(x, y)}{\varepsilon_0}\]</span></p>
-<p>We discretize the domain with grid spacing <span class="math inline">\(\Delta x = \Delta y = h\)</span>: <span class="math display">\[x_i = i h, \qquad y_j = j h, \qquad \phi_{i,j} \approx \phi(x_i, y_j)\]</span></p>
-<p>Using second-order central difference approximations: <span class="math display">\[\left. \frac{\partial^2 \phi}{\partial x^2} \right|_{i,j} \approx \frac{\phi_{i+1,j} - 2\phi_{i,j} + \phi_{i-1,j}}{h^2}\]</span> <span class="math display">\[\left. \frac{\partial^2 \phi}{\partial y^2} \right|_{i,j} \approx \frac{\phi_{i,j+1} - 2\phi_{i,j} + \phi_{i,j-1}}{h^2}\]</span></p>
-<p>Adding both terms yields the 5-point discrete Laplacian stencil: <span class="math display">\[\frac{\phi_{i+1,j} + \phi_{i-1,j} + \phi_{i,j+1} + \phi_{i,j-1} - 4\phi_{i,j}}{h^2} = -\frac{\rho_{i,j}}{\varepsilon_0}\]</span></p>
-<p>Solving for the central value <span class="math inline">\(\phi_{i,j}\)</span>: <span class="math display">\[\boxed{\phi_{i,j} = \frac{1}{4} \left( \phi_{i+1,j} + \phi_{i-1,j} + \phi_{i,j+1} + \phi_{i,j-1} \right) + \frac{h^2}{4\varepsilon_0} \rho_{i,j}}\]</span></p>
-<section id="iterative-relaxation-schemes" class="level3">
-<h3 class="anchored" data-anchor-id="iterative-relaxation-schemes">Iterative Relaxation Schemes</h3>
-<ol type="1">
-<li><strong>Jacobi Iteration:</strong> Computes the <span class="math inline">\((k+1)\)</span>-th grid state strictly using values from the <span class="math inline">\(k\)</span>-th iteration: <span class="math display">\[\phi_{i,j}^{(k+1)} = \frac{1}{4} \left( \phi_{i+1,j}^{(k)} + \phi_{i-1,j}^{(k)} + \phi_{i,j+1}^{(k)} + \phi_{i,j-1}^{(k)} \right) + \frac{h^2}{4\varepsilon_0} \rho_{i,j}\]</span></li>
-<li><strong>Gauss-Seidel Iteration:</strong> Immediately uses updated values as soon as they are computed: <span class="math display">\[\phi_{i,j}^{(k+1)} = \frac{1}{4} \left( \phi_{i+1,j}^{(k)} + \phi_{i-1,j}^{(k+1)} + \phi_{i,j+1}^{(k)} + \phi_{i,j-1}^{(k+1)} \right) + \frac{h^2}{4\varepsilon_0} \rho_{i,j}\]</span> Converges twice as fast as Jacobi.</li>
-<li><strong>Successive Over-Relaxation (SOR):</strong> Accelerates convergence by extrapolating with parameter <span class="math inline">\(\omega \in (1, 2)\)</span>: <span class="math display">\[\phi_{i,j}^{(k+1)} = (1 - \omega) \phi_{i,j}^{(k)} + \omega \phi_{i,j}^{\text{GS}}\]</span> Optimal parameter for an <span class="math inline">\(N \times N\)</span> grid: <span class="math inline">\(\omega_{\text{opt}} \approx \frac{2}{1 + \pi / N}\)</span>.</li>
-</ol>
+<section id="hpc-resources-toolchains" class="level2">
+<h2 class="anchored" data-anchor-id="hpc-resources-toolchains">🌐 HPC Resources &amp; Toolchains</h2>
+<ul>
+<li><a href="https://www.top500.org">Top500 Supercomputers</a> - Biannual ranking of the world’s most powerful supercomputers.</li>
+<li><a href="https://www.openmp.org">OpenMP 4.5 Specifications &amp; Tutorials</a></li>
+<li><a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/">NVIDIA CUDA C/C++ Programming Guide</a></li>
+<li><a href="http://www.linfo.org">The Linux Information Project (LINFO)</a></li>
+</ul>
 
 
 
 <!-- -->
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -760,58 +714,26 @@ window.Quarto = {
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Numerical Solutions of PDEs: Elliptic, Parabolic, and Hyperbolic Fields"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Finite difference discretization, von Neumann stability analysis, and iterative relaxation methods."</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2026-09-08"</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> ["PDEs", "Finite Difference", "Numerical Analysis"]</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">    math: true</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Classification of Second-Order PDEs</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>A general linear second-order partial differential equation in two dimensions has the form:</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>$$A \frac{\partial^2 u}{\partial x^2} + B \frac{\partial^2 u}{\partial x \partial y} + C \frac{\partial^2 u}{\partial y^2} + D \frac{\partial u}{\partial x} + E \frac{\partial u}{\partial y} + F u = G$$</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>The physical nature of the problem and its numerical behavior depend on the discriminant $\Delta = B^2 - 4AC$:</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Type <span class="pp">|</span> Condition <span class="pp">|</span> Canonical Equation <span class="pp">|</span> Physical Examples <span class="pp">|</span> Numerical Methods <span class="pp">|</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="pp">| :---</span> <span class="pp">| :---</span> <span class="pp">| :---</span> <span class="pp">| :---</span> <span class="pp">| :---</span> <span class="pp">|</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Elliptic** <span class="pp">|</span> $B^2 - 4AC &lt; 0$ <span class="pp">|</span> Laplace / Poisson: $\nabla^2 u = \rho$ <span class="pp">|</span> Electrostatic potential, steady gravitational fields <span class="pp">|</span> Relaxation (Jacobi, Gauss-Seidel, SOR), Multigrid, FFT <span class="pp">|</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Parabolic** <span class="pp">|</span> $B^2 - 4AC = 0$ <span class="pp">|</span> Heat / Diffusion: $\frac{\partial u}{\partial t} = \alpha \nabla^2 u$ <span class="pp">|</span> Thermal conduction, viscous diffusion, Schrödinger equation <span class="pp">|</span> FTCS, Crank-Nicolson, ADI (Alternating Direction Implicit) <span class="pp">|</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Hyperbolic**<span class="pp">|</span> $B^2 - 4AC &gt; 0$ <span class="pp">|</span> Wave Equation: $\frac{\partial^2 u}{\partial t^2} = c^2 \nabla^2 u$ <span class="pp">|</span> Sound waves, electromagnetic radiation, seismic waves <span class="pp">|</span> Leapfrog, Lax-Wendroff, Godunov methods <span class="pp">|</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Elliptic PDEs: The Poisson Equation on a Discrete Grid</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>Consider the 2D Poisson equation on a square domain:</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>$$\nabla^2 \phi = \frac{\partial^2 \phi}{\partial x^2} + \frac{\partial^2 \phi}{\partial y^2} = -\frac{\rho(x, y)}{\varepsilon_0}$$</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>We discretize the domain with grid spacing $\Delta x = \Delta y = h$:</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>$$x_i = i h, \qquad y_j = j h, \qquad \phi_{i,j} \approx \phi(x_i, y_j)$$</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>Using second-order central difference approximations:</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>$$\left. \frac{\partial^2 \phi}{\partial x^2} \right|_{i,j} \approx \frac{\phi_{i+1,j} - 2\phi_{i,j} + \phi_{i-1,j}}{h^2}$$</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>$$\left. \frac{\partial^2 \phi}{\partial y^2} \right|_{i,j} \approx \frac{\phi_{i,j+1} - 2\phi_{i,j} + \phi_{i,j-1}}{h^2}$$</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>Adding both terms yields the 5-point discrete Laplacian stencil:</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>$$\frac{\phi_{i+1,j} + \phi_{i-1,j} + \phi_{i,j+1} + \phi_{i,j-1} - 4\phi_{i,j}}{h^2} = -\frac{\rho_{i,j}}{\varepsilon_0}$$</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>Solving for the central value $\phi_{i,j}$:</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>$$\boxed{\phi_{i,j} = \frac{1}{4} \left( \phi_{i+1,j} + \phi_{i-1,j} + \phi_{i,j+1} + \phi_{i,j-1} \right) + \frac{h^2}{4\varepsilon_0} \rho_{i,j}}$$</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="fu">### Iterative Relaxation Schemes</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**Jacobi Iteration:** Computes the $(k+1)$-th grid state strictly using values from the $k$-th iteration:</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    $$\phi_{i,j}^{(k+1)} = \frac{1}{4} \left( \phi_{i+1,j}^{(k)} + \phi_{i-1,j}^{(k)} + \phi_{i,j+1}^{(k)} + \phi_{i,j-1}^{(k)} \right) + \frac{h^2}{4\varepsilon_0} \rho_{i,j}$$</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**Gauss-Seidel Iteration:** Immediately uses updated values as soon as they are computed:</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    $$\phi_{i,j}^{(k+1)} = \frac{1}{4} \left( \phi_{i+1,j}^{(k)} + \phi_{i-1,j}^{(k+1)} + \phi_{i,j+1}^{(k)} + \phi_{i,j-1}^{(k+1)} \right) + \frac{h^2}{4\varepsilon_0} \rho_{i,j}$$</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    Converges twice as fast as Jacobi.</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>**Successive Over-Relaxation (SOR):** Accelerates convergence by extrapolating with parameter $\omega \in (1, 2)$:</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    $$\phi_{i,j}^{(k+1)} = (1 - \omega) \phi_{i,j}^{(k)} + \omega \phi_{i,j}^{\text{GS}}$$</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>    Optimal parameter for an $N \times N$ grid: $\omega_{\text{opt}} \approx \frac{2}{1 + \pi / N}$.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Computational Physics Sources &amp; Bibliography"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Textbooks, online documentation, and HPC references for PHYD57."</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2025-09-11"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> ["Reference", "Bibliography", "Sources"]</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## 📚 Textbooks</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Schoerghofer, N. (2019)**. *Lessons in Scientific Computing*. CRC Press.</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Izaac, J., &amp; Wang, J. (2018)**. *Computational Quantum Mechanics*. Springer.</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Turner, P., Arildsen, T., &amp; Kavanagh, K. (2018)**. *Applied Scientific Computing with Python*. Springer.</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Linge, S., &amp; Langtangen, H. P. (2019)**. *Programming for Computations - Python* (2nd ed.). Springer.</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Fatica, M., &amp; Ruetsch, G. (2013)**. *CUDA Fortran for Scientists and Engineers*. Morgan Kaufmann.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🌐 HPC Resources &amp; Toolchains</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Top500 Supercomputers</span><span class="co">](https://www.top500.org)</span> - Biannual ranking of the world's most powerful supercomputers.</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">OpenMP 4.5 Specifications &amp; Tutorials</span><span class="co">](https://www.openmp.org)</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">NVIDIA CUDA C/C++ Programming Guide</span><span class="co">](https://docs.nvidia.com/cuda/cuda-c-programming-guide/)</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">The Linux Information Project (LINFO)</span><span class="co">](http://www.linfo.org)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
