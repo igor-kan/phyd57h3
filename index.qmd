@@ -1,28 +1,41 @@
 ---
-title: "PHYD57H3: Advanced Physics Laboratory"
-subtitle: "Experimental modern physics, quantum phenomena, precision metrology, and statistical data reduction."
+title: "PHYD57H3: Advanced Computational Methods in Physics"
+subtitle: "Numerical analysis, partial differential equations, N-body particle systems, fluid dynamics, and high-performance computing in Linux."
 page-layout: full
 ---
 
 ::: {.hero-banner}
-# PHYD57H3: Advanced Physics Laboratory
+# PHYD57H3: Advanced Computational Methods in Physics
 ### Department of Physical and Environmental Sciences — UTSC
-Research-grade laboratory portal documenting experimental protocols, raw data analysis, systematic error budgets, and Python instrumentation pipelines.
+Comprehensive portal for computational physics, large-scale simulations, vectorization, multi-threading (OpenMP/MPI), and numerical solutions to physical field equations in Python, C, and Fortran.
 :::
 
 ::: {.card-grid}
 ::: {.course-card}
-### 🔬 [Experiments](experiments/index.qmd)
-Detailed laboratory logs, apparatus schematics, calibration curves, and analysis for core experimental suites (Muon decay, Quantum Hall Effect, Optical Pumping).
+### 💻 [Lecture Notes](notes/index.qmd)
+In-depth treatment of ODE integration (Runge-Kutta, Symplectic Verlet), elliptic/parabolic/hyperbolic PDEs, spectral methods (FFT), and Monte Carlo algorithms.
 :::
 
 ::: {.course-card}
-### 📐 [Error Analysis & Metrology](techniques/index.qmd)
-Propagation of covariant uncertainties, Gaussian/Poisson counting statistics, weighted least-squares $\chi^2$ fitting, and goodness-of-fit tests.
+### 🚀 [Computational Projects](assignments/index.qmd)
+Full implementations of gravitational N-body integrators, 2D Navier-Stokes fluid simulations, Poisson potential solvers, and machine learning physics surrogates.
 :::
 
 ::: {.course-card}
-### 💻 [Analysis Pipelines](analysis/index.qmd)
-Python scripts utilizing NumPy, SciPy, and Matplotlib for non-linear curve fitting, Fourier filtering, and automated peak detection.
+### ⚙️ [HPC & Code Lab](code/index.qmd)
+High-performance computing workflows: parallel computing with OpenMP and MPI, SIMD vectorization, memory cache optimization, and Python/C interoperability.
 :::
 :::
+
+---
+
+## Course Curriculum & Numerical Methods
+
+| Module | Scientific Topics | Numerical Algorithms | Languages & Frameworks |
+| :--- | :--- | :--- | :--- |
+| **01: Advanced ODEs** | Planetary orbits, chaotic attractors, stiff chemical kinetics | Adaptive RK45, Symplectic Velocity-Verlet, Radau/BDF | Python, NumPy, SciPy |
+| **02: Elliptic PDEs** | Electrostatic & Gravitational Potentials ($\nabla^2 \phi = \rho$) | Finite difference, Successive Over-Relaxation (SOR), Multigrid | C / Python |
+| **03: Parabolic PDEs** | Heat conduction, diffusion, quantum Schrödinger evolution | FTCS stability, Crank-Nicolson implicit method | Python, C |
+| **04: Hyperbolic PDEs** | Sound waves, shock waves, electromagnetism | Lax-Friedrichs, Godunov, flux limiters | Fortran / C |
+| **05: N-Body & Fluids** | Galactic collisions, fluid dynamics | Barnes-Hut tree code, Particle-Mesh (PM), Smoothed Particle Hydrodynamics (SPH) | Python, OpenMP |
+| **06: HPC & Parallelism** | Shared and distributed memory scaling | OpenMP multithreading, MPI message passing, cache profiling | Linux, GCC, Slurm |

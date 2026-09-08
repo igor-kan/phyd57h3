@@ -1,0 +1,9 @@
+---
+title: "Computational Physics Projects"
+description: "Numerical programming assignments, algorithm benchmarks, and simulation reports."
+listing:
+  contents: "*.qmd"
+  sort: "date desc"
+  type: default
+page-layout: full
+---

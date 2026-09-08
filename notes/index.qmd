@@ -1,0 +1,9 @@
+---
+title: "Computational Physics Lecture Notes"
+description: "Numerical algorithms, partial differential equations, and scientific computing theory."
+listing:
+  contents: "*.qmd"
+  sort: "date desc"
+  type: default
+page-layout: full
+---

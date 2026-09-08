@@ -3,18 +3,18 @@ project:
   output-dir: _site
 
 website:
-  title: "PHYD57H3: Advanced Physics Laboratory"
-  description: "Experimental physics notebook, uncertainty propagation, measurement reports, and instrument control."
+  title: "PHYD57H3: Advanced Computational Methods in Physics"
+  description: "Numerical analysis, PDEs, N-body dynamics, fluid mechanics, high-performance computing (HPC), and scientific machine learning at UTSC."
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - href: experiments/index.qmd
-        text: Experiments
-      - href: techniques/index.qmd
-        text: Lab Techniques & Error Analysis
-      - href: analysis/index.qmd
-        text: Python Data Analysis
+      - href: notes/index.qmd
+        text: Lecture Notes
+      - href: assignments/index.qmd
+        text: Computational Projects
+      - href: code/index.qmd
+        text: Code & High-Performance Computing
 
 format:
   html:

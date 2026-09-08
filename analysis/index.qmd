@@ -1,9 +1,0 @@
----
-title: "Python Data Reduction & Error Analysis"
-description: "Statistical reduction scripts, non-linear chi-square fits, and covariance routines."
-format:
-  html:
-    toc: true
----
-
-This section houses reusable numerical data reduction utilities for PHYD57 experiments.
