@@ -1,6 +1,5 @@
 ---
-title: "PHYD57 Reference & Computational Tools"
-subtitle: "Linux commands, compiler manuals, OpenMP/CUDA syntax cheatsheets, and literature bibliography."
+title: "Reference & Math"
 listing:
   contents: "*.qmd"
   sort:
@@ -10,13 +9,10 @@ listing:
   categories: true
   sort-ui: [title, date, date-modified]
   filter-ui: [title, date, categories]
-  fields: [date, date-modified, title, subtitle, categories, reading-time]
+  fields: [date, title, categories, reading-time]
   field-display-names:
-    date: "Created"
-    date-modified: "Modified"
+    date: "Date"
     reading-time: "Read Time"
   page-size: 15
 page-layout: full
 ---
-
-Quick-reference toolkits, Linux shell commands, compiler optimization flags, and external literature references for PHYD57.

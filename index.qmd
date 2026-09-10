@@ -7,28 +7,27 @@ page-layout: full
 ::: {.hero-banner}
 # PHYD57H3: Advanced Computational Methods
 ### University of Toronto Scarborough · Fall 2025
-Comprehensive course portal featuring the official course syllabus, lecture slides, assignment sets, high-performance computing code repositories, and interactive physics simulations.
 :::
 
 ::: {.card-grid}
 ::: {.course-card}
 ### 💻 [Lecture Notes & Syllabus](notes/index.qmd)
-Official course syllabus, Linux system administration, C(++) & Fortran compilers, OpenMP threading, CUDA GPU architecture, and neural networks.
+Course syllabus and high-performance computing notes.
 :::
 
 ::: {.course-card}
 ### ✏️ [Problem Sets & Projects](problems/index.qmd)
-Assignment sets A1–A3, the A4 group capstone research project, and preparation guides for the Midterm and 3-hour practical Final examination.
+Computational assignments and research projects.
 :::
 
 ::: {.course-card}
 ### ⚙️ [Code & Simulations](simulations/index.qmd)
-Interactive in-browser simulations (2D diffusion & wave equations, inverted broomstick neural net), C/Fortran benchmarks, and GPU CUDA scripts.
+Interactive simulations and parallel code benchmarks.
 :::
 
 ::: {.course-card}
 ### 📐 [Reference & Math](reference/index.qmd)
-Linux commands & shell scripting cheatsheets, OpenMP/CUDA syntax guides, numerical PDE stencils, and course bibliography.
+Linux commands and compiler syntax toolkits.
 :::
 :::
 

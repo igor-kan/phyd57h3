@@ -1,6 +1,5 @@
 ---
-title: "PHYD57 Lecture Notes & Syllabus"
-subtitle: "High-performance computing architectures, modern Fortran, C/C++, OpenMP multithreading, and GPU CUDA."
+title: "Lecture Notes & Syllabus"
 listing:
   contents: "*.qmd"
   sort:
@@ -10,13 +9,10 @@ listing:
   categories: true
   sort-ui: [title, date, date-modified]
   filter-ui: [title, date, categories]
-  fields: [date, date-modified, title, subtitle, categories, reading-time]
+  fields: [date, title, categories, reading-time]
   field-display-names:
-    date: "Created"
-    date-modified: "Modified"
+    date: "Date"
     reading-time: "Read Time"
   page-size: 15
 page-layout: full
 ---
-
-This section houses the official course syllabus and lecture notes for PHYD57. Use the category filters below to locate specific lecture modules.
