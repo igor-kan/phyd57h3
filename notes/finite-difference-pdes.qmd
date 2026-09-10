@@ -6,6 +6,7 @@ categories: ["PDEs", "Finite Difference", "Numerical Analysis"]
 format:
   html:
     math: true
+draft: true
 ---
 
 ## 1. Classification of Second-Order PDEs

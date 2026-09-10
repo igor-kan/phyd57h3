@@ -3,6 +3,7 @@ title: "Linux Environment, Shells & Compiler Toolchains"
 subtitle: "Bash/tcsh scripting, cluster SSH access, stack size limits, and compiler optimization flags."
 date: "2025-09-11"
 categories: ["Reference", "Linux", "Compilers", "HPC"]
+draft: true
 ---
 
 ## 🐧 Cluster Remote Access & File Transfer

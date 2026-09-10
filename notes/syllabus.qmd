@@ -3,6 +3,7 @@ title: "PHYD57 Course Syllabus & Administrative Policies"
 subtitle: "Course Structure, Languages, Grading Scheme, and Academic Integrity"
 date: "2025-09-11"
 categories: ["Syllabus", "Course Administration"]
+draft: true
 ---
 
 ## 💻 Prerequisites & Languages

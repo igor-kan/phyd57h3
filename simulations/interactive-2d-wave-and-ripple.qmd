@@ -6,6 +6,7 @@ categories: ["Simulations", "PDEs", "Wave Equation", "Interactive"]
 format:
   html:
     math: true
+draft: true
 ---
 
 ## 🌊 Numerical Algorithm: 2D Wave Equation

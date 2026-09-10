@@ -3,6 +3,7 @@ title: "Assignment #4: Capstone Group Research Project"
 subtitle: "Research simulation topics, group formation, presentations, and technical report guidelines."
 date: "2025-12-04"
 categories: ["Projects", "Group Project", "HPC Capstone"]
+draft: true
 ---
 
 ## Overview & Timeline

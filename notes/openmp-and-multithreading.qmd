@@ -3,6 +3,7 @@ title: "OpenMP Multithreading & Shared-Memory Architecture"
 subtitle: "Fork-join parallelism, race conditions, reduction clauses, and memory bandwidth limits on multicore CPUs."
 date: "2025-10-09"
 categories: ["HPC", "Parallel Computing", "OpenMP"]
+draft: true
 ---
 
 ## 1. The Fork-Join Parallel Execution Model

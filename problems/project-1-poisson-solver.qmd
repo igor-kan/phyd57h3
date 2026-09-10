@@ -6,6 +6,7 @@ categories: ["Poisson Solver", "Relaxation", "Python"]
 format:
   html:
     math: true
+draft: true
 ---
 
 ## Objective
