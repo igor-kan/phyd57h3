@@ -44,16 +44,9 @@
   {
     "objectID": "simulations/index.html",
     "href": "simulations/index.html",
-    "title": "Computational Physics Code & Simulations",
+    "title": "Code & Simulations",
     "section": "",
-    "text": "This section hosts computational codebases, benchmark suites, and interactive physics simulations for PHYD57:\n\nInteractive PDE Simulations: In-browser HTML5 Canvas implementations of 2D wave equations, double-slit diffraction, and heat diffusion.\nHPC Parallel Solvers: 5-point Laplace stencils, SAXPY benchmarks, and OpenMP multi-threaded solvers in C and Modern Fortran.\nGPU CUDA Kernels: Fast Fourier Transform (CUFFT) convolution solvers, N-body particle simulators, and GPU acceleration.\n\n\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n      \n        Created - Oldest\n      \n      \n        Created - Newest\n      \n      \n        Modified - Oldest\n      \n      \n        Modified - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "PHYD57H3: Advanced Computational Methods in Physics",
-    "section": "",
-    "text": "Comprehensive course portal featuring the official course syllabus, lecture slides, assignment sets, high-performance computing code repositories, and interactive physics simulations."
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html#course-roadmap-calendar-fall-2025",
@@ -72,22 +65,22 @@
   {
     "objectID": "problems/index.html",
     "href": "problems/index.html",
-    "title": "PHYD57 Problem Sets & Projects",
+    "title": "Problem Sets & Projects",
     "section": "",
-    "text": "This section features official computational problem sets, instructions for the capstone group project, and exam preparation packages for PHYD57.\n\nSubmission Policies\n\nDeadlines are strictly at 11:00 AM on lecture Fridays via Quercus.\nSubmissions late by &gt;3 hours earn 50% penalty. No extensions.\nCode must include clear comments explaining algorithm steps.\n\n\n\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n      \n        Created - Oldest\n      \n      \n        Created - Newest\n      \n      \n        Modified - Oldest\n      \n      \n        Modified - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
   },
   {
     "objectID": "reference/index.html",
     "href": "reference/index.html",
-    "title": "PHYD57 Reference & Computational Tools",
+    "title": "Reference & Math",
     "section": "",
-    "text": "Quick-reference toolkits, Linux shell commands, compiler optimization flags, and external literature references for PHYD57.\n\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n      \n        Created - Oldest\n      \n      \n        Created - Newest\n      \n      \n        Modified - Oldest\n      \n      \n        Modified - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
   },
   {
     "objectID": "notes/index.html",
     "href": "notes/index.html",
-    "title": "PHYD57 Lecture Notes & Syllabus",
+    "title": "Lecture Notes & Syllabus",
     "section": "",
-    "text": "This section houses the official course syllabus and lecture notes for PHYD57. Use the category filters below to locate specific lecture modules.\n\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n      \n        Created - Oldest\n      \n      \n        Created - Newest\n      \n      \n        Modified - Oldest\n      \n      \n        Modified - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\nPHYD57 Project Ideas: High-Performance Scientific Computing & HPC Architecture\n\n\nRigorous semester capstone projects in GPU CUDA kernel engineering, SIMD hardware vectorization, and distributed physical simulations.\n\n\n\nHPC\n\nPHYD57\n\nResearch\n\nCUDA\n\nOpenMP\n\nSIMD\n\nFluid Dynamics\n\nAstrophysics\n\n\n\n\n\n\n2026-09-10\n\n6 min\n\nInvalid Date\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\nPHYD57 Project Ideas: High-Performance Scientific Computing & HPC Architecture\n\n\n\nHPC\n\nPHYD57\n\nResearch\n\nCUDA\n\nOpenMP\n\nSIMD\n\nFluid Dynamics\n\nAstrophysics\n\n\n\n\n\n\n2026-09-10\n\n6 min\n\n\n\n\nNo matching items"
   }
 ]
