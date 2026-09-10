@@ -1,8 +1,8 @@
 ---
-title: "SYLLABUS & Course Information: PHYD57"
-subtitle: "Advanced Computational Methods in Physics — Fall 2026"
+title: "PHYD57 Course Information & Literature Portal"
+subtitle: "Advanced Computational Methods in Physics — Official Webpage Text & Resources"
 date: "2026-09-10"
-categories: ["Syllabus", "Course Administration"]
+categories: ["Syllabus", "Course Administration", "HPC"]
 draft: true
 format:
   html:
