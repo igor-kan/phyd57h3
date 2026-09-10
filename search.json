@@ -42,18 +42,11 @@
     "text": "📋 Summary: How to Choose Your PHYD57 Project\n\n\n\n\n\n\n\n\n\nProject\nPrimary Focus\nBest Suited For\nKey Tools\n\n\n\n\nOption 1: 3D SPH CUDA Fluid\nGPU Architecture & CUDA Kernels\nStudents aiming for GPU engineering, VFX & CFD\nC++, CUDA, Shared Memory, Nsight\n\n\nOption 2: AVX-512 Barnes-Hut\nMicroprocessor Limits & SIMD\nStudents aiming for low-latency systems & HFT\nC++, AVX2/512, OpenMP, perf\n\n\nOption 3: Hybrid MPI PM Solver\nDistributed Clusters & Spectral PDEs\nStudents aiming for supercomputing & astrophysics\nC++, MPI, OpenMP, FFTW3, Slurm"
   },
   {
-    "objectID": "reference/index.html",
-    "href": "reference/index.html",
-    "title": "PHYD57 Reference & Computational Tools",
+    "objectID": "simulations/index.html",
+    "href": "simulations/index.html",
+    "title": "Computational Physics Code & Simulations",
     "section": "",
-    "text": "Quick-reference toolkits, Linux shell commands, compiler optimization flags, and external literature references for PHYD57.\n\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n      \n        Created - Oldest\n      \n      \n        Created - Newest\n      \n      \n        Modified - Oldest\n      \n      \n        Modified - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "problems/index.html",
-    "href": "problems/index.html",
-    "title": "PHYD57 Problem Sets & Projects",
-    "section": "",
-    "text": "This section features official computational problem sets, instructions for the capstone group project, and exam preparation packages for PHYD57.\n\nSubmission Policies\n\nDeadlines are strictly at 11:00 AM on lecture Fridays via Quercus.\nSubmissions late by &gt;3 hours earn 50% penalty. No extensions.\nCode must include clear comments explaining algorithm steps.\n\n\n\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n      \n        Created - Oldest\n      \n      \n        Created - Newest\n      \n      \n        Modified - Oldest\n      \n      \n        Modified - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
+    "text": "This section hosts computational codebases, benchmark suites, and interactive physics simulations for PHYD57:\n\nInteractive PDE Simulations: In-browser HTML5 Canvas implementations of 2D wave equations, double-slit diffraction, and heat diffusion.\nHPC Parallel Solvers: 5-point Laplace stencils, SAXPY benchmarks, and OpenMP multi-threaded solvers in C and Modern Fortran.\nGPU CUDA Kernels: Fast Fourier Transform (CUFFT) convolution solvers, N-body particle simulators, and GPU acceleration.\n\n\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n      \n        Created - Oldest\n      \n      \n        Created - Newest\n      \n      \n        Modified - Oldest\n      \n      \n        Modified - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
@@ -77,11 +70,18 @@
     "text": "👨‍🏫 Instructor & Contact\n\nLecturer: Prof. Pawel Artymowicz (Email: pawel.artymowicz@utoronto.ca | Office: SW 506G)\n\nSubject MUST contain PHYD57. Please use your mail.utoronto.ca account.\nOffice Hours: Directly after the tutorial on Fridays in HLB108 or SW 5th floor."
   },
   {
-    "objectID": "simulations/index.html",
-    "href": "simulations/index.html",
-    "title": "Computational Physics Code & Simulations",
+    "objectID": "problems/index.html",
+    "href": "problems/index.html",
+    "title": "PHYD57 Problem Sets & Projects",
     "section": "",
-    "text": "This section hosts computational codebases, benchmark suites, and interactive physics simulations for PHYD57:\n\nInteractive PDE Simulations: In-browser HTML5 Canvas implementations of 2D wave equations, double-slit diffraction, and heat diffusion.\nHPC Parallel Solvers: 5-point Laplace stencils, SAXPY benchmarks, and OpenMP multi-threaded solvers in C and Modern Fortran.\nGPU CUDA Kernels: Fast Fourier Transform (CUFFT) convolution solvers, N-body particle simulators, and GPU acceleration.\n\n\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n      \n        Created - Oldest\n      \n      \n        Created - Newest\n      \n      \n        Modified - Oldest\n      \n      \n        Modified - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
+    "text": "This section features official computational problem sets, instructions for the capstone group project, and exam preparation packages for PHYD57.\n\nSubmission Policies\n\nDeadlines are strictly at 11:00 AM on lecture Fridays via Quercus.\nSubmissions late by &gt;3 hours earn 50% penalty. No extensions.\nCode must include clear comments explaining algorithm steps.\n\n\n\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n      \n        Created - Oldest\n      \n      \n        Created - Newest\n      \n      \n        Modified - Oldest\n      \n      \n        Modified - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "reference/index.html",
+    "href": "reference/index.html",
+    "title": "PHYD57 Reference & Computational Tools",
+    "section": "",
+    "text": "Quick-reference toolkits, Linux shell commands, compiler optimization flags, and external literature references for PHYD57.\n\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n      \n        Created - Oldest\n      \n      \n        Created - Newest\n      \n      \n        Modified - Oldest\n      \n      \n        Modified - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
   },
   {
     "objectID": "notes/index.html",
