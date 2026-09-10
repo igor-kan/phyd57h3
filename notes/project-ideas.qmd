@@ -1,0 +1,101 @@
+---
+title: "PHYD57 Project Ideas: High-Performance Scientific Computing & HPC Architecture"
+subtitle: "Rigorous semester capstone projects in GPU CUDA kernel engineering, SIMD hardware vectorization, and distributed physical simulations."
+date: "2026-09-10"
+categories: ["HPC", "PHYD57", "Research", "CUDA", "OpenMP", "SIMD", "Fluid Dynamics", "Astrophysics"]
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    math: true
+    code-fold: false
+---
+
+## 🎯 Project Selection Framework & Evaluation Criteria
+
+Every project proposed below meets five mandatory criteria designed to build deep, enduring expertise in the age of generative AI:
+
+1. **Semester Feasibility:** Tailored to be independently architected, compiled, profiled, and benchmarked within a 12-week academic term by an individual student (or pair for the A4 capstone).
+2. **Curricular Grounding:** Deeply integrated with the PHYD57 syllabus taught by Prof. Pawel Artymowicz—specifically applying compiler optimization flags (`gcc`, `clang`, `nvcc`), OpenMP multi-threading, microprocessor cache architecture, SIMD vectorization (AVX2/AVX-512), CUDA GPU kernels, Barnes-Hut octree algorithms, or Smoothed Particle Hydrodynamics (SPH).
+3. **AI Automation Resilience:** Focuses on hardware-aware systems programming where statistical AI is notoriously incapable: eliminating thread divergence in GPU warp scheduling, avoiding false sharing in CPU L1/L2 cache lines, maximizing hardware memory coalescing, managing NUMA node memory affinity, and profiling against hardware Roofline models.
+4. **Academic Leverage (Impressing Faculty):** Formulated to demonstrate the computational rigor that professors in computational physics and computer science look for—producing verified scaling curves, FLOP rate benchmarks, and clean reproducible C++/CUDA repositories.
+5. **Industry & Professional Value:** Imparts direct, high-salary engineering capabilities required in high-performance computing (HPC), quantitative trading (low-latency C++ / FPGA / GPU execution), GPU kernel engineering (NVIDIA, AMD, Apple), aerospace simulation, and modern AI systems infrastructure.
+
+---
+
+## 🚀 Project Option 1: GPU-Accelerated 3D Smoothed Particle Hydrodynamics (SPH) with CUDA Shared Memory Tiling
+
+### 1. Context & Motivation (PHYD57 Lectures 8–11)
+Smoothed Particle Hydrodynamics (SPH) is a Lagrangian fluid simulation technique where continuous fluid fields (density $\rho$, velocity $\mathbf{v}$, pressure $P$) are approximated by interpolation over moving particles using a smoothing kernel $W(\mathbf{r} - \mathbf{r}', h)$:
+$$\rho_i = \sum_{j} m_j W(\mathbf{r}_i - \mathbf{r}_j, h)$$
+$$\frac{d\mathbf{v}_i}{dt} = -\sum_{j} m_j \left( \frac{P_i}{\rho_i^2} + \frac{P_j}{\rho_j^2} + \Pi_{ij} \right) \nabla_i W_{ij} + \mathbf{g}$$
+where $\Pi_{ij}$ is the Monaghan artificial viscosity term preventing unphysical interparticle penetration.
+
+On CPUs, neighbor searching dominates computation time ($O(N^2)$ without spatial sorting). On GPUs, naive particle interactions suffer from uncoalesced global memory transactions and high warp divergence.
+
+### 2. Concrete Deliverables & Scope
+* **Parallel Spatial Hash Grid:** Implement a 3D uniform spatial hash grid in CUDA. Use parallel radix sort (`thrust::sort_by_key` or custom CUDA kernel) on spatial cell IDs so neighbor particles occupy contiguous GPU global memory addresses.
+* **Shared Memory Tiling Kernel:** Write custom CUDA kernels for density and force computation that load cell neighbor particles into high-speed **GPU shared memory** ($L1$ cache speed), eliminating redundant global memory bandwidth bottlenecks.
+* **Tait Equation of State:** Implement the weakly compressible Tait EOS:
+  $$P(\rho) = B \left[ \left(\frac{\rho}{\rho_0}\right)^\gamma - 1 \right]$$
+  with numerical speed of sound chosen to limit density fluctuations to $< 1\%$.
+* **Physics Benchmark:** Simulate the 3D Rayleigh-Taylor instability or a breaking dam obstacle impact for $N = 2 \times 10^5$ particles in real time.
+* **Hardware Profiling:** Use NVIDIA Nsight Compute to measure achieved memory bandwidth (GB/s), warp execution efficiency ($> 85\%$), and speedup relative to a multi-threaded OpenMP CPU baseline.
+
+### 3. Why This Impresses Professors & Employers
+* Demonstrates mastery of low-level GPU hardware architecture: coalescing, bank conflicts in shared memory, and occupancy optimization.
+* Highly coveted skillset in game engine physics (Unreal Engine Niagara), visual effects (ILM, Weta), aerospace CFD, and GPU compiler engineering at tech firms.
+
+---
+
+## ⚡ Project Option 2: AVX-512 SIMD Vectorized & OpenMP-Parallelized Barnes-Hut Octree Gravitational Engine
+
+### 1. Context & Motivation (PHYD57 Lectures 5–9)
+Simulating gravitational interactions between $N$ bodies by direct pairwise summation requires $O(N^2)$ operations, becoming computationally intractable for $N > 10^5$. The **Barnes-Hut algorithm** reduces complexity to $O(N \log N)$ by grouping distant particles into an octree. 
+
+If a tree node of size $s$ is at distance $d$ from a particle such that the opening angle satisfies:
+$$\theta = \frac{s}{d} < \theta_{\text{crit}} \approx 0.7$$
+the entire sub-cluster is approximated by its center-of-mass multipole moment.
+
+However, tree traversal involves irregular pointer chasing that thrashes the CPU cache hierarchy. Modern CPUs (Intel Xeon, AMD EPYC, modern Ryzen) achieve peak performance only when operations are vectorized across 256-bit (AVX2) or 512-bit (AVX-512) SIMD registers.
+
+### 2. Concrete Deliverables & Scope
+* **Cache-Conscious Linear Octree:** Implement a Morton-indexed (Z-order curve) linear octree in C++ that stores node data in contiguous flat arrays rather than heap-allocated pointers, maximizing L1/L2 cache hit rates.
+* **AVX-512 Explicit SIMD Intrinsics:** Write hand-vectorized interaction kernels using Intel AVX2/AVX-512 intrinsics (`_mm256_fmadd_ps` / `_mm512_fmadd_ps`) that process 8 to 16 particle interactions simultaneously per vector register.
+* **OpenMP Dynamic Work Stealing:** Parallelize tree traversal using OpenMP tasking (`#pragma omp task`) with dynamic load balancing across CPU cores, preventing thread starvation when particles cluster non-uniformly.
+* **Roofline Model & Hardware Performance Counters:** Profile execution with Linux `perf` or Intel VTune. Construct an empirical Roofline Model plotting operational intensity (FLOP/byte) against memory bandwidth to prove the kernel operates near the hardware compute ceiling.
+
+### 3. Why This Impresses Professors & Employers
+* Writing explicit SIMD intrinsics and cache-oblivious data structures demonstrates low-level systems programming that generic AI tools cannot generate reliably.
+* Direct relevance to high-frequency trading (low-latency order books, market data decoding), physics engines, and high-performance computing centers (Compute Canada / Digital Research Alliance).
+
+---
+
+## 🌌 Project Option 3: Distributed Hybrid MPI + OpenMP Cosmological Particle-Mesh (PM) Spectral Gravitational Simulator
+
+### 1. Context & Motivation (PHYD57 Lectures 10–12)
+On cosmological scales, the universe's large-scale structure (filaments, clusters, and cosmic voids) evolves under self-gravity in an expanding Friedmann-Lemaître-Robertson-Walker (FLRW) spacetime. The **Particle-Mesh (PM)** algorithm solves Poisson's equation $\nabla^2 \Phi = 4\pi G a^2 \bar{\rho} \delta$ using Fast Fourier Transforms (FFTs) on a regular spatial grid:
+$$\tilde{\Phi}(\mathbf{k}) = -4\pi G a^2 \bar{\rho} \frac{\tilde{\delta}(\mathbf{k})}{k^2}$$
+achieving linear complexity $O(N_g \log N_g)$ where $N_g$ is the grid size.
+
+### 2. Concrete Deliverables & Scope
+* **Cloud-in-Cell (CIC) Density & Force Interpolation:** Implement 3D Cloud-in-Cell trilinear mass assignment and force interpolation between continuous particles and discrete grid nodes.
+* **FFTW 3D Spectral Poisson Solver:** Use the FFTW3 library to compute exact spatial gradients via spectral multiplication in Fourier space ($\mathbf{g}(\mathbf{k}) = -i \mathbf{k} \tilde{\Phi}(\mathbf{k})$).
+* **Expanding Universe Time Stepping:** Implement a cosmological leapfrog symplectic integrator in conformal time or scale factor $a(t)$, incorporating Hubble drag:
+  $$\frac{d\mathbf{x}}{dt} = \frac{\mathbf{p}}{m a^2}, \quad \frac{d\mathbf{p}}{dt} = -\frac{1}{a} \nabla \Phi$$
+* **Hybrid Parallelization (MPI + OpenMP):** Implement 1D or 2D domain decomposition using MPI across distributed nodes and OpenMP threading within each node.
+* **Cosmological Statistics:** From the simulated structure at redshift $z = 0$, compute the matter power spectrum $P(k)$ and two-point correlation function $\xi(r)$, benchmarking against analytical linear perturbation theory (Harrison-Zeldovich spectrum).
+
+### 3. Why This Impresses Professors & Employers
+* Mastering distributed memory parallel computing (MPI) is the cornerstone requirement for supercomputing research (e.g. at CITA, Perimeter Institute, national laboratories).
+* Demonstrates complete full-stack computational physics competence: cosmological theory, spectral Fourier numerical methods, and distributed cluster scaling.
+
+---
+
+## 📋 Summary: How to Choose Your PHYD57 Project
+
+| Project | Primary Focus | Best Suited For | Key Tools |
+| :--- | :--- | :--- | :--- |
+| **Option 1: 3D SPH CUDA Fluid** | GPU Architecture & CUDA Kernels | Students aiming for GPU engineering, VFX & CFD | C++, CUDA, Shared Memory, Nsight |
+| **Option 2: AVX-512 Barnes-Hut** | Microprocessor Limits & SIMD | Students aiming for low-latency systems & HFT | C++, AVX2/512, OpenMP, `perf` |
+| **Option 3: Hybrid MPI PM Solver** | Distributed Clusters & Spectral PDEs | Students aiming for supercomputing & astrophysics | C++, MPI, OpenMP, FFTW3, Slurm |
