@@ -1,31 +1,18 @@
 [
   {
     "listing": "/reference/index.html",
-    "items": [
-      "/reference/sources-and-bibliography.html",
-      "/reference/linux-and-compilers-guide.html"
-    ]
+    "items": []
   },
   {
     "listing": "/problems/index.html",
-    "items": [
-      "/problems/project-1-poisson-solver.html",
-      "/problems/assignment-04-group-project.html"
-    ]
+    "items": []
   },
   {
     "listing": "/simulations/index.html",
-    "items": [
-      "/simulations/hpc-pde-solvers-cpp-fortran.html",
-      "/simulations/interactive-2d-wave-and-ripple.html"
-    ]
+    "items": []
   },
   {
     "listing": "/notes/index.html",
-    "items": [
-      "/notes/finite-difference-pdes.html",
-      "/notes/openmp-and-multithreading.html",
-      "/notes/syllabus.html"
-    ]
+    "items": []
   }
 ]

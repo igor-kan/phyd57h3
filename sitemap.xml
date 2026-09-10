@@ -1,59 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://igor-kan.github.io/phyd57h3/notes/openmp-and-multithreading.html</loc>
-    <lastmod>2026-09-08T22:38:42.170Z</lastmod>
-  </url>
-  <url>
-    <loc>https://igor-kan.github.io/phyd57h3/notes/finite-difference-pdes.html</loc>
-    <lastmod>2026-09-08T22:38:42.170Z</lastmod>
-  </url>
-  <url>
-    <loc>https://igor-kan.github.io/phyd57h3/reference/sources-and-bibliography.html</loc>
-    <lastmod>2026-09-08T22:38:42.170Z</lastmod>
-  </url>
-  <url>
     <loc>https://igor-kan.github.io/phyd57h3/reference/index.html</loc>
-    <lastmod>2026-09-08T22:38:42.170Z</lastmod>
-  </url>
-  <url>
-    <loc>https://igor-kan.github.io/phyd57h3/simulations/hpc-pde-solvers-cpp-fortran.html</loc>
-    <lastmod>2026-09-08T22:38:42.170Z</lastmod>
-  </url>
-  <url>
-    <loc>https://igor-kan.github.io/phyd57h3/problems/project-1-poisson-solver.html</loc>
-    <lastmod>2026-09-08T22:38:42.170Z</lastmod>
+    <lastmod>2026-09-10T14:51:04.016Z</lastmod>
   </url>
   <url>
     <loc>https://igor-kan.github.io/phyd57h3/problems/index.html</loc>
-    <lastmod>2026-09-08T22:38:42.170Z</lastmod>
+    <lastmod>2026-09-10T14:51:04.016Z</lastmod>
   </url>
   <url>
     <loc>https://igor-kan.github.io/phyd57h3/index.html</loc>
-    <lastmod>2026-09-08T22:38:42.170Z</lastmod>
-  </url>
-  <url>
-    <loc>https://igor-kan.github.io/phyd57h3/problems/assignment-04-group-project.html</loc>
-    <lastmod>2026-09-08T22:38:42.170Z</lastmod>
+    <lastmod>2026-09-10T14:51:04.015Z</lastmod>
   </url>
   <url>
     <loc>https://igor-kan.github.io/phyd57h3/simulations/index.html</loc>
-    <lastmod>2026-09-08T22:38:42.171Z</lastmod>
-  </url>
-  <url>
-    <loc>https://igor-kan.github.io/phyd57h3/simulations/interactive-2d-wave-and-ripple.html</loc>
-    <lastmod>2026-09-08T22:38:42.171Z</lastmod>
-  </url>
-  <url>
-    <loc>https://igor-kan.github.io/phyd57h3/reference/linux-and-compilers-guide.html</loc>
-    <lastmod>2026-09-08T22:38:42.170Z</lastmod>
+    <lastmod>2026-09-10T14:51:04.016Z</lastmod>
   </url>
   <url>
     <loc>https://igor-kan.github.io/phyd57h3/notes/index.html</loc>
-    <lastmod>2026-09-08T22:38:42.170Z</lastmod>
-  </url>
-  <url>
-    <loc>https://igor-kan.github.io/phyd57h3/notes/syllabus.html</loc>
-    <lastmod>2026-09-08T22:38:42.170Z</lastmod>
+    <lastmod>2026-09-10T14:51:04.015Z</lastmod>
   </url>
 </urlset>
