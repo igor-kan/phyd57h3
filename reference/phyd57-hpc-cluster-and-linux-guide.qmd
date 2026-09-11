@@ -1,0 +1,341 @@
+---
+title: "PHYD57: HPC Infrastructure, Tech Stack, and Linux Guide"
+description: "A comprehensive overview of the technical tools, compiler toolchains, Linux distributions, SSH command options, cluster navigation, and FTP/SFTP file transfers used in Advanced Computational Methods in Physics."
+date: "2026-09-11"
+categories: [HPC, Linux, Physics, Compilers, Systems, SSH]
+---
+
+**PHYD57H3: Advanced Computational Methods in Physics** bridges the gap between theoretical physics and high-performance scientific computing. Successfully navigating the course requires more than just understanding mathematical models—it demands a solid grasp of the underlying infrastructure, from Linux distributions to compiler toolchains, SSH mechanics, and remote file manipulation.
+
+This guide provides an end-to-end technical reference covering:
+1. The curriculum tech stack and compiler toolchains.
+2. An architectural comparison of Linux distributions (why Rocky Linux is preferred over Ubuntu/Arch for HPC).
+3. The anatomy of the `ssh` command and all essential connection options.
+4. An analysis of the filesystem artifacts on the university's `art-1` cluster.
+5. Techniques for viewing and editing remote files locally (SSHFS, VS Code glibc workarounds, `screen`).
+6. Bidirectional file transfers via SCP, Rsync, and graphical/CLI FTP and SFTP.
+
+---
+
+## 1. The Curriculum Tech Stack
+
+To run physics simulations efficiently (such as Monte Carlo methods, Eulerian/Lagrangian fluid dynamics, and N-body gravitational solvers), the course relies on a specialized high-performance stack:
+
+### Programming Languages
+*   **C / C++**: Used for low-level memory control and multi-dimensional array manipulation. You will learn to write high-performance C routines and call them directly from Python wrappers.
+*   **Fortran (F95 / 2008)**: Far from a dead language, modern Fortran remains unparalleled in contiguous numerical array operations and scientific computing. The course emphasizes modern syntax (lowercase, no legacy ALL CAPS).
+*   **Python 3**: Utilized as a high-level scripting glue to steer simulations, parse output files, and generate interactive plots.
+
+### High-Performance Computing (HPC) & Parallelization
+Modern scientific computing is impossible without parallel computing APIs:
+*   **OpenMP**: Used for CPU shared-memory multithreading (fork-join parallelism) in both C and Fortran loops.
+*   **CUDA (C/C++ & Fortran)**: NVIDIA's parallel computing platform for GPU acceleration, used to scale tasks like fluid dynamics, Poisson solvers, and Fourier transforms.
+*   **MPI (Message Passing Interface)**: The industry standard for distributed-memory parallelization across networked supercomputing cluster nodes.
+
+### Enterprise Compilers
+You will work across several enterprise compiler toolchains:
+*   `gcc` / `g++` (GNU C/C++ Compiler)
+*   `gfortran` (GNU Fortran Compiler)
+*   `ifort` / `ifx` (Intel OneAPI Fortran Compiler)
+*   `nvcc` / `nvfortran` (NVIDIA CUDA HPC Compilers)
+
+### CLI Environment & Graphics
+*   **Shells**: `bash` and `tcsh`.
+*   **Terminal Editors**: `vim` and `nano`.
+*   **Scientific Graphics**: **DISLIN**, a high-level data plotting library linked into C and Fortran programs.
+
+---
+
+## 2. Comparing Linux Distributions: Why Rocky Linux?
+
+The UTSC computing clusters span multiple generations: the legacy node `art-1` runs on **CentOS 6.6**, while the modern node `art-16` runs on **Rocky Linux 9.6**. If you plan to set up a local Virtual Machine, dual-boot, or WSL environment, here is how the relevant distributions compare:
+
+### The Red Hat Family (The HPC Supercomputing Standard)
+These distributions share the same core architecture, `.rpm` binary package format, and `dnf`/`yum` package managers.
+*   **RHEL (Red Hat Enterprise Linux)**: The commercial standard for enterprise computing, government laboratories, and supercomputing clusters. Engineered for decade-long stability and binary reproducibility.
+*   **Rocky Linux**: A 100% free, bug-for-bug downstream clone of RHEL. Following Red Hat's deprecation of standard CentOS, Rocky Linux emerged to preserve enterprise-grade stability without licensing costs. **This is why UTSC runs Rocky Linux 9.6 on `art-16`.**
+*   **Fedora**: The upstream rapid-release proving ground for Red Hat. It receives experimental features, cutting-edge kernels, and new GCC releases every 6 months. Excellent for desktop workstations, but too volatile for reproducible physics research.
+
+### Alternative Distributions
+*   **Ubuntu (Debian-based)**: The most popular general-purpose distro, using `.deb` packages and `apt`. While excellent for web servers and personal development, its package names, configuration hierarchies, and system libraries differ from the Red Hat ecosystem used on university clusters.
+*   **Arch Linux**: An ultra-bleeding-edge rolling release distribution. It has no frozen release versions and receives daily package updates. While favored by power users, Arch is the opposite of an HPC cluster, where compiler and library versions must remain frozen to ensure numerical reproducibility across academic terms.
+
+> [!TIP]
+> **Recommended Local Environment**
+> For your laptop (via WSL2 or VirtualBox), install **Rocky Linux 9**. This guarantees 1:1 command, compiler, and package manager (`dnf`) parity with the university's modern compute nodes.
+
+---
+
+## 3. The `ssh` Command & Connection Options Deep-Dive
+
+Secure Shell (**SSH**) is the standard protocol for encrypted terminal access over untrusted networks. The fundamental syntax is:
+
+```bash
+ssh [options] [user@]hostname [command]
+```
+
+To connect to the UTSC cluster node `art-1`, you run:
+```bash
+ssh -X -o HostKeyAlgorithms=+ssh-dss phyd57@art-1.utsc.utoronto.ca
+```
+
+### Dissecting the Command and Options
+
+| Option / Flag | Purpose & Technical Mechanism |
+| :--- | :--- |
+| `phyd57@art-1.utsc.utoronto.ca` | Specifies the remote user account (`phyd57`) and fully qualified domain name (FQDN) of the server. |
+| `-o HostKeyAlgorithms=+ssh-dss` | **Mandatory for `art-1`**. Tells the local OpenSSH client to accept legacy Digital Signature Algorithm (**DSA**) host keys. |
+| `-X` | Enables **X11 Forwarding** with security extensions (untrusted mode). Forwards graphical windows (e.g., DISLIN plots) back to your local display. |
+| `-Y` | Enables **Trusted X11 Forwarding**. Bypasses security restrictions; required if complex GUI programs crash under `-X`. |
+| `-p <port>` | Specifies the remote SSH port (default is `22`). Example: `ssh -p 22 user@host`. |
+| `-C` | Enables **gzip compression** on all data streams (stdin, stdout, stderr, and X11). Dramatically improves responsiveness over slow Wi-Fi. |
+| `-i <identity_file>` | Passes a private key file for key-based authentication instead of typing a password. Example: `ssh -i ~/.ssh/id_rsa user@host`. |
+| `-t` | Forces pseudo-terminal allocation. Essential when launching interactive screen/tmux sessions or jumping between nodes. |
+| `-o ServerAliveInterval=60` | Sends a keepalive null packet every 60 seconds to prevent network firewalls or NAT routers from dropping idle sessions. |
+| `-o ServerAliveCountMax=3` | Drops connection only if 3 consecutive keepalive packets fail to return an acknowledgment. |
+
+#### Why Is `-o HostKeyAlgorithms=+ssh-dss` Required on `art-1`?
+CentOS 6.6 runs an older OpenSSH server daemon (`sshd`) that advertises host identity using 1024-bit DSA keys (`ssh-dss`). Modern OpenSSH client releases (version 7.0 and later) deprecated and disabled `ssh-dss` out-of-the-box due to known cryptographic weaknesses in 1024-bit discrete logarithm implementations.
+
+Without `-o HostKeyAlgorithms=+ssh-dss`, modern clients immediately abort the handshake with:
+```text
+Unable to negotiate with 142.1.xxx.xxx port 22: no matching host key type found. Their offer: ssh-dss
+```
+The `+` sign instructs your local client to append `ssh-dss` to its allowed list of host key algorithms for this session.
+
+### Streamlining with `~/.ssh/config`
+Rather than typing long flags each time, configure a profile in `~/.ssh/config`:
+
+```bash
+nano ~/.ssh/config
+```
+
+Add the following block:
+```ssh-config
+Host art-1
+    HostName art-1.utsc.utoronto.ca
+    User phyd57
+    HostKeyAlgorithms +ssh-dss
+    ForwardX11 yes
+    Compression yes
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+
+Host art-16
+    HostName art-16.utsc.utoronto.ca
+    User phyd57
+    ForwardX11 yes
+    ServerAliveInterval 60
+```
+
+Set strict file permissions:
+```bash
+chmod 600 ~/.ssh/config
+```
+
+Now, connecting to either cluster is as simple as:
+```bash
+ssh art-1
+# or
+ssh art-16
+```
+
+---
+
+## 4. Filesystem Artifacts on `art-1` (`ll` Breakdown)
+
+Listing the root directory of `/home/phyd57` reveals the course history and shared resources:
+
+```text
+[phyd57@art-1 ~]$ ll
+total 293180
+drwx------  4 phyd57 phyd57     36864 Dec 30  2017 6994
+-rw-------  1 phyd57 phyd57         0 Nov  7  2019 A3.c
+drwx------  6 phyd57 phyd57      4096 Nov 26  2019 A4FFTSolver
+-rw-------  1 phyd57 phyd57        13 Sep 14  2019 DO NOT OPEN
+-rw-------  1 phyd57 phyd57       429 Sep 12  2020 T1.1.py
+drwx------  2 phyd57 phyd57      4096 Sep  6  2019 TA
+-rwx------  1 phyd57 phyd57     12912 Nov  9  2019 a3
+-rw-------  1 phyd57 phyd57      4587 Nov  9  2019 a3.c
+drwxrwxr-x  7 phyd57 phyd57     36864 Dec  3  2019 avx
+-rwx------  1 phyd57 root      629895 Nov  9  2019 bandwidthTest
+drwx------  2 phyd57 phyd57      4096 Sep 21  2019 bks
+-rw-------  1 phyd57 phyd57 297134160 Jan  5  2019 cm_re.zip
+-rwx------  1 phyd57 root      609556 Nov  9  2019 deviceQuery
+drwx------  2 phyd57 phyd57      4096 Apr  4  2017 dislin
+drwx------  2 phyd57 phyd57      4096 Nov 16  2019 fft
+-rw-------  1 phyd57 phyd57        34 Sep 14  2019 file1.txt
+-rw-------  1 phyd57 phyd57        21 Jan 25  2017 file_w_strings.txt
+-r--r--r--  1 phyd57 phyd57      8031 Dec 13  2024 finalD57-Q-2024.txt
+drwx------  2 phyd57 phyd57      4096 Sep 21  2019 findat
+drwx------  4 phyd57 phyd57      4096 Feb  8  2017 game
+-rwx------  1 phyd57 phyd57      8480 Sep  5  2020 hello
+-rw-------  1 phyd57 phyd57        79 Sep  5  2020 hello.c
+drwxrwxr-x  2 phyd57 phyd57      4096 Sep 11 13:30 igor-dir
+drwx------  2 phyd57 phyd57      4096 Sep 21  2019 imag
+drwx------  2 phyd57 phyd57      4096 Sep 23  2020 math
+drwxr-xr-x  4 phyd57 phyd57     20480 Apr 18  2017 mie
+-rw-------  1 phyd57 phyd57      5511 Sep 16  2020 my_assignment1.py
+-rwx------  1 phyd57 root     1480788 Nov  9  2019 nbody
+-rw-------  1 phyd57 phyd57        10 Mar 15  2017 old..vimrc
+-r-xr--r--  1 phyd57 phyd57      3675 Dec 13  2024 prob4_w_issue.f95
+-r-x------  1 phyd57 phyd57     51832 Dec 12  2018 prob4_w_issue.x
+drwxr-xr-x  6 phyd57 phyd57     36864 Dec 30  2017 progD57
+drwxrwxr-x  2 phyd57 phyd57      4096 Oct  2  2020 sandbox
+drwx------ 11 phyd57 phyd57      4096 Sep  6  2019 stud1
+-rwx------  1 phyd57 phyd57     12896 Nov  9  2019 t1
+-rw-------  1 phyd57 phyd57       312 Sep 12  2020 t1.1.py
+-rw-------  1 phyd57 phyd57      4245 Nov  9  2019 t1.c
+-rw-------  1 phyd57 phyd57        80 Sep  7  2019 test.f90
+-rw-------  1 phyd57 phyd57        79 Sep  7  2019 test.f90.save
+-rw-------  1 phyd57 phyd57       242 Sep 12  2020 tut2.py
+```
+
+### Artifact Catalog
+1. **Isolated Workspace (`igor-dir/`):** Personal workspace directory. Because `phyd57` is a shared cohort user account, **always conduct work inside your designated folder** to avoid modifying shared files or other students' assignments.
+2. **Assignments & Code:**
+   * `A3.c`, `a3`, `a3.c`: Assignment 3 C source and compiled ELF binaries.
+   * `A4FFTSolver/`: Group project directory for Fast Fourier Transform gravitational potential solvers.
+   * `my_assignment1.py`: Python reference implementation for Assignment 1.
+   * `prob4_w_issue.f95` & `prob4_w_issue.x`: Fortran 95 code demonstrating segmentation faults caused by exceeding stack size limits with static array allocations.
+3. **GPU & HPC Diagnostics:**
+   * `deviceQuery` & `bandwidthTest`: Standard NVIDIA CUDA SDK binaries compiled with `nvcc`. They query device capability, CUDA core counts, and PCIe memory bandwidth.
+   * `avx/`: Test directory for Advanced Vector Extensions (AVX) SIMD compiler vectorization.
+   * `nbody`: Compiled parallel N-body simulation binary.
+4. **Reference Scripts & Exam Prompts:**
+   * `dislin/`: Local installation of the DISLIN scientific graphics library.
+   * `finalD57-Q-2024.txt`: Programming prompt text file from the December 2024 final exam.
+   * `old..vimrc`: Legacy Vim editor configuration file.
+
+---
+
+## 5. Local Viewing & Editing of Remote Code
+
+Developing directly over terminal SSH using basic Vim or Nano can slow down debugging. Here is how to view and edit files using modern local developer tools:
+
+### Method 1: SSHFS (Virtual Directory Mount) — *Recommended*
+**SSHFS** mounts the remote cluster folder directly into your local filesystem over SFTP, allowing you to open remote files in local VS Code, Cursor, or Neovim with full language server protocol (LSP) support.
+
+```bash
+# 1. Create a local mount directory
+mkdir -p ~/mounts/art-1
+
+# 2. Mount using your ~/.ssh/config alias
+sshfs art-1:/home/phyd57 ~/mounts/art-1 -o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3
+
+# 3. Open your personal folder in local VS Code
+code ~/mounts/art-1/igor-dir
+
+# 4. Unmount cleanly when finished
+fusermount -u ~/mounts/art-1
+```
+
+*(macOS users: install via `brew install macfuse gromgit/fuse/sshfs-mac` and unmount using `umount ~/mounts/art-1`).*
+
+### Method 2: VS Code "SSH FS" (Bypassing CentOS 6 Glibc Limits)
+The official **VS Code Remote - SSH** extension automatically deploys a remote Node.js server agent that requires **glibc 2.28+**. Because CentOS 6.6 ships with **glibc 2.12**, the extension crashes with:
+```text
+/lib64/libc.so.6: version `GLIBC_2.28' not found
+```
+
+**The Solution:**
+Install the client-side **SSH FS** extension (`HuFlungDu.ssh-fs` or `liximomo.sftp`). This extension runs pure SFTP from your local machine, allowing file browsing and editing inside VS Code without requiring modern glibc libraries on the cluster.
+
+### Method 3: Terminal Persistence with `screen`
+If you edit directly inside the remote shell, protect long-running compilations and simulations against network drops using `screen`:
+```bash
+# Start a detached-capable session
+screen -S simulation_run
+
+# Compile and execute
+make && ./nbody
+
+# Detach session: Press Ctrl+A, then D
+# Reattach later:
+screen -r simulation_run
+```
+
+---
+
+## 6. Bidirectional File Transfers & FTP/SFTP
+
+Moving files, datasets, and plots between your computer and `art-1` can be done via CLI or graphical interfaces.
+
+### 1. `scp` (Secure Copy Protocol)
+* **Download a file to your local directory:**
+  ```bash
+  scp art-1:~/finalD57-Q-2024.txt ./
+  ```
+* **Download your entire workspace recursively:**
+  ```bash
+  scp -r art-1:~/igor-dir ./backup_igor_dir/
+  ```
+* **Upload source code to your cluster folder:**
+  ```bash
+  scp ./my_solver.c art-1:~/igor-dir/
+  ```
+
+### 2. `rsync` (Differential Fast Synchronization)
+`rsync` only transfers binary delta changes, making it far superior to `scp` for recurring project backups:
+```bash
+# Pull remote updates to local folder
+rsync -avzP art-1:~/igor-dir/ ./local_igor_dir/
+
+# Push local edits to cluster
+rsync -avzP ./local_igor_dir/ art-1:~/igor-dir/
+```
+
+### 3. FTP & SFTP (GUI & CLI)
+Because `art-1` blocks unencrypted FTP (port 21), all FTP transfers must use **SFTP (SSH File Transfer Protocol)** over port 22.
+
+#### Graphical FTP Clients (FileZilla, WinSCP, Cyberduck)
+1. **Protocol:** Select **SFTP - SSH File Transfer Protocol** (Do *not* choose FTP).
+2. **Host:** `art-1.utsc.utoronto.ca`
+3. **Port:** `22`
+4. **User:** `phyd57`
+5. **Password:** `[Password provided in lecture / saved in course private draft]`
+
+> [!NOTE]
+> **GUI Client Legacy Host Key Note:**
+> Because of CentOS 6.6's legacy DSA host keys, strictly updated FTP clients (such as latest FileZilla) may drop the connection. If this occurs, enable legacy host keys under FileZilla's SFTP settings, or use **WinSCP** (Windows) or **Cyberduck** (macOS/Windows), which negotiate legacy ciphers automatically.
+
+#### Interactive Command-Line `sftp`
+```bash
+sftp art-1
+```
+* `ls` / `lls` : List remote / local directory contents.
+* `cd <dir>` / `lcd <dir>` : Change remote / local directory.
+* `get <remote-file>` : Download file.
+* `put <local-file>` : Upload file.
+* `exit` : Quit session.
+
+---
+
+## 7. Automated Local Backup Script
+
+To safeguard your work inside `igor-dir/`, save this script locally as `sync_art1.sh`:
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+REMOTE_HOST="art-1"
+REMOTE_PATH="~/igor-dir/"
+LOCAL_BACKUP_DIR="${HOME}/backups/phyd57/$(date +%Y-%m-%d)"
+
+mkdir -p "${LOCAL_BACKUP_DIR}"
+
+echo "Syncing ${REMOTE_HOST}:${REMOTE_PATH} to ${LOCAL_BACKUP_DIR}..."
+rsync -avzP \
+  --exclude="*.x" \
+  --exclude="*.o" \
+  "${REMOTE_HOST}:${REMOTE_PATH}" "${LOCAL_BACKUP_DIR}/"
+
+echo "Backup complete at $(date)."
+```
+
+Run with:
+```bash
+chmod +x sync_art1.sh
+./sync_art1.sh
+```
