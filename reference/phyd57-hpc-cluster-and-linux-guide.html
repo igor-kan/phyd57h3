@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-09-11">
+<meta name="description" content="A comprehensive overview of the technical tools, compiler toolchains, Linux distributions, SSH command options, cluster navigation, and FTP/SFTP file transfers used in Advanced Computational Methods in Physics.">
+
+<title>PHYD57: HPC Infrastructure, Tech Stack, and Linux Guide – PHYD57H3: Advanced Computational Methods in Physics</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-89af0c2d685ccb09a4d7d65decb66752.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-34dbf897b697f50edbbc4554a08e61a3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-89af0c2d685ccb09a4d7d65decb66752.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">PHYD57H3: Advanced Computational Methods in Physics</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../notes/index.html"> 
+<span class="menu-text">Lecture Notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../problems/index.html"> 
+<span class="menu-text">Problem Sets</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../simulations/index.html"> 
+<span class="menu-text">Code &amp; Simulations</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reference/index.html"> 
+<span class="menu-text">Reference &amp; Math</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-curriculum-tech-stack" id="toc-the-curriculum-tech-stack" class="nav-link active" data-scroll-target="#the-curriculum-tech-stack">1. The Curriculum Tech Stack</a>
+  <ul class="collapse">
+  <li><a href="#programming-languages" id="toc-programming-languages" class="nav-link" data-scroll-target="#programming-languages">Programming Languages</a></li>
+  <li><a href="#high-performance-computing-hpc-parallelization" id="toc-high-performance-computing-hpc-parallelization" class="nav-link" data-scroll-target="#high-performance-computing-hpc-parallelization">High-Performance Computing (HPC) &amp; Parallelization</a></li>
+  <li><a href="#enterprise-compilers" id="toc-enterprise-compilers" class="nav-link" data-scroll-target="#enterprise-compilers">Enterprise Compilers</a></li>
+  <li><a href="#cli-environment-graphics" id="toc-cli-environment-graphics" class="nav-link" data-scroll-target="#cli-environment-graphics">CLI Environment &amp; Graphics</a></li>
+  </ul></li>
+  <li><a href="#comparing-linux-distributions-why-rocky-linux" id="toc-comparing-linux-distributions-why-rocky-linux" class="nav-link" data-scroll-target="#comparing-linux-distributions-why-rocky-linux">2. Comparing Linux Distributions: Why Rocky Linux?</a>
+  <ul class="collapse">
+  <li><a href="#the-red-hat-family-the-hpc-supercomputing-standard" id="toc-the-red-hat-family-the-hpc-supercomputing-standard" class="nav-link" data-scroll-target="#the-red-hat-family-the-hpc-supercomputing-standard">The Red Hat Family (The HPC Supercomputing Standard)</a></li>
+  <li><a href="#alternative-distributions" id="toc-alternative-distributions" class="nav-link" data-scroll-target="#alternative-distributions">Alternative Distributions</a></li>
+  </ul></li>
+  <li><a href="#the-ssh-command-connection-options-deep-dive" id="toc-the-ssh-command-connection-options-deep-dive" class="nav-link" data-scroll-target="#the-ssh-command-connection-options-deep-dive">3. The <code>ssh</code> Command &amp; Connection Options Deep-Dive</a>
+  <ul class="collapse">
+  <li><a href="#dissecting-the-command-and-options" id="toc-dissecting-the-command-and-options" class="nav-link" data-scroll-target="#dissecting-the-command-and-options">Dissecting the Command and Options</a></li>
+  <li><a href="#streamlining-with-.sshconfig" id="toc-streamlining-with-.sshconfig" class="nav-link" data-scroll-target="#streamlining-with-.sshconfig">Streamlining with <code>~/.ssh/config</code></a></li>
+  </ul></li>
+  <li><a href="#filesystem-artifacts-on-art-1-ll-breakdown" id="toc-filesystem-artifacts-on-art-1-ll-breakdown" class="nav-link" data-scroll-target="#filesystem-artifacts-on-art-1-ll-breakdown">4. Filesystem Artifacts on <code>art-1</code> (<code>ll</code> Breakdown)</a>
+  <ul class="collapse">
+  <li><a href="#artifact-catalog" id="toc-artifact-catalog" class="nav-link" data-scroll-target="#artifact-catalog">Artifact Catalog</a></li>
+  </ul></li>
+  <li><a href="#local-viewing-editing-of-remote-code" id="toc-local-viewing-editing-of-remote-code" class="nav-link" data-scroll-target="#local-viewing-editing-of-remote-code">5. Local Viewing &amp; Editing of Remote Code</a>
+  <ul class="collapse">
+  <li><a href="#method-1-sshfs-virtual-directory-mount-recommended" id="toc-method-1-sshfs-virtual-directory-mount-recommended" class="nav-link" data-scroll-target="#method-1-sshfs-virtual-directory-mount-recommended">Method 1: SSHFS (Virtual Directory Mount) — <em>Recommended</em></a></li>
+  <li><a href="#method-2-vs-code-ssh-fs-bypassing-centos-6-glibc-limits" id="toc-method-2-vs-code-ssh-fs-bypassing-centos-6-glibc-limits" class="nav-link" data-scroll-target="#method-2-vs-code-ssh-fs-bypassing-centos-6-glibc-limits">Method 2: VS Code “SSH FS” (Bypassing CentOS 6 Glibc Limits)</a></li>
+  <li><a href="#method-3-terminal-persistence-with-screen" id="toc-method-3-terminal-persistence-with-screen" class="nav-link" data-scroll-target="#method-3-terminal-persistence-with-screen">Method 3: Terminal Persistence with <code>screen</code></a></li>
+  </ul></li>
+  <li><a href="#bidirectional-file-transfers-ftpsftp" id="toc-bidirectional-file-transfers-ftpsftp" class="nav-link" data-scroll-target="#bidirectional-file-transfers-ftpsftp">6. Bidirectional File Transfers &amp; FTP/SFTP</a>
+  <ul class="collapse">
+  <li><a href="#scp-secure-copy-protocol" id="toc-scp-secure-copy-protocol" class="nav-link" data-scroll-target="#scp-secure-copy-protocol">1. <code>scp</code> (Secure Copy Protocol)</a></li>
+  <li><a href="#rsync-differential-fast-synchronization" id="toc-rsync-differential-fast-synchronization" class="nav-link" data-scroll-target="#rsync-differential-fast-synchronization">2. <code>rsync</code> (Differential Fast Synchronization)</a></li>
+  <li><a href="#ftp-sftp-gui-cli" id="toc-ftp-sftp-gui-cli" class="nav-link" data-scroll-target="#ftp-sftp-gui-cli">3. FTP &amp; SFTP (GUI &amp; CLI)</a></li>
+  </ul></li>
+  <li><a href="#automated-local-backup-script" id="toc-automated-local-backup-script" class="nav-link" data-scroll-target="#automated-local-backup-script">7. Automated Local Backup Script</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">PHYD57: HPC Infrastructure, Tech Stack, and Linux Guide</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+  <div class="quarto-categories">
+    <div class="quarto-category">HPC</div>
+    <div class="quarto-category">Linux</div>
+    <div class="quarto-category">Physics</div>
+    <div class="quarto-category">Compilers</div>
+    <div class="quarto-category">Systems</div>
+    <div class="quarto-category">SSH</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    A comprehensive overview of the technical tools, compiler toolchains, Linux distributions, SSH command options, cluster navigation, and FTP/SFTP file transfers used in Advanced Computational Methods in Physics.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2026-09-11</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><strong>PHYD57H3: Advanced Computational Methods in Physics</strong> bridges the gap between theoretical physics and high-performance scientific computing. Successfully navigating the course requires more than just understanding mathematical models—it demands a solid grasp of the underlying infrastructure, from Linux distributions to compiler toolchains, SSH mechanics, and remote file manipulation.</p>
+<p>This guide provides an end-to-end technical reference covering: 1. The curriculum tech stack and compiler toolchains. 2. An architectural comparison of Linux distributions (why Rocky Linux is preferred over Ubuntu/Arch for HPC). 3. The anatomy of the <code>ssh</code> command and all essential connection options. 4. An analysis of the filesystem artifacts on the university’s <code>art-1</code> cluster. 5. Techniques for viewing and editing remote files locally (SSHFS, VS Code glibc workarounds, <code>screen</code>). 6. Bidirectional file transfers via SCP, Rsync, and graphical/CLI FTP and SFTP.</p>
+<hr>
+<section id="the-curriculum-tech-stack" class="level2">
+<h2 class="anchored" data-anchor-id="the-curriculum-tech-stack">1. The Curriculum Tech Stack</h2>
+<p>To run physics simulations efficiently (such as Monte Carlo methods, Eulerian/Lagrangian fluid dynamics, and N-body gravitational solvers), the course relies on a specialized high-performance stack:</p>
+<section id="programming-languages" class="level3">
+<h3 class="anchored" data-anchor-id="programming-languages">Programming Languages</h3>
+<ul>
+<li><strong>C / C++</strong>: Used for low-level memory control and multi-dimensional array manipulation. You will learn to write high-performance C routines and call them directly from Python wrappers.</li>
+<li><strong>Fortran (F95 / 2008)</strong>: Far from a dead language, modern Fortran remains unparalleled in contiguous numerical array operations and scientific computing. The course emphasizes modern syntax (lowercase, no legacy ALL CAPS).</li>
+<li><strong>Python 3</strong>: Utilized as a high-level scripting glue to steer simulations, parse output files, and generate interactive plots.</li>
+</ul>
+</section>
+<section id="high-performance-computing-hpc-parallelization" class="level3">
+<h3 class="anchored" data-anchor-id="high-performance-computing-hpc-parallelization">High-Performance Computing (HPC) &amp; Parallelization</h3>
+<p>Modern scientific computing is impossible without parallel computing APIs: * <strong>OpenMP</strong>: Used for CPU shared-memory multithreading (fork-join parallelism) in both C and Fortran loops. * <strong>CUDA (C/C++ &amp; Fortran)</strong>: NVIDIA’s parallel computing platform for GPU acceleration, used to scale tasks like fluid dynamics, Poisson solvers, and Fourier transforms. * <strong>MPI (Message Passing Interface)</strong>: The industry standard for distributed-memory parallelization across networked supercomputing cluster nodes.</p>
+</section>
+<section id="enterprise-compilers" class="level3">
+<h3 class="anchored" data-anchor-id="enterprise-compilers">Enterprise Compilers</h3>
+<p>You will work across several enterprise compiler toolchains: * <code>gcc</code> / <code>g++</code> (GNU C/C++ Compiler) * <code>gfortran</code> (GNU Fortran Compiler) * <code>ifort</code> / <code>ifx</code> (Intel OneAPI Fortran Compiler) * <code>nvcc</code> / <code>nvfortran</code> (NVIDIA CUDA HPC Compilers)</p>
+</section>
+<section id="cli-environment-graphics" class="level3">
+<h3 class="anchored" data-anchor-id="cli-environment-graphics">CLI Environment &amp; Graphics</h3>
+<ul>
+<li><strong>Shells</strong>: <code>bash</code> and <code>tcsh</code>.</li>
+<li><strong>Terminal Editors</strong>: <code>vim</code> and <code>nano</code>.</li>
+<li><strong>Scientific Graphics</strong>: <strong>DISLIN</strong>, a high-level data plotting library linked into C and Fortran programs.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="comparing-linux-distributions-why-rocky-linux" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-linux-distributions-why-rocky-linux">2. Comparing Linux Distributions: Why Rocky Linux?</h2>
+<p>The UTSC computing clusters span multiple generations: the legacy node <code>art-1</code> runs on <strong>CentOS 6.6</strong>, while the modern node <code>art-16</code> runs on <strong>Rocky Linux 9.6</strong>. If you plan to set up a local Virtual Machine, dual-boot, or WSL environment, here is how the relevant distributions compare:</p>
+<section id="the-red-hat-family-the-hpc-supercomputing-standard" class="level3">
+<h3 class="anchored" data-anchor-id="the-red-hat-family-the-hpc-supercomputing-standard">The Red Hat Family (The HPC Supercomputing Standard)</h3>
+<p>These distributions share the same core architecture, <code>.rpm</code> binary package format, and <code>dnf</code>/<code>yum</code> package managers. * <strong>RHEL (Red Hat Enterprise Linux)</strong>: The commercial standard for enterprise computing, government laboratories, and supercomputing clusters. Engineered for decade-long stability and binary reproducibility. * <strong>Rocky Linux</strong>: A 100% free, bug-for-bug downstream clone of RHEL. Following Red Hat’s deprecation of standard CentOS, Rocky Linux emerged to preserve enterprise-grade stability without licensing costs. <strong>This is why UTSC runs Rocky Linux 9.6 on <code>art-16</code>.</strong> * <strong>Fedora</strong>: The upstream rapid-release proving ground for Red Hat. It receives experimental features, cutting-edge kernels, and new GCC releases every 6 months. Excellent for desktop workstations, but too volatile for reproducible physics research.</p>
+</section>
+<section id="alternative-distributions" class="level3">
+<h3 class="anchored" data-anchor-id="alternative-distributions">Alternative Distributions</h3>
+<ul>
+<li><strong>Ubuntu (Debian-based)</strong>: The most popular general-purpose distro, using <code>.deb</code> packages and <code>apt</code>. While excellent for web servers and personal development, its package names, configuration hierarchies, and system libraries differ from the Red Hat ecosystem used on university clusters.</li>
+<li><strong>Arch Linux</strong>: An ultra-bleeding-edge rolling release distribution. It has no frozen release versions and receives daily package updates. While favored by power users, Arch is the opposite of an HPC cluster, where compiler and library versions must remain frozen to ensure numerical reproducibility across academic terms.</li>
+</ul>
+<blockquote class="blockquote">
+<p>[!TIP] <strong>Recommended Local Environment</strong> For your laptop (via WSL2 or VirtualBox), install <strong>Rocky Linux 9</strong>. This guarantees 1:1 command, compiler, and package manager (<code>dnf</code>) parity with the university’s modern compute nodes.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="the-ssh-command-connection-options-deep-dive" class="level2">
+<h2 class="anchored" data-anchor-id="the-ssh-command-connection-options-deep-dive">3. The <code>ssh</code> Command &amp; Connection Options Deep-Dive</h2>
+<p>Secure Shell (<strong>SSH</strong>) is the standard protocol for encrypted terminal access over untrusted networks. The fundamental syntax is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="pp">[</span><span class="ss">options</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">user@</span><span class="pp">]</span>hostname <span class="pp">[</span><span class="ss">command</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>To connect to the UTSC cluster node <code>art-1</code>, you run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-X</span> <span class="at">-o</span> HostKeyAlgorithms=+ssh-dss phyd57@art-1.utsc.utoronto.ca</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="dissecting-the-command-and-options" class="level3">
+<h3 class="anchored" data-anchor-id="dissecting-the-command-and-options">Dissecting the Command and Options</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Option / Flag</th>
+<th style="text-align: left;">Purpose &amp; Technical Mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>phyd57@art-1.utsc.utoronto.ca</code></td>
+<td style="text-align: left;">Specifies the remote user account (<code>phyd57</code>) and fully qualified domain name (FQDN) of the server.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>-o HostKeyAlgorithms=+ssh-dss</code></td>
+<td style="text-align: left;"><strong>Mandatory for <code>art-1</code></strong>. Tells the local OpenSSH client to accept legacy Digital Signature Algorithm (<strong>DSA</strong>) host keys.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>-X</code></td>
+<td style="text-align: left;">Enables <strong>X11 Forwarding</strong> with security extensions (untrusted mode). Forwards graphical windows (e.g., DISLIN plots) back to your local display.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>-Y</code></td>
+<td style="text-align: left;">Enables <strong>Trusted X11 Forwarding</strong>. Bypasses security restrictions; required if complex GUI programs crash under <code>-X</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>-p &lt;port&gt;</code></td>
+<td style="text-align: left;">Specifies the remote SSH port (default is <code>22</code>). Example: <code>ssh -p 22 user@host</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>-C</code></td>
+<td style="text-align: left;">Enables <strong>gzip compression</strong> on all data streams (stdin, stdout, stderr, and X11). Dramatically improves responsiveness over slow Wi-Fi.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>-i &lt;identity_file&gt;</code></td>
+<td style="text-align: left;">Passes a private key file for key-based authentication instead of typing a password. Example: <code>ssh -i ~/.ssh/id_rsa user@host</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>-t</code></td>
+<td style="text-align: left;">Forces pseudo-terminal allocation. Essential when launching interactive screen/tmux sessions or jumping between nodes.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>-o ServerAliveInterval=60</code></td>
+<td style="text-align: left;">Sends a keepalive null packet every 60 seconds to prevent network firewalls or NAT routers from dropping idle sessions.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>-o ServerAliveCountMax=3</code></td>
+<td style="text-align: left;">Drops connection only if 3 consecutive keepalive packets fail to return an acknowledgment.</td>
+</tr>
+</tbody>
+</table>
+<section id="why-is--o-hostkeyalgorithmsssh-dss-required-on-art-1" class="level4">
+<h4 class="anchored" data-anchor-id="why-is--o-hostkeyalgorithmsssh-dss-required-on-art-1">Why Is <code>-o HostKeyAlgorithms=+ssh-dss</code> Required on <code>art-1</code>?</h4>
+<p>CentOS 6.6 runs an older OpenSSH server daemon (<code>sshd</code>) that advertises host identity using 1024-bit DSA keys (<code>ssh-dss</code>). Modern OpenSSH client releases (version 7.0 and later) deprecated and disabled <code>ssh-dss</code> out-of-the-box due to known cryptographic weaknesses in 1024-bit discrete logarithm implementations.</p>
+<p>Without <code>-o HostKeyAlgorithms=+ssh-dss</code>, modern clients immediately abort the handshake with:</p>
+<pre class="text"><code>Unable to negotiate with 142.1.xxx.xxx port 22: no matching host key type found. Their offer: ssh-dss</code></pre>
+<p>The <code>+</code> sign instructs your local client to append <code>ssh-dss</code> to its allowed list of host key algorithms for this session.</p>
+</section>
+</section>
+<section id="streamlining-with-.sshconfig" class="level3">
+<h3 class="anchored" data-anchor-id="streamlining-with-.sshconfig">Streamlining with <code>~/.ssh/config</code></h3>
+<p>Rather than typing long flags each time, configure a profile in <code>~/.ssh/config</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/.ssh/config</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Add the following block:</p>
+<pre class="ssh-config"><code>Host art-1
+    HostName art-1.utsc.utoronto.ca
+    User phyd57
+    HostKeyAlgorithms +ssh-dss
+    ForwardX11 yes
+    Compression yes
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+
+Host art-16
+    HostName art-16.utsc.utoronto.ca
+    User phyd57
+    ForwardX11 yes
+    ServerAliveInterval 60</code></pre>
+<p>Set strict file permissions:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 600 ~/.ssh/config</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now, connecting to either cluster is as simple as:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> art-1</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> art-16</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="filesystem-artifacts-on-art-1-ll-breakdown" class="level2">
+<h2 class="anchored" data-anchor-id="filesystem-artifacts-on-art-1-ll-breakdown">4. Filesystem Artifacts on <code>art-1</code> (<code>ll</code> Breakdown)</h2>
+<p>Listing the root directory of <code>/home/phyd57</code> reveals the course history and shared resources:</p>
+<pre class="text"><code>[phyd57@art-1 ~]$ ll
+total 293180
+drwx------  4 phyd57 phyd57     36864 Dec 30  2017 6994
+-rw-------  1 phyd57 phyd57         0 Nov  7  2019 A3.c
+drwx------  6 phyd57 phyd57      4096 Nov 26  2019 A4FFTSolver
+-rw-------  1 phyd57 phyd57        13 Sep 14  2019 DO NOT OPEN
+-rw-------  1 phyd57 phyd57       429 Sep 12  2020 T1.1.py
+drwx------  2 phyd57 phyd57      4096 Sep  6  2019 TA
+-rwx------  1 phyd57 phyd57     12912 Nov  9  2019 a3
+-rw-------  1 phyd57 phyd57      4587 Nov  9  2019 a3.c
+drwxrwxr-x  7 phyd57 phyd57     36864 Dec  3  2019 avx
+-rwx------  1 phyd57 root      629895 Nov  9  2019 bandwidthTest
+drwx------  2 phyd57 phyd57      4096 Sep 21  2019 bks
+-rw-------  1 phyd57 phyd57 297134160 Jan  5  2019 cm_re.zip
+-rwx------  1 phyd57 root      609556 Nov  9  2019 deviceQuery
+drwx------  2 phyd57 phyd57      4096 Apr  4  2017 dislin
+drwx------  2 phyd57 phyd57      4096 Nov 16  2019 fft
+-rw-------  1 phyd57 phyd57        34 Sep 14  2019 file1.txt
+-rw-------  1 phyd57 phyd57        21 Jan 25  2017 file_w_strings.txt
+-r--r--r--  1 phyd57 phyd57      8031 Dec 13  2024 finalD57-Q-2024.txt
+drwx------  2 phyd57 phyd57      4096 Sep 21  2019 findat
+drwx------  4 phyd57 phyd57      4096 Feb  8  2017 game
+-rwx------  1 phyd57 phyd57      8480 Sep  5  2020 hello
+-rw-------  1 phyd57 phyd57        79 Sep  5  2020 hello.c
+drwxrwxr-x  2 phyd57 phyd57      4096 Sep 11 13:30 igor-dir
+drwx------  2 phyd57 phyd57      4096 Sep 21  2019 imag
+drwx------  2 phyd57 phyd57      4096 Sep 23  2020 math
+drwxr-xr-x  4 phyd57 phyd57     20480 Apr 18  2017 mie
+-rw-------  1 phyd57 phyd57      5511 Sep 16  2020 my_assignment1.py
+-rwx------  1 phyd57 root     1480788 Nov  9  2019 nbody
+-rw-------  1 phyd57 phyd57        10 Mar 15  2017 old..vimrc
+-r-xr--r--  1 phyd57 phyd57      3675 Dec 13  2024 prob4_w_issue.f95
+-r-x------  1 phyd57 phyd57     51832 Dec 12  2018 prob4_w_issue.x
+drwxr-xr-x  6 phyd57 phyd57     36864 Dec 30  2017 progD57
+drwxrwxr-x  2 phyd57 phyd57      4096 Oct  2  2020 sandbox
+drwx------ 11 phyd57 phyd57      4096 Sep  6  2019 stud1
+-rwx------  1 phyd57 phyd57     12896 Nov  9  2019 t1
+-rw-------  1 phyd57 phyd57       312 Sep 12  2020 t1.1.py
+-rw-------  1 phyd57 phyd57      4245 Nov  9  2019 t1.c
+-rw-------  1 phyd57 phyd57        80 Sep  7  2019 test.f90
+-rw-------  1 phyd57 phyd57        79 Sep  7  2019 test.f90.save
+-rw-------  1 phyd57 phyd57       242 Sep 12  2020 tut2.py</code></pre>
+<section id="artifact-catalog" class="level3">
+<h3 class="anchored" data-anchor-id="artifact-catalog">Artifact Catalog</h3>
+<ol type="1">
+<li><strong>Isolated Workspace (<code>igor-dir/</code>):</strong> Personal workspace directory. Because <code>phyd57</code> is a shared cohort user account, <strong>always conduct work inside your designated folder</strong> to avoid modifying shared files or other students’ assignments.</li>
+<li><strong>Assignments &amp; Code:</strong>
+<ul>
+<li><code>A3.c</code>, <code>a3</code>, <code>a3.c</code>: Assignment 3 C source and compiled ELF binaries.</li>
+<li><code>A4FFTSolver/</code>: Group project directory for Fast Fourier Transform gravitational potential solvers.</li>
+<li><code>my_assignment1.py</code>: Python reference implementation for Assignment 1.</li>
+<li><code>prob4_w_issue.f95</code> &amp; <code>prob4_w_issue.x</code>: Fortran 95 code demonstrating segmentation faults caused by exceeding stack size limits with static array allocations.</li>
+</ul></li>
+<li><strong>GPU &amp; HPC Diagnostics:</strong>
+<ul>
+<li><code>deviceQuery</code> &amp; <code>bandwidthTest</code>: Standard NVIDIA CUDA SDK binaries compiled with <code>nvcc</code>. They query device capability, CUDA core counts, and PCIe memory bandwidth.</li>
+<li><code>avx/</code>: Test directory for Advanced Vector Extensions (AVX) SIMD compiler vectorization.</li>
+<li><code>nbody</code>: Compiled parallel N-body simulation binary.</li>
+</ul></li>
+<li><strong>Reference Scripts &amp; Exam Prompts:</strong>
+<ul>
+<li><code>dislin/</code>: Local installation of the DISLIN scientific graphics library.</li>
+<li><code>finalD57-Q-2024.txt</code>: Programming prompt text file from the December 2024 final exam.</li>
+<li><code>old..vimrc</code>: Legacy Vim editor configuration file.</li>
+</ul></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="local-viewing-editing-of-remote-code" class="level2">
+<h2 class="anchored" data-anchor-id="local-viewing-editing-of-remote-code">5. Local Viewing &amp; Editing of Remote Code</h2>
+<p>Developing directly over terminal SSH using basic Vim or Nano can slow down debugging. Here is how to view and edit files using modern local developer tools:</p>
+<section id="method-1-sshfs-virtual-directory-mount-recommended" class="level3">
+<h3 class="anchored" data-anchor-id="method-1-sshfs-virtual-directory-mount-recommended">Method 1: SSHFS (Virtual Directory Mount) — <em>Recommended</em></h3>
+<p><strong>SSHFS</strong> mounts the remote cluster folder directly into your local filesystem over SFTP, allowing you to open remote files in local VS Code, Cursor, or Neovim with full language server protocol (LSP) support.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Create a local mount directory</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/mounts/art-1</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Mount using your ~/.ssh/config alias</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">sshfs</span> art-1:/home/phyd57 ~/mounts/art-1 <span class="at">-o</span> reconnect,ServerAliveInterval=15,ServerAliveCountMax=3</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Open your personal folder in local VS Code</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> ~/mounts/art-1/igor-dir</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Unmount cleanly when finished</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="ex">fusermount</span> <span class="at">-u</span> ~/mounts/art-1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>(macOS users: install via <code>brew install macfuse gromgit/fuse/sshfs-mac</code> and unmount using <code>umount ~/mounts/art-1</code>).</em></p>
+</section>
+<section id="method-2-vs-code-ssh-fs-bypassing-centos-6-glibc-limits" class="level3">
+<h3 class="anchored" data-anchor-id="method-2-vs-code-ssh-fs-bypassing-centos-6-glibc-limits">Method 2: VS Code “SSH FS” (Bypassing CentOS 6 Glibc Limits)</h3>
+<p>The official <strong>VS Code Remote - SSH</strong> extension automatically deploys a remote Node.js server agent that requires <strong>glibc 2.28+</strong>. Because CentOS 6.6 ships with <strong>glibc 2.12</strong>, the extension crashes with:</p>
+<pre class="text"><code>/lib64/libc.so.6: version `GLIBC_2.28' not found</code></pre>
+<p><strong>The Solution:</strong> Install the client-side <strong>SSH FS</strong> extension (<code>HuFlungDu.ssh-fs</code> or <code>liximomo.sftp</code>). This extension runs pure SFTP from your local machine, allowing file browsing and editing inside VS Code without requiring modern glibc libraries on the cluster.</p>
+</section>
+<section id="method-3-terminal-persistence-with-screen" class="level3">
+<h3 class="anchored" data-anchor-id="method-3-terminal-persistence-with-screen">Method 3: Terminal Persistence with <code>screen</code></h3>
+<p>If you edit directly inside the remote shell, protect long-running compilations and simulations against network drops using <code>screen</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start a detached-capable session</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">screen</span> <span class="at">-S</span> simulation_run</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile and execute</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> <span class="kw">&amp;&amp;</span> <span class="ex">./nbody</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Detach session: Press Ctrl+A, then D</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Reattach later:</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="ex">screen</span> <span class="at">-r</span> simulation_run</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="bidirectional-file-transfers-ftpsftp" class="level2">
+<h2 class="anchored" data-anchor-id="bidirectional-file-transfers-ftpsftp">6. Bidirectional File Transfers &amp; FTP/SFTP</h2>
+<p>Moving files, datasets, and plots between your computer and <code>art-1</code> can be done via CLI or graphical interfaces.</p>
+<section id="scp-secure-copy-protocol" class="level3">
+<h3 class="anchored" data-anchor-id="scp-secure-copy-protocol">1. <code>scp</code> (Secure Copy Protocol)</h3>
+<ul>
+<li><p><strong>Download a file to your local directory:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> art-1:~/finalD57-Q-2024.txt ./</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>Download your entire workspace recursively:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> art-1:~/igor-dir ./backup_igor_dir/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>Upload source code to your cluster folder:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> ./my_solver.c art-1:~/igor-dir/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ul>
+</section>
+<section id="rsync-differential-fast-synchronization" class="level3">
+<h3 class="anchored" data-anchor-id="rsync-differential-fast-synchronization">2. <code>rsync</code> (Differential Fast Synchronization)</h3>
+<p><code>rsync</code> only transfers binary delta changes, making it far superior to <code>scp</code> for recurring project backups:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull remote updates to local folder</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avzP</span> art-1:~/igor-dir/ ./local_igor_dir/</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Push local edits to cluster</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avzP</span> ./local_igor_dir/ art-1:~/igor-dir/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="ftp-sftp-gui-cli" class="level3">
+<h3 class="anchored" data-anchor-id="ftp-sftp-gui-cli">3. FTP &amp; SFTP (GUI &amp; CLI)</h3>
+<p>Because <code>art-1</code> blocks unencrypted FTP (port 21), all FTP transfers must use <strong>SFTP (SSH File Transfer Protocol)</strong> over port 22.</p>
+<section id="graphical-ftp-clients-filezilla-winscp-cyberduck" class="level4">
+<h4 class="anchored" data-anchor-id="graphical-ftp-clients-filezilla-winscp-cyberduck">Graphical FTP Clients (FileZilla, WinSCP, Cyberduck)</h4>
+<ol type="1">
+<li><strong>Protocol:</strong> Select <strong>SFTP - SSH File Transfer Protocol</strong> (Do <em>not</em> choose FTP).</li>
+<li><strong>Host:</strong> <code>art-1.utsc.utoronto.ca</code></li>
+<li><strong>Port:</strong> <code>22</code></li>
+<li><strong>User:</strong> <code>phyd57</code></li>
+<li><strong>Password:</strong> <code>[Password provided in lecture / saved in course private draft]</code></li>
+</ol>
+<blockquote class="blockquote">
+<p>[!NOTE] <strong>GUI Client Legacy Host Key Note:</strong> Because of CentOS 6.6’s legacy DSA host keys, strictly updated FTP clients (such as latest FileZilla) may drop the connection. If this occurs, enable legacy host keys under FileZilla’s SFTP settings, or use <strong>WinSCP</strong> (Windows) or <strong>Cyberduck</strong> (macOS/Windows), which negotiate legacy ciphers automatically.</p>
+</blockquote>
+</section>
+<section id="interactive-command-line-sftp" class="level4">
+<h4 class="anchored" data-anchor-id="interactive-command-line-sftp">Interactive Command-Line <code>sftp</code></h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sftp</span> art-1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>ls</code> / <code>lls</code> : List remote / local directory contents.</li>
+<li><code>cd &lt;dir&gt;</code> / <code>lcd &lt;dir&gt;</code> : Change remote / local directory.</li>
+<li><code>get &lt;remote-file&gt;</code> : Download file.</li>
+<li><code>put &lt;local-file&gt;</code> : Upload file.</li>
+<li><code>exit</code> : Quit session.</li>
+</ul>
+<hr>
+</section>
+</section>
+</section>
+<section id="automated-local-backup-script" class="level2">
+<h2 class="anchored" data-anchor-id="automated-local-backup-script">7. Automated Local Backup Script</h2>
+<p>To safeguard your work inside <code>igor-dir/</code>, save this script locally as <code>sync_art1.sh</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-euo</span> pipefail</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="va">REMOTE_HOST</span><span class="op">=</span><span class="st">"art-1"</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="va">REMOTE_PATH</span><span class="op">=</span><span class="st">"~/igor-dir/"</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="va">LOCAL_BACKUP_DIR</span><span class="op">=</span><span class="st">"</span><span class="va">${HOME}</span><span class="st">/backups/phyd57/</span><span class="va">$(</span><span class="fu">date</span> +%Y-%m-%d<span class="va">)</span><span class="st">"</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="st">"</span><span class="va">${LOCAL_BACKUP_DIR}</span><span class="st">"</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Syncing </span><span class="va">${REMOTE_HOST}</span><span class="st">:</span><span class="va">${REMOTE_PATH}</span><span class="st"> to </span><span class="va">${LOCAL_BACKUP_DIR}</span><span class="st">..."</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avzP</span> <span class="dt">\</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--exclude</span><span class="op">=</span><span class="st">"*.x"</span> <span class="dt">\</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--exclude</span><span class="op">=</span><span class="st">"*.o"</span> <span class="dt">\</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"</span><span class="va">${REMOTE_HOST}</span><span class="st">:</span><span class="va">${REMOTE_PATH}</span><span class="st">"</span> <span class="st">"</span><span class="va">${LOCAL_BACKUP_DIR}</span><span class="st">/"</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Backup complete at </span><span class="va">$(</span><span class="fu">date</span><span class="va">)</span><span class="st">."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Run with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x sync_art1.sh</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./sync_art1.sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/igor-kan\.github\.io\/phyd57h3");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "PHYD57: HPC Infrastructure, Tech Stack, and Linux Guide"</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "A comprehensive overview of the technical tools, compiler toolchains, Linux distributions, SSH command options, cluster navigation, and FTP/SFTP file transfers used in Advanced Computational Methods in Physics."</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2026-09-11"</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [HPC, Linux, Physics, Compilers, Systems, SSH]</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>**PHYD57H3: Advanced Computational Methods in Physics** bridges the gap between theoretical physics and high-performance scientific computing. Successfully navigating the course requires more than just understanding mathematical models—it demands a solid grasp of the underlying infrastructure, from Linux distributions to compiler toolchains, SSH mechanics, and remote file manipulation.</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>This guide provides an end-to-end technical reference covering:</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The curriculum tech stack and compiler toolchains.</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>An architectural comparison of Linux distributions (why Rocky Linux is preferred over Ubuntu/Arch for HPC).</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>The anatomy of the <span class="in">`ssh`</span> command and all essential connection options.</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>An analysis of the filesystem artifacts on the university's <span class="in">`art-1`</span> cluster.</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Techniques for viewing and editing remote files locally (SSHFS, VS Code glibc workarounds, <span class="in">`screen`</span>).</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Bidirectional file transfers via SCP, Rsync, and graphical/CLI FTP and SFTP.</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. The Curriculum Tech Stack</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>To run physics simulations efficiently (such as Monte Carlo methods, Eulerian/Lagrangian fluid dynamics, and N-body gravitational solvers), the course relies on a specialized high-performance stack:</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="fu">### Programming Languages</span></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**C / C++**: Used for low-level memory control and multi-dimensional array manipulation. You will learn to write high-performance C routines and call them directly from Python wrappers.</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Fortran (F95 / 2008)**: Far from a dead language, modern Fortran remains unparalleled in contiguous numerical array operations and scientific computing. The course emphasizes modern syntax (lowercase, no legacy ALL CAPS).</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Python 3**: Utilized as a high-level scripting glue to steer simulations, parse output files, and generate interactive plots.</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a><span class="fu">### High-Performance Computing (HPC) &amp; Parallelization</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>Modern scientific computing is impossible without parallel computing APIs:</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**OpenMP**: Used for CPU shared-memory multithreading (fork-join parallelism) in both C and Fortran loops.</span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**CUDA (C/C++ &amp; Fortran)**: NVIDIA's parallel computing platform for GPU acceleration, used to scale tasks like fluid dynamics, Poisson solvers, and Fourier transforms.</span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**MPI (Message Passing Interface)**: The industry standard for distributed-memory parallelization across networked supercomputing cluster nodes.</span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a><span class="fu">### Enterprise Compilers</span></span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>You will work across several enterprise compiler toolchains:</span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span><span class="in">`gcc`</span> / <span class="in">`g++`</span> (GNU C/C++ Compiler)</span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span><span class="in">`gfortran`</span> (GNU Fortran Compiler)</span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span><span class="in">`ifort`</span> / <span class="in">`ifx`</span> (Intel OneAPI Fortran Compiler)</span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span><span class="in">`nvcc`</span> / <span class="in">`nvfortran`</span> (NVIDIA CUDA HPC Compilers)</span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a><span class="fu">### CLI Environment &amp; Graphics</span></span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Shells**: <span class="in">`bash`</span> and <span class="in">`tcsh`</span>.</span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Terminal Editors**: <span class="in">`vim`</span> and <span class="in">`nano`</span>.</span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Scientific Graphics**: **DISLIN**, a high-level data plotting library linked into C and Fortran programs.</span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Comparing Linux Distributions: Why Rocky Linux?</span></span>
+<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a>The UTSC computing clusters span multiple generations: the legacy node <span class="in">`art-1`</span> runs on **CentOS 6.6**, while the modern node `art-16` runs on **Rocky Linux 9.6**. If you plan to set up a local Virtual Machine, dual-boot, or WSL environment, here is how the relevant distributions compare:</span>
+<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Red Hat Family (The HPC Supercomputing Standard)</span></span>
+<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a>These distributions share the same core architecture, <span class="in">`.rpm`</span> binary package format, and <span class="in">`dnf`</span>/<span class="in">`yum`</span> package managers.</span>
+<span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**RHEL (Red Hat Enterprise Linux)**: The commercial standard for enterprise computing, government laboratories, and supercomputing clusters. Engineered for decade-long stability and binary reproducibility.</span>
+<span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Rocky Linux**: A 100% free, bug-for-bug downstream clone of RHEL. Following Red Hat's deprecation of standard CentOS, Rocky Linux emerged to preserve enterprise-grade stability without licensing costs. **This is why UTSC runs Rocky Linux 9.6 on `art-16`.**</span>
+<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Fedora**: The upstream rapid-release proving ground for Red Hat. It receives experimental features, cutting-edge kernels, and new GCC releases every 6 months. Excellent for desktop workstations, but too volatile for reproducible physics research.</span>
+<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a><span class="fu">### Alternative Distributions</span></span>
+<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Ubuntu (Debian-based)**: The most popular general-purpose distro, using <span class="in">`.deb`</span> packages and <span class="in">`apt`</span>. While excellent for web servers and personal development, its package names, configuration hierarchies, and system libraries differ from the Red Hat ecosystem used on university clusters.</span>
+<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a><span class="ss">*   </span>**Arch Linux**: An ultra-bleeding-edge rolling release distribution. It has no frozen release versions and receives daily package updates. While favored by power users, Arch is the opposite of an HPC cluster, where compiler and library versions must remain frozen to ensure numerical reproducibility across academic terms.</span>
+<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!TIP</span><span class="co">]</span></span>
+<span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **Recommended Local Environment**</span></span>
+<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; For your laptop (via WSL2 or VirtualBox), install **Rocky Linux 9**. This guarantees 1:1 command, compiler, and package manager (</span><span class="in">`dnf`</span><span class="at">) parity with the university's modern compute nodes.</span></span>
+<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. The `ssh` Command &amp; Connection Options Deep-Dive</span></span>
+<span id="cb19-70"><a href="#cb19-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-71"><a href="#cb19-71" aria-hidden="true" tabindex="-1"></a>Secure Shell (**SSH**) is the standard protocol for encrypted terminal access over untrusted networks. The fundamental syntax is:</span>
+<span id="cb19-72"><a href="#cb19-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-73"><a href="#cb19-73" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb19-74"><a href="#cb19-74" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="pp">[</span><span class="ss">options</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">user@</span><span class="pp">]</span>hostname <span class="pp">[</span><span class="ss">command</span><span class="pp">]</span></span>
+<span id="cb19-75"><a href="#cb19-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-76"><a href="#cb19-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-77"><a href="#cb19-77" aria-hidden="true" tabindex="-1"></a>To connect to the UTSC cluster node <span class="in">`art-1`</span>, you run:</span>
+<span id="cb19-78"><a href="#cb19-78" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb19-79"><a href="#cb19-79" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-X</span> <span class="at">-o</span> HostKeyAlgorithms=+ssh-dss phyd57@art-1.utsc.utoronto.ca</span>
+<span id="cb19-80"><a href="#cb19-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-81"><a href="#cb19-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-82"><a href="#cb19-82" aria-hidden="true" tabindex="-1"></a><span class="fu">### Dissecting the Command and Options</span></span>
+<span id="cb19-83"><a href="#cb19-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-84"><a href="#cb19-84" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Option / Flag <span class="pp">|</span> Purpose &amp; Technical Mechanism <span class="pp">|</span></span>
+<span id="cb19-85"><a href="#cb19-85" aria-hidden="true" tabindex="-1"></a><span class="pp">| :---</span> <span class="pp">| :---</span> <span class="pp">|</span></span>
+<span id="cb19-86"><a href="#cb19-86" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`phyd57@art-1.utsc.utoronto.ca`</span> <span class="pp">|</span> Specifies the remote user account (<span class="in">`phyd57`</span>) and fully qualified domain name (FQDN) of the server. <span class="pp">|</span></span>
+<span id="cb19-87"><a href="#cb19-87" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`-o HostKeyAlgorithms=+ssh-dss`</span> <span class="pp">|</span> **Mandatory for `art-1`**. Tells the local OpenSSH client to accept legacy Digital Signature Algorithm (**DSA**) host keys. <span class="pp">|</span></span>
+<span id="cb19-88"><a href="#cb19-88" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`-X`</span> <span class="pp">|</span> Enables **X11 Forwarding** with security extensions (untrusted mode). Forwards graphical windows (e.g., DISLIN plots) back to your local display. <span class="pp">|</span></span>
+<span id="cb19-89"><a href="#cb19-89" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`-Y`</span> <span class="pp">|</span> Enables **Trusted X11 Forwarding**. Bypasses security restrictions; required if complex GUI programs crash under <span class="in">`-X`</span>. <span class="pp">|</span></span>
+<span id="cb19-90"><a href="#cb19-90" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`-p &lt;port&gt;`</span> <span class="pp">|</span> Specifies the remote SSH port (default is <span class="in">`22`</span>). Example: <span class="in">`ssh -p 22 user@host`</span>. <span class="pp">|</span></span>
+<span id="cb19-91"><a href="#cb19-91" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`-C`</span> <span class="pp">|</span> Enables **gzip compression** on all data streams (stdin, stdout, stderr, and X11). Dramatically improves responsiveness over slow Wi-Fi. <span class="pp">|</span></span>
+<span id="cb19-92"><a href="#cb19-92" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`-i &lt;identity_file&gt;`</span> <span class="pp">|</span> Passes a private key file for key-based authentication instead of typing a password. Example: <span class="in">`ssh -i ~/.ssh/id_rsa user@host`</span>. <span class="pp">|</span></span>
+<span id="cb19-93"><a href="#cb19-93" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`-t`</span> <span class="pp">|</span> Forces pseudo-terminal allocation. Essential when launching interactive screen/tmux sessions or jumping between nodes. <span class="pp">|</span></span>
+<span id="cb19-94"><a href="#cb19-94" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`-o ServerAliveInterval=60`</span> <span class="pp">|</span> Sends a keepalive null packet every 60 seconds to prevent network firewalls or NAT routers from dropping idle sessions. <span class="pp">|</span></span>
+<span id="cb19-95"><a href="#cb19-95" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`-o ServerAliveCountMax=3`</span> <span class="pp">|</span> Drops connection only if 3 consecutive keepalive packets fail to return an acknowledgment. <span class="pp">|</span></span>
+<span id="cb19-96"><a href="#cb19-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-97"><a href="#cb19-97" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Why Is `-o HostKeyAlgorithms=+ssh-dss` Required on `art-1`?</span></span>
+<span id="cb19-98"><a href="#cb19-98" aria-hidden="true" tabindex="-1"></a>CentOS 6.6 runs an older OpenSSH server daemon (<span class="in">`sshd`</span>) that advertises host identity using 1024-bit DSA keys (<span class="in">`ssh-dss`</span>). Modern OpenSSH client releases (version 7.0 and later) deprecated and disabled <span class="in">`ssh-dss`</span> out-of-the-box due to known cryptographic weaknesses in 1024-bit discrete logarithm implementations.</span>
+<span id="cb19-99"><a href="#cb19-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-100"><a href="#cb19-100" aria-hidden="true" tabindex="-1"></a>Without <span class="in">`-o HostKeyAlgorithms=+ssh-dss`</span>, modern clients immediately abort the handshake with:</span>
+<span id="cb19-101"><a href="#cb19-101" aria-hidden="true" tabindex="-1"></a><span class="in">```text</span></span>
+<span id="cb19-102"><a href="#cb19-102" aria-hidden="true" tabindex="-1"></a><span class="in">Unable to negotiate with 142.1.xxx.xxx port 22: no matching host key type found. Their offer: ssh-dss</span></span>
+<span id="cb19-103"><a href="#cb19-103" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-104"><a href="#cb19-104" aria-hidden="true" tabindex="-1"></a>The <span class="in">`+`</span> sign instructs your local client to append <span class="in">`ssh-dss`</span> to its allowed list of host key algorithms for this session.</span>
+<span id="cb19-105"><a href="#cb19-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-106"><a href="#cb19-106" aria-hidden="true" tabindex="-1"></a><span class="fu">### Streamlining with `~/.ssh/config`</span></span>
+<span id="cb19-107"><a href="#cb19-107" aria-hidden="true" tabindex="-1"></a>Rather than typing long flags each time, configure a profile in <span class="in">`~/.ssh/config`</span>:</span>
+<span id="cb19-108"><a href="#cb19-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-109"><a href="#cb19-109" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb19-110"><a href="#cb19-110" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/.ssh/config</span>
+<span id="cb19-111"><a href="#cb19-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-112"><a href="#cb19-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-113"><a href="#cb19-113" aria-hidden="true" tabindex="-1"></a>Add the following block:</span>
+<span id="cb19-114"><a href="#cb19-114" aria-hidden="true" tabindex="-1"></a><span class="in">```ssh-config</span></span>
+<span id="cb19-115"><a href="#cb19-115" aria-hidden="true" tabindex="-1"></a><span class="in">Host art-1</span></span>
+<span id="cb19-116"><a href="#cb19-116" aria-hidden="true" tabindex="-1"></a><span class="in">    HostName art-1.utsc.utoronto.ca</span></span>
+<span id="cb19-117"><a href="#cb19-117" aria-hidden="true" tabindex="-1"></a><span class="in">    User phyd57</span></span>
+<span id="cb19-118"><a href="#cb19-118" aria-hidden="true" tabindex="-1"></a><span class="in">    HostKeyAlgorithms +ssh-dss</span></span>
+<span id="cb19-119"><a href="#cb19-119" aria-hidden="true" tabindex="-1"></a><span class="in">    ForwardX11 yes</span></span>
+<span id="cb19-120"><a href="#cb19-120" aria-hidden="true" tabindex="-1"></a><span class="in">    Compression yes</span></span>
+<span id="cb19-121"><a href="#cb19-121" aria-hidden="true" tabindex="-1"></a><span class="in">    ServerAliveInterval 60</span></span>
+<span id="cb19-122"><a href="#cb19-122" aria-hidden="true" tabindex="-1"></a><span class="in">    ServerAliveCountMax 3</span></span>
+<span id="cb19-123"><a href="#cb19-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-124"><a href="#cb19-124" aria-hidden="true" tabindex="-1"></a><span class="in">Host art-16</span></span>
+<span id="cb19-125"><a href="#cb19-125" aria-hidden="true" tabindex="-1"></a><span class="in">    HostName art-16.utsc.utoronto.ca</span></span>
+<span id="cb19-126"><a href="#cb19-126" aria-hidden="true" tabindex="-1"></a><span class="in">    User phyd57</span></span>
+<span id="cb19-127"><a href="#cb19-127" aria-hidden="true" tabindex="-1"></a><span class="in">    ForwardX11 yes</span></span>
+<span id="cb19-128"><a href="#cb19-128" aria-hidden="true" tabindex="-1"></a><span class="in">    ServerAliveInterval 60</span></span>
+<span id="cb19-129"><a href="#cb19-129" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-130"><a href="#cb19-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-131"><a href="#cb19-131" aria-hidden="true" tabindex="-1"></a>Set strict file permissions:</span>
+<span id="cb19-132"><a href="#cb19-132" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb19-133"><a href="#cb19-133" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 600 ~/.ssh/config</span>
+<span id="cb19-134"><a href="#cb19-134" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-135"><a href="#cb19-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-136"><a href="#cb19-136" aria-hidden="true" tabindex="-1"></a>Now, connecting to either cluster is as simple as:</span>
+<span id="cb19-137"><a href="#cb19-137" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb19-138"><a href="#cb19-138" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> art-1</span>
+<span id="cb19-139"><a href="#cb19-139" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb19-140"><a href="#cb19-140" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> art-16</span>
+<span id="cb19-141"><a href="#cb19-141" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-142"><a href="#cb19-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-143"><a href="#cb19-143" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb19-144"><a href="#cb19-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-145"><a href="#cb19-145" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4. Filesystem Artifacts on `art-1` (`ll` Breakdown)</span></span>
+<span id="cb19-146"><a href="#cb19-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-147"><a href="#cb19-147" aria-hidden="true" tabindex="-1"></a>Listing the root directory of <span class="in">`/home/phyd57`</span> reveals the course history and shared resources:</span>
+<span id="cb19-148"><a href="#cb19-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-149"><a href="#cb19-149" aria-hidden="true" tabindex="-1"></a><span class="in">```text</span></span>
+<span id="cb19-150"><a href="#cb19-150" aria-hidden="true" tabindex="-1"></a><span class="in">[phyd57@art-1 ~]$ ll</span></span>
+<span id="cb19-151"><a href="#cb19-151" aria-hidden="true" tabindex="-1"></a><span class="in">total 293180</span></span>
+<span id="cb19-152"><a href="#cb19-152" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  4 phyd57 phyd57     36864 Dec 30  2017 6994</span></span>
+<span id="cb19-153"><a href="#cb19-153" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57         0 Nov  7  2019 A3.c</span></span>
+<span id="cb19-154"><a href="#cb19-154" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  6 phyd57 phyd57      4096 Nov 26  2019 A4FFTSolver</span></span>
+<span id="cb19-155"><a href="#cb19-155" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        13 Sep 14  2019 DO NOT OPEN</span></span>
+<span id="cb19-156"><a href="#cb19-156" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57       429 Sep 12  2020 T1.1.py</span></span>
+<span id="cb19-157"><a href="#cb19-157" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Sep  6  2019 TA</span></span>
+<span id="cb19-158"><a href="#cb19-158" aria-hidden="true" tabindex="-1"></a><span class="in">-rwx------  1 phyd57 phyd57     12912 Nov  9  2019 a3</span></span>
+<span id="cb19-159"><a href="#cb19-159" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57      4587 Nov  9  2019 a3.c</span></span>
+<span id="cb19-160"><a href="#cb19-160" aria-hidden="true" tabindex="-1"></a><span class="in">drwxrwxr-x  7 phyd57 phyd57     36864 Dec  3  2019 avx</span></span>
+<span id="cb19-161"><a href="#cb19-161" aria-hidden="true" tabindex="-1"></a><span class="in">-rwx------  1 phyd57 root      629895 Nov  9  2019 bandwidthTest</span></span>
+<span id="cb19-162"><a href="#cb19-162" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Sep 21  2019 bks</span></span>
+<span id="cb19-163"><a href="#cb19-163" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57 297134160 Jan  5  2019 cm_re.zip</span></span>
+<span id="cb19-164"><a href="#cb19-164" aria-hidden="true" tabindex="-1"></a><span class="in">-rwx------  1 phyd57 root      609556 Nov  9  2019 deviceQuery</span></span>
+<span id="cb19-165"><a href="#cb19-165" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Apr  4  2017 dislin</span></span>
+<span id="cb19-166"><a href="#cb19-166" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Nov 16  2019 fft</span></span>
+<span id="cb19-167"><a href="#cb19-167" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        34 Sep 14  2019 file1.txt</span></span>
+<span id="cb19-168"><a href="#cb19-168" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        21 Jan 25  2017 file_w_strings.txt</span></span>
+<span id="cb19-169"><a href="#cb19-169" aria-hidden="true" tabindex="-1"></a><span class="in">-r--r--r--  1 phyd57 phyd57      8031 Dec 13  2024 finalD57-Q-2024.txt</span></span>
+<span id="cb19-170"><a href="#cb19-170" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Sep 21  2019 findat</span></span>
+<span id="cb19-171"><a href="#cb19-171" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  4 phyd57 phyd57      4096 Feb  8  2017 game</span></span>
+<span id="cb19-172"><a href="#cb19-172" aria-hidden="true" tabindex="-1"></a><span class="in">-rwx------  1 phyd57 phyd57      8480 Sep  5  2020 hello</span></span>
+<span id="cb19-173"><a href="#cb19-173" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        79 Sep  5  2020 hello.c</span></span>
+<span id="cb19-174"><a href="#cb19-174" aria-hidden="true" tabindex="-1"></a><span class="in">drwxrwxr-x  2 phyd57 phyd57      4096 Sep 11 13:30 igor-dir</span></span>
+<span id="cb19-175"><a href="#cb19-175" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Sep 21  2019 imag</span></span>
+<span id="cb19-176"><a href="#cb19-176" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Sep 23  2020 math</span></span>
+<span id="cb19-177"><a href="#cb19-177" aria-hidden="true" tabindex="-1"></a><span class="in">drwxr-xr-x  4 phyd57 phyd57     20480 Apr 18  2017 mie</span></span>
+<span id="cb19-178"><a href="#cb19-178" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57      5511 Sep 16  2020 my_assignment1.py</span></span>
+<span id="cb19-179"><a href="#cb19-179" aria-hidden="true" tabindex="-1"></a><span class="in">-rwx------  1 phyd57 root     1480788 Nov  9  2019 nbody</span></span>
+<span id="cb19-180"><a href="#cb19-180" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        10 Mar 15  2017 old..vimrc</span></span>
+<span id="cb19-181"><a href="#cb19-181" aria-hidden="true" tabindex="-1"></a><span class="in">-r-xr--r--  1 phyd57 phyd57      3675 Dec 13  2024 prob4_w_issue.f95</span></span>
+<span id="cb19-182"><a href="#cb19-182" aria-hidden="true" tabindex="-1"></a><span class="in">-r-x------  1 phyd57 phyd57     51832 Dec 12  2018 prob4_w_issue.x</span></span>
+<span id="cb19-183"><a href="#cb19-183" aria-hidden="true" tabindex="-1"></a><span class="in">drwxr-xr-x  6 phyd57 phyd57     36864 Dec 30  2017 progD57</span></span>
+<span id="cb19-184"><a href="#cb19-184" aria-hidden="true" tabindex="-1"></a><span class="in">drwxrwxr-x  2 phyd57 phyd57      4096 Oct  2  2020 sandbox</span></span>
+<span id="cb19-185"><a href="#cb19-185" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------ 11 phyd57 phyd57      4096 Sep  6  2019 stud1</span></span>
+<span id="cb19-186"><a href="#cb19-186" aria-hidden="true" tabindex="-1"></a><span class="in">-rwx------  1 phyd57 phyd57     12896 Nov  9  2019 t1</span></span>
+<span id="cb19-187"><a href="#cb19-187" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57       312 Sep 12  2020 t1.1.py</span></span>
+<span id="cb19-188"><a href="#cb19-188" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57      4245 Nov  9  2019 t1.c</span></span>
+<span id="cb19-189"><a href="#cb19-189" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        80 Sep  7  2019 test.f90</span></span>
+<span id="cb19-190"><a href="#cb19-190" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        79 Sep  7  2019 test.f90.save</span></span>
+<span id="cb19-191"><a href="#cb19-191" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57       242 Sep 12  2020 tut2.py</span></span>
+<span id="cb19-192"><a href="#cb19-192" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-193"><a href="#cb19-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-194"><a href="#cb19-194" aria-hidden="true" tabindex="-1"></a><span class="fu">### Artifact Catalog</span></span>
+<span id="cb19-195"><a href="#cb19-195" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Isolated Workspace (`igor-dir/`):** Personal workspace directory. Because `phyd57` is a shared cohort user account, **always conduct work inside your designated folder** to avoid modifying shared files or other students' assignments.</span>
+<span id="cb19-196"><a href="#cb19-196" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Assignments &amp; Code:**</span>
+<span id="cb19-197"><a href="#cb19-197" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`A3.c`</span>, <span class="in">`a3`</span>, <span class="in">`a3.c`</span>: Assignment 3 C source and compiled ELF binaries.</span>
+<span id="cb19-198"><a href="#cb19-198" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`A4FFTSolver/`</span>: Group project directory for Fast Fourier Transform gravitational potential solvers.</span>
+<span id="cb19-199"><a href="#cb19-199" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`my_assignment1.py`</span>: Python reference implementation for Assignment 1.</span>
+<span id="cb19-200"><a href="#cb19-200" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`prob4_w_issue.f95`</span> &amp; <span class="in">`prob4_w_issue.x`</span>: Fortran 95 code demonstrating segmentation faults caused by exceeding stack size limits with static array allocations.</span>
+<span id="cb19-201"><a href="#cb19-201" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**GPU &amp; HPC Diagnostics:**</span>
+<span id="cb19-202"><a href="#cb19-202" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`deviceQuery`</span> &amp; <span class="in">`bandwidthTest`</span>: Standard NVIDIA CUDA SDK binaries compiled with <span class="in">`nvcc`</span>. They query device capability, CUDA core counts, and PCIe memory bandwidth.</span>
+<span id="cb19-203"><a href="#cb19-203" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`avx/`</span>: Test directory for Advanced Vector Extensions (AVX) SIMD compiler vectorization.</span>
+<span id="cb19-204"><a href="#cb19-204" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`nbody`</span>: Compiled parallel N-body simulation binary.</span>
+<span id="cb19-205"><a href="#cb19-205" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Reference Scripts &amp; Exam Prompts:**</span>
+<span id="cb19-206"><a href="#cb19-206" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`dislin/`</span>: Local installation of the DISLIN scientific graphics library.</span>
+<span id="cb19-207"><a href="#cb19-207" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`finalD57-Q-2024.txt`</span>: Programming prompt text file from the December 2024 final exam.</span>
+<span id="cb19-208"><a href="#cb19-208" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`old..vimrc`</span>: Legacy Vim editor configuration file.</span>
+<span id="cb19-209"><a href="#cb19-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-210"><a href="#cb19-210" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb19-211"><a href="#cb19-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-212"><a href="#cb19-212" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5. Local Viewing &amp; Editing of Remote Code</span></span>
+<span id="cb19-213"><a href="#cb19-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-214"><a href="#cb19-214" aria-hidden="true" tabindex="-1"></a>Developing directly over terminal SSH using basic Vim or Nano can slow down debugging. Here is how to view and edit files using modern local developer tools:</span>
+<span id="cb19-215"><a href="#cb19-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-216"><a href="#cb19-216" aria-hidden="true" tabindex="-1"></a><span class="fu">### Method 1: SSHFS (Virtual Directory Mount) — *Recommended*</span></span>
+<span id="cb19-217"><a href="#cb19-217" aria-hidden="true" tabindex="-1"></a>**SSHFS** mounts the remote cluster folder directly into your local filesystem over SFTP, allowing you to open remote files in local VS Code, Cursor, or Neovim with full language server protocol (LSP) support.</span>
+<span id="cb19-218"><a href="#cb19-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-219"><a href="#cb19-219" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb19-220"><a href="#cb19-220" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Create a local mount directory</span></span>
+<span id="cb19-221"><a href="#cb19-221" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/mounts/art-1</span>
+<span id="cb19-222"><a href="#cb19-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-223"><a href="#cb19-223" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Mount using your ~/.ssh/config alias</span></span>
+<span id="cb19-224"><a href="#cb19-224" aria-hidden="true" tabindex="-1"></a><span class="ex">sshfs</span> art-1:/home/phyd57 ~/mounts/art-1 <span class="at">-o</span> reconnect,ServerAliveInterval=15,ServerAliveCountMax=3</span>
+<span id="cb19-225"><a href="#cb19-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-226"><a href="#cb19-226" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Open your personal folder in local VS Code</span></span>
+<span id="cb19-227"><a href="#cb19-227" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> ~/mounts/art-1/igor-dir</span>
+<span id="cb19-228"><a href="#cb19-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-229"><a href="#cb19-229" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Unmount cleanly when finished</span></span>
+<span id="cb19-230"><a href="#cb19-230" aria-hidden="true" tabindex="-1"></a><span class="ex">fusermount</span> <span class="at">-u</span> ~/mounts/art-1</span>
+<span id="cb19-231"><a href="#cb19-231" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-232"><a href="#cb19-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-233"><a href="#cb19-233" aria-hidden="true" tabindex="-1"></a>*(macOS users: install via `brew install macfuse gromgit/fuse/sshfs-mac` and unmount using `umount ~/mounts/art-1`).*</span>
+<span id="cb19-234"><a href="#cb19-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-235"><a href="#cb19-235" aria-hidden="true" tabindex="-1"></a><span class="fu">### Method 2: VS Code "SSH FS" (Bypassing CentOS 6 Glibc Limits)</span></span>
+<span id="cb19-236"><a href="#cb19-236" aria-hidden="true" tabindex="-1"></a>The official **VS Code Remote - SSH** extension automatically deploys a remote Node.js server agent that requires **glibc 2.28+**. Because CentOS 6.6 ships with **glibc 2.12**, the extension crashes with:</span>
+<span id="cb19-237"><a href="#cb19-237" aria-hidden="true" tabindex="-1"></a><span class="in">```text</span></span>
+<span id="cb19-238"><a href="#cb19-238" aria-hidden="true" tabindex="-1"></a><span class="in">/lib64/libc.so.6: version `GLIBC_2.28' not found</span></span>
+<span id="cb19-239"><a href="#cb19-239" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-240"><a href="#cb19-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-241"><a href="#cb19-241" aria-hidden="true" tabindex="-1"></a>**The Solution:**</span>
+<span id="cb19-242"><a href="#cb19-242" aria-hidden="true" tabindex="-1"></a>Install the client-side **SSH FS** extension (<span class="in">`HuFlungDu.ssh-fs`</span> or <span class="in">`liximomo.sftp`</span>). This extension runs pure SFTP from your local machine, allowing file browsing and editing inside VS Code without requiring modern glibc libraries on the cluster.</span>
+<span id="cb19-243"><a href="#cb19-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-244"><a href="#cb19-244" aria-hidden="true" tabindex="-1"></a><span class="fu">### Method 3: Terminal Persistence with `screen`</span></span>
+<span id="cb19-245"><a href="#cb19-245" aria-hidden="true" tabindex="-1"></a>If you edit directly inside the remote shell, protect long-running compilations and simulations against network drops using <span class="in">`screen`</span>:</span>
+<span id="cb19-246"><a href="#cb19-246" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb19-247"><a href="#cb19-247" aria-hidden="true" tabindex="-1"></a><span class="co"># Start a detached-capable session</span></span>
+<span id="cb19-248"><a href="#cb19-248" aria-hidden="true" tabindex="-1"></a><span class="ex">screen</span> <span class="at">-S</span> simulation_run</span>
+<span id="cb19-249"><a href="#cb19-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-250"><a href="#cb19-250" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile and execute</span></span>
+<span id="cb19-251"><a href="#cb19-251" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> <span class="kw">&amp;&amp;</span> <span class="ex">./nbody</span></span>
+<span id="cb19-252"><a href="#cb19-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-253"><a href="#cb19-253" aria-hidden="true" tabindex="-1"></a><span class="co"># Detach session: Press Ctrl+A, then D</span></span>
+<span id="cb19-254"><a href="#cb19-254" aria-hidden="true" tabindex="-1"></a><span class="co"># Reattach later:</span></span>
+<span id="cb19-255"><a href="#cb19-255" aria-hidden="true" tabindex="-1"></a><span class="ex">screen</span> <span class="at">-r</span> simulation_run</span>
+<span id="cb19-256"><a href="#cb19-256" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-257"><a href="#cb19-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-258"><a href="#cb19-258" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb19-259"><a href="#cb19-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-260"><a href="#cb19-260" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6. Bidirectional File Transfers &amp; FTP/SFTP</span></span>
+<span id="cb19-261"><a href="#cb19-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-262"><a href="#cb19-262" aria-hidden="true" tabindex="-1"></a>Moving files, datasets, and plots between your computer and <span class="in">`art-1`</span> can be done via CLI or graphical interfaces.</span>
+<span id="cb19-263"><a href="#cb19-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-264"><a href="#cb19-264" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. `scp` (Secure Copy Protocol)</span></span>
+<span id="cb19-265"><a href="#cb19-265" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Download a file to your local directory:**</span>
+<span id="cb19-266"><a href="#cb19-266" aria-hidden="true" tabindex="-1"></a>  <span class="in">```bash</span></span>
+<span id="cb19-267"><a href="#cb19-267" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scp</span> art-1:~/finalD57-Q-2024.txt ./</span>
+<span id="cb19-268"><a href="#cb19-268" aria-hidden="true" tabindex="-1"></a>  <span class="in">```</span></span>
+<span id="cb19-269"><a href="#cb19-269" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Download your entire workspace recursively:**</span>
+<span id="cb19-270"><a href="#cb19-270" aria-hidden="true" tabindex="-1"></a>  <span class="in">```bash</span></span>
+<span id="cb19-271"><a href="#cb19-271" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scp</span> <span class="at">-r</span> art-1:~/igor-dir ./backup_igor_dir/</span>
+<span id="cb19-272"><a href="#cb19-272" aria-hidden="true" tabindex="-1"></a>  <span class="in">```</span></span>
+<span id="cb19-273"><a href="#cb19-273" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Upload source code to your cluster folder:**</span>
+<span id="cb19-274"><a href="#cb19-274" aria-hidden="true" tabindex="-1"></a>  <span class="in">```bash</span></span>
+<span id="cb19-275"><a href="#cb19-275" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scp</span> ./my_solver.c art-1:~/igor-dir/</span>
+<span id="cb19-276"><a href="#cb19-276" aria-hidden="true" tabindex="-1"></a>  <span class="in">```</span></span>
+<span id="cb19-277"><a href="#cb19-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-278"><a href="#cb19-278" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. `rsync` (Differential Fast Synchronization)</span></span>
+<span id="cb19-279"><a href="#cb19-279" aria-hidden="true" tabindex="-1"></a><span class="in">`rsync`</span> only transfers binary delta changes, making it far superior to <span class="in">`scp`</span> for recurring project backups:</span>
+<span id="cb19-280"><a href="#cb19-280" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb19-281"><a href="#cb19-281" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull remote updates to local folder</span></span>
+<span id="cb19-282"><a href="#cb19-282" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avzP</span> art-1:~/igor-dir/ ./local_igor_dir/</span>
+<span id="cb19-283"><a href="#cb19-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-284"><a href="#cb19-284" aria-hidden="true" tabindex="-1"></a><span class="co"># Push local edits to cluster</span></span>
+<span id="cb19-285"><a href="#cb19-285" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avzP</span> ./local_igor_dir/ art-1:~/igor-dir/</span>
+<span id="cb19-286"><a href="#cb19-286" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-287"><a href="#cb19-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-288"><a href="#cb19-288" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. FTP &amp; SFTP (GUI &amp; CLI)</span></span>
+<span id="cb19-289"><a href="#cb19-289" aria-hidden="true" tabindex="-1"></a>Because <span class="in">`art-1`</span> blocks unencrypted FTP (port 21), all FTP transfers must use **SFTP (SSH File Transfer Protocol)** over port 22.</span>
+<span id="cb19-290"><a href="#cb19-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-291"><a href="#cb19-291" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Graphical FTP Clients (FileZilla, WinSCP, Cyberduck)</span></span>
+<span id="cb19-292"><a href="#cb19-292" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Protocol:** Select **SFTP - SSH File Transfer Protocol** (Do *not* choose FTP).</span>
+<span id="cb19-293"><a href="#cb19-293" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Host:** <span class="in">`art-1.utsc.utoronto.ca`</span></span>
+<span id="cb19-294"><a href="#cb19-294" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Port:** <span class="in">`22`</span></span>
+<span id="cb19-295"><a href="#cb19-295" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**User:** <span class="in">`phyd57`</span></span>
+<span id="cb19-296"><a href="#cb19-296" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Password:** <span class="in">`[Password provided in lecture / saved in course private draft]`</span></span>
+<span id="cb19-297"><a href="#cb19-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-298"><a href="#cb19-298" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!NOTE</span><span class="co">]</span></span>
+<span id="cb19-299"><a href="#cb19-299" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **GUI Client Legacy Host Key Note:**</span></span>
+<span id="cb19-300"><a href="#cb19-300" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Because of CentOS 6.6's legacy DSA host keys, strictly updated FTP clients (such as latest FileZilla) may drop the connection. If this occurs, enable legacy host keys under FileZilla's SFTP settings, or use **WinSCP** (Windows) or **Cyberduck** (macOS/Windows), which negotiate legacy ciphers automatically.</span></span>
+<span id="cb19-301"><a href="#cb19-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-302"><a href="#cb19-302" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Interactive Command-Line `sftp`</span></span>
+<span id="cb19-303"><a href="#cb19-303" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb19-304"><a href="#cb19-304" aria-hidden="true" tabindex="-1"></a><span class="ex">sftp</span> art-1</span>
+<span id="cb19-305"><a href="#cb19-305" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-306"><a href="#cb19-306" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`ls`</span> / <span class="in">`lls`</span> : List remote / local directory contents.</span>
+<span id="cb19-307"><a href="#cb19-307" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`cd &lt;dir&gt;`</span> / <span class="in">`lcd &lt;dir&gt;`</span> : Change remote / local directory.</span>
+<span id="cb19-308"><a href="#cb19-308" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`get &lt;remote-file&gt;`</span> : Download file.</span>
+<span id="cb19-309"><a href="#cb19-309" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`put &lt;local-file&gt;`</span> : Upload file.</span>
+<span id="cb19-310"><a href="#cb19-310" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`exit`</span> : Quit session.</span>
+<span id="cb19-311"><a href="#cb19-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-312"><a href="#cb19-312" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb19-313"><a href="#cb19-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-314"><a href="#cb19-314" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7. Automated Local Backup Script</span></span>
+<span id="cb19-315"><a href="#cb19-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-316"><a href="#cb19-316" aria-hidden="true" tabindex="-1"></a>To safeguard your work inside <span class="in">`igor-dir/`</span>, save this script locally as <span class="in">`sync_art1.sh`</span>:</span>
+<span id="cb19-317"><a href="#cb19-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-318"><a href="#cb19-318" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb19-319"><a href="#cb19-319" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb19-320"><a href="#cb19-320" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-euo</span> pipefail</span>
+<span id="cb19-321"><a href="#cb19-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-322"><a href="#cb19-322" aria-hidden="true" tabindex="-1"></a><span class="va">REMOTE_HOST</span><span class="op">=</span><span class="st">"art-1"</span></span>
+<span id="cb19-323"><a href="#cb19-323" aria-hidden="true" tabindex="-1"></a><span class="va">REMOTE_PATH</span><span class="op">=</span><span class="st">"~/igor-dir/"</span></span>
+<span id="cb19-324"><a href="#cb19-324" aria-hidden="true" tabindex="-1"></a><span class="va">LOCAL_BACKUP_DIR</span><span class="op">=</span><span class="st">"</span><span class="va">${HOME}</span><span class="st">/backups/phyd57/</span><span class="va">$(</span><span class="fu">date</span> +%Y-%m-%d<span class="va">)</span><span class="st">"</span></span>
+<span id="cb19-325"><a href="#cb19-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-326"><a href="#cb19-326" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="st">"</span><span class="va">${LOCAL_BACKUP_DIR}</span><span class="st">"</span></span>
+<span id="cb19-327"><a href="#cb19-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-328"><a href="#cb19-328" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Syncing </span><span class="va">${REMOTE_HOST}</span><span class="st">:</span><span class="va">${REMOTE_PATH}</span><span class="st"> to </span><span class="va">${LOCAL_BACKUP_DIR}</span><span class="st">..."</span></span>
+<span id="cb19-329"><a href="#cb19-329" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avzP</span> <span class="dt">\</span></span>
+<span id="cb19-330"><a href="#cb19-330" aria-hidden="true" tabindex="-1"></a>  <span class="at">--exclude</span><span class="op">=</span><span class="st">"*.x"</span> <span class="dt">\</span></span>
+<span id="cb19-331"><a href="#cb19-331" aria-hidden="true" tabindex="-1"></a>  <span class="at">--exclude</span><span class="op">=</span><span class="st">"*.o"</span> <span class="dt">\</span></span>
+<span id="cb19-332"><a href="#cb19-332" aria-hidden="true" tabindex="-1"></a>  <span class="st">"</span><span class="va">${REMOTE_HOST}</span><span class="st">:</span><span class="va">${REMOTE_PATH}</span><span class="st">"</span> <span class="st">"</span><span class="va">${LOCAL_BACKUP_DIR}</span><span class="st">/"</span></span>
+<span id="cb19-333"><a href="#cb19-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-334"><a href="#cb19-334" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Backup complete at </span><span class="va">$(</span><span class="fu">date</span><span class="va">)</span><span class="st">."</span></span>
+<span id="cb19-335"><a href="#cb19-335" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-336"><a href="#cb19-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-337"><a href="#cb19-337" aria-hidden="true" tabindex="-1"></a>Run with:</span>
+<span id="cb19-338"><a href="#cb19-338" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb19-339"><a href="#cb19-339" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x sync_art1.sh</span>
+<span id="cb19-340"><a href="#cb19-340" aria-hidden="true" tabindex="-1"></a><span class="ex">./sync_art1.sh</span></span>
+<span id="cb19-341"><a href="#cb19-341" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© 2026 Igor Kan</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

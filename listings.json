@@ -9,7 +9,9 @@
   },
   {
     "listing": "/reference/index.html",
-    "items": []
+    "items": [
+      "/reference/phyd57-hpc-cluster-and-linux-guide.html"
+    ]
   },
   {
     "listing": "/notes/index.html",
