@@ -1,8 +1,8 @@
 ---
-title: "PHYD57 Project Ideas: High-Performance Scientific Computing & HPC Architecture"
-subtitle: "Rigorous semester capstone projects in GPU CUDA kernel engineering, SIMD hardware vectorization, and distributed physical simulations."
-date: "2026-09-10"
-categories: ["HPC", "PHYD57", "Research", "CUDA", "OpenMP", "SIMD", "Fluid Dynamics", "Astrophysics"]
+title: "PHYD57 Project Ideas: High-Performance Scientific Computing, Mathematical Singularities & Frontier AI"
+subtitle: "Rigorous semester capstone projects in GPU CUDA kernel engineering, Navier-Stokes singularity verification, and differentiable physical simulations."
+date: "2026-09-11"
+categories: ["HPC", "PHYD57", "Research", "CUDA", "OpenMP", "SIMD", "Fluid Dynamics", "Navier-Stokes", "AI for Science", "Astrophysics"]
 draft: true
 format:
   html:
@@ -12,17 +12,22 @@ format:
     code-fold: false
 ---
 
-## 🎯 Project Selection Framework & Evaluation Criteria
+## 🎯 Project Selection Framework & Modular Tracks
 
-Every project proposed below meets five mandatory criteria designed to build deep, enduring expertise in the age of generative AI:
+Every capstone project proposed below is engineered to develop enduring computational physics expertise by bridging mathematical rigor with low-level systems programming. 
 
-1. **Semester Feasibility:** Tailored to be independently architected, compiled, profiled, and benchmarked within a 12-week academic term by an individual student (or pair for the A4 capstone).
-2. **Curricular Grounding:** Deeply integrated with the PHYD57 syllabus taught by Prof. Pawel Artymowicz—specifically applying compiler optimization flags (`gcc`, `clang`, `nvcc`), OpenMP multi-threading, microprocessor cache architecture, SIMD vectorization (AVX2/AVX-512), CUDA GPU kernels, Barnes-Hut octree algorithms, or Smoothed Particle Hydrodynamics (SPH).
-3. **AI Automation Resilience:** Focuses on hardware-aware systems programming where statistical AI is notoriously incapable: eliminating thread divergence in GPU warp scheduling, avoiding false sharing in CPU L1/L2 cache lines, maximizing hardware memory coalescing, managing NUMA node memory affinity, and profiling against hardware Roofline models.
-4. **Academic Leverage (Impressing Faculty):** Formulated to demonstrate the computational rigor that professors in computational physics and computer science look for—producing verified scaling curves, FLOP rate benchmarks, and clean reproducible C++/CUDA repositories.
-5. **Industry & Professional Value:** Imparts direct, high-salary engineering capabilities required in high-performance computing (HPC), quantitative trading (low-latency C++ / FPGA / GPU execution), GPU kernel engineering (NVIDIA, AMD, Apple), aerospace simulation, and modern AI systems infrastructure.
+> [!IMPORTANT]
+> ### 💡 Note on Modularity & Research Focus
+> **Projects do NOT need to combine AI research and Navier-Stokes singularity analysis simultaneously.** 
+> Students are encouraged to choose the specific focus area that best matches their scientific and career ambitions:
+> 1. **Track 1: Classical HPC & Astrophysics (Options 1–3):** Pure high-performance physics simulations (fluid dynamics, stellar dynamics, cosmology) optimized to microprocessor and GPU limits without any machine learning.
+> 2. **Track 2: Mathematical Physics & Singularity Verification (Option 4):** Rigorous numerical analysis and stress-testing of fluid singularity constructions (specifically the OpenAI 2026 *Finite Time Blowup for Navier–Stokes* framework) using direct numerical simulation (DNS) and particle methods.
+> 3. **Track 3: Frontier AI for Computational Physics (Option 5):** Integrating differentiable programming, physics-informed neural operators (PINNs/FNO), or neural turbulence closures into numerical solvers, completely independent of the Navier-Stokes blowup problem.
+> 4. **Optional Hybrid Track:** Advanced students who wish to cross disciplines may optionally combine AI candidate discovery with high-precision singularity solvers.
 
 ---
+
+# Track 1: Classical Computational Astrophysics & HPC Systems
 
 ## 🚀 Project Option 1: GPU-Accelerated 3D Smoothed Particle Hydrodynamics (SPH) with CUDA Shared Memory Tiling
 
@@ -43,9 +48,9 @@ On CPUs, neighbor searching dominates computation time ($O(N^2)$ without spatial
 * **Physics Benchmark:** Simulate the 3D Rayleigh-Taylor instability or a breaking dam obstacle impact for $N = 2 \times 10^5$ particles in real time.
 * **Hardware Profiling:** Use NVIDIA Nsight Compute to measure achieved memory bandwidth (GB/s), warp execution efficiency ($> 85\%$), and speedup relative to a multi-threaded OpenMP CPU baseline.
 
-### 3. Why This Impresses Professors & Employers
-* Demonstrates mastery of low-level GPU hardware architecture: coalescing, bank conflicts in shared memory, and occupancy optimization.
-* Highly coveted skillset in game engine physics (Unreal Engine Niagara), visual effects (ILM, Weta), aerospace CFD, and GPU compiler engineering at tech firms.
+### 3. Faculty & Industry Relevance
+* **Faculty Alignment:** Directly reflects Prof. Pawel Artymowicz's foundational research in accretion disks, binary protostars, and his peer-reviewed SPH publications (*Artymowicz & Lubow 1989, 1990*).
+* **Industry Alignment:** Highly coveted skillset in game engine physics (Unreal Engine Niagara), visual effects (ILM, Weta), aerospace CFD, and GPU kernel engineering (NVIDIA, AMD).
 
 ---
 
@@ -66,9 +71,9 @@ However, tree traversal involves irregular pointer chasing that thrashes the CPU
 * **OpenMP Dynamic Work Stealing:** Parallelize tree traversal using OpenMP tasking (`#pragma omp task`) with dynamic load balancing across CPU cores, preventing thread starvation when particles cluster non-uniformly.
 * **Roofline Model & Hardware Performance Counters:** Profile execution with Linux `perf` or Intel VTune. Construct an empirical Roofline Model plotting operational intensity (FLOP/byte) against memory bandwidth to prove the kernel operates near the hardware compute ceiling.
 
-### 3. Why This Impresses Professors & Employers
-* Writing explicit SIMD intrinsics and cache-oblivious data structures demonstrates low-level systems programming that generic AI tools cannot generate reliably.
-* Direct relevance to high-frequency trading (low-latency order books, market data decoding), physics engines, and high-performance computing centers (Compute Canada / Digital Research Alliance).
+### 3. Faculty & Industry Relevance
+* **Faculty Alignment:** Connects to Prof. Artymowicz's research in multi-body planetary dynamics, Lindblad resonances, and runaway planetesimal growth.
+* **Industry Alignment:** Direct relevance to quantitative finance (low-latency order book matching), physics engines, and national supercomputing centers.
 
 ---
 
@@ -87,16 +92,77 @@ achieving linear complexity $O(N_g \log N_g)$ where $N_g$ is the grid size.
 * **Hybrid Parallelization (MPI + OpenMP):** Implement 1D or 2D domain decomposition using MPI across distributed nodes and OpenMP threading within each node.
 * **Cosmological Statistics:** From the simulated structure at redshift $z = 0$, compute the matter power spectrum $P(k)$ and two-point correlation function $\xi(r)$, benchmarking against analytical linear perturbation theory (Harrison-Zeldovich spectrum).
 
-### 3. Why This Impresses Professors & Employers
-* Mastering distributed memory parallel computing (MPI) is the cornerstone requirement for supercomputing research (e.g. at CITA, Perimeter Institute, national laboratories).
-* Demonstrates complete full-stack computational physics competence: cosmological theory, spectral Fourier numerical methods, and distributed cluster scaling.
+### 3. Faculty & Industry Relevance
+* **Faculty Alignment:** Matches classical large-scale galactic dynamics and gravitational N-body simulations.
+* **Industry Alignment:** Demonstrates distributed-memory cluster computing (MPI) required for research at CITA, Perimeter Institute, and national supercomputer facilities.
 
 ---
 
-## 📋 Summary: How to Choose Your PHYD57 Project
+# Track 2: Mathematical Physics & Singularity Verification
 
-| Project | Primary Focus | Best Suited For | Key Tools |
-| :--- | :--- | :--- | :--- |
-| **Option 1: 3D SPH CUDA Fluid** | GPU Architecture & CUDA Kernels | Students aiming for GPU engineering, VFX & CFD | C++, CUDA, Shared Memory, Nsight |
-| **Option 2: AVX-512 Barnes-Hut** | Microprocessor Limits & SIMD | Students aiming for low-latency systems & HFT | C++, AVX2/512, OpenMP, `perf` |
-| **Option 3: Hybrid MPI PM Solver** | Distributed Clusters & Spectral PDEs | Students aiming for supercomputing & astrophysics | C++, MPI, OpenMP, FFTW3, Slurm |
+## 🌪️ Project Option 4: Computational Verification & Stress-Testing of the OpenAI Navier-Stokes Singularity Construction
+
+### 1. Context & Motivation (Millennium Prize Physics)
+In 2026, researchers at OpenAI published *Finite Time Blowup for Navier–Stokes*, presenting an analytical and Lean-formalized proof of finite-time singularity formation for the 3D incompressible Navier–Stokes equations under smooth, compactly supported external forcing $f \in C_c^\infty(\mathbb{R}^3 \times [0, \infty))$.
+
+The construction posits a contracting self-similar background vortex with aspect ratio $\ell_z / \ell_r \sim \tau^{-h}$ ($\tau = 1 - t$, $0 < h < 1/6$) where peak azimuthal velocity diverges as $\|u_\theta\|_{L^\infty} \sim \tau^{-1/2 - h} \to \infty$ and enstrophy diverges as $\Omega(t) \sim \tau^{-(1+2h)} \to \infty$, while total kinetic energy remains bounded $E(t) \le C < \infty$. The divergent momentum residual is cancelled by an infinite hierarchy of high-frequency oscillatory wave packets whose quadratic Reynolds stress $\nabla \cdot \overline{(w \otimes w)}$ balances the background.
+
+This project computationally investigates whether this mathematical construction is **structurally stable under numerical perturbations**, whether **Lagrangian continuum breakdown** regularizes the core, and whether **Palasek's dissipation obstacle** quenches the singularity when forcing is removed.
+
+> **Reference Repository:** Full research framework and code available locally at [`/home/igorkan/repos/navier-stokes-singularity`](file:///home/igorkan/repos/navier-stokes-singularity).
+
+### 2. Concrete Deliverables & Scope
+* **GPU 3D Pseudo-Spectral DNS with Leray Projection:** 
+  Implement incompressible Navier-Stokes in Fourier space on $\mathbb{T}^3 = [0, 2\pi]^3$ using CUDA CUFFT. Apply the exact Leray projection tensor $\hat{P}(k) = I - \frac{k \otimes k}{|k|^2}$ to eliminate kinematic pressure and guarantee divergence-free flow ($\max |\nabla \cdot u| < 10^{-14}$).
+* **Orszag 2/3 Dealiasing & ETD-RK4 Time-Stepping:**
+  Implement the 2/3 dealiasing cutoff ($|k| < \frac{2}{3}k_{\text{max}}$) to prevent nonlinear aliasing instabilities. Integrate using Exponential Time Differencing 4th-order Runge-Kutta (ETD-RK4) across grids up to $1024^3$.
+* **SPH Continuum Breakdown Modeling:**
+  Discretize the singular vortex core using Lagrangian SPH particles. Track whether the contracting core radius $\ell_r \sim \tau^{1/2}$ drops below the particle smoothing length $h_{\text{SPH}}$ and the molecular mean free path $\lambda_{\text{mfp}} \sim 10^{-7}\text{ m}$ (Knudsen number $Kn \ge 0.01$), investigating if discrete particle dynamics physically arrest the mathematical blowup.
+* **Azimuthal Perturbation & Lyapunov Stability ($m=0,1,2,3$):**
+  Seed non-axisymmetric perturbations $\delta u_m(r, z, t) e^{im\theta}$. Compute finite-time Lyapunov exponents (FTLE) to determine if centrifugal, elliptic, or Kelvin-Helmholtz shear instabilities destroy the core before the nominal blowup time $t = 1$.
+* **Palasek Dissipation Quenching Experiment:**
+  Modulate the external body force with a smooth $C^\infty$ bump function $\chi_\delta(t)$ that quenches forcing at $t_{\text{cut}} < 1$. Confirm whether viscous dissipation immediately drains kinetic energy and arrests the singularity:
+  $$\|u(t)\|_{L^2}^2 \le \|u(t_{\text{cut}})\|_{L^2}^2 e^{-2 \nu \lambda_1 (t - t_{\text{cut}})}$$
+
+### 3. Faculty & Industry Relevance
+* **Faculty Alignment:** Directly engages Prof. Artymowicz's core specializations: nonlinear vortex dynamics, fluid instability criteria, and high-performance fluid solvers.
+* **Scientific Impact:** Produces an independent numerical verification dossier testing the physical and structural validity of one of the most significant modern mathematical claims in fluid dynamics.
+
+---
+
+# Track 3: Frontier AI for Computational Physics
+
+## 🧠 Project Option 5: Differentiable Hydrodynamics & GPU Physics-Informed Neural Operators for Fluid Closures
+
+### 1. Context & Motivation (AI for Science & Differentiable Physics)
+Modern deep learning for physical systems is rapidly moving away from black-box surrogate models and toward **differentiable numerical solvers** and **neural operators** that strictly enforce physical conservation laws. 
+
+In turbulence modeling and fluid mechanics, direct numerical simulations (DNS) at high Reynolds numbers require grid resolutions that exceed supercomputer capacities. Traditional Large Eddy Simulations (LES) rely on empirical sub-grid scale (SGS) closures (e.g. Smagorinsky eddy viscosity). In this project, students implement a high-performance numerical fluid engine in CUDA and integrate an end-to-end differentiable pipeline or neural operator to discover data-driven subgrid closures.
+
+*(Note: This project focuses strictly on learning physics closures and inverse parameter estimation; it does NOT require any analysis of the Navier-Stokes Millennium singularity).*
+
+### 2. Concrete Deliverables & Scope
+* **Custom Differentiable CUDA Fluid Kernel (SPH or Spectral):**
+  Implement an adjoint or backward pass in CUDA C++ for a 2D/3D fluid solver (either Lagrangian SPH or Fourier pseudo-spectral). Compute exact gradients of a downstream loss function (e.g., target kinetic energy dissipation or obstacle drag) with respect to simulation parameters.
+* **Neural Subgrid Viscosity Closure ($\Pi_{ij}$ / Reynolds Stress):**
+  Parameterize subgrid dissipation using a compact Neural Network or Graph Neural Operator (GNO). Train the neural network via backpropagation through the simulation time steps to match high-resolution reference data while guaranteeing Galilean invariance and non-negative entropy production.
+* **Fourier Neural Operator (FNO) Multi-Scale Benchmark:**
+  Train a Fourier Neural Operator (FNO) on spectral vorticity snapshots. Evaluate zero-shot super-resolution (training on $64^2$ grids and evaluating on $256^2$ grids) and benchmark prediction accuracy, inference speedup ($> 100\times$), and long-term enstrophy conservation against the native CUDA solver.
+* **Inverse Problem Benchmark:**
+  Use the differentiable engine to solve an inverse engineering problem: optimize initial fluid velocity conditions or obstacle geometry to minimize turbulent vortex shedding (von Kármán vortex street) downstream.
+
+### 3. Faculty & Industry Relevance
+* **Faculty Alignment:** Combines computational fluid mechanics with gradient-based optimization, avoiding unphysical black-box models while adhering to conservation laws.
+* **Industry Alignment:** Direct pathway to frontier AI labs (Google DeepMind Science team, NVIDIA Earth-2 / Modulus, Meta FAIR) and computational engineering firms deploying AI-augmented CFD.
+
+---
+
+## 📋 Comprehensive Decision Matrix: Choosing Your PHYD57 Project
+
+| Project Option | Track | Primary Focus | Math & Physics Challenge | Low-Level Systems Challenge | Target Career / Field |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Option 1: 3D SPH CUDA Engine** | Track 1 (HPC) | Lagrangian Fluid Dynamics | Weakly compressible Tait EOS, Monaghan viscosity | GPU Shared Memory, Warp Divergence, Spatial Hashing | GPU Kernel Engineer, CFD, Game Physics |
+| **Option 2: AVX-512 Barnes-Hut** | Track 1 (HPC) | N-Body Gravitational Dynamics | Octree multipole expansion, opening angle criteria | AVX-512 SIMD Intrinsics, Morton Octree, OpenMP Work-Stealing | Low-Latency Systems, HFT, Supercomputing |
+| **Option 3: Hybrid MPI PM Solver** | Track 1 (HPC) | Cosmological Large-Scale Structure | Friedmann FLRW expansion, spectral Poisson solver | Distributed MPI Domain Decomposition, FFTW3, OpenMP | Astrophysics Research, National Labs, CITA |
+| **Option 4: Navier-Stokes Singularity Verifier** | Track 2 (Math Physics) | 3D Fluid Blowup & Instability | Self-similar scaling ($\tau = 1 - t$), FTLE, Palasek quenching | CUFFT Leray Projector, Orszag 2/3 Dealiasing, ETD-RK4 | Mathematical Physics, Fluid Mechanics, Research Academia |
+| **Option 5: Differentiable CUDA & Neural FNO** | Track 3 (AI for Science) | Physics-Informed ML & Closures | Adjoint state method, Fourier operators, subgrid turbulence | Custom Backward CUDA Kernels, PyTorch C++ Extension, Nsight | Frontier AI Labs, Differentiable Physics, ML for Science |
