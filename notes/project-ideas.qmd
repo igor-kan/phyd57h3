@@ -3,6 +3,7 @@ title: "PHYD57 Project Ideas: High-Performance Scientific Computing & HPC Archit
 subtitle: "Rigorous semester capstone projects in GPU CUDA kernel engineering, SIMD hardware vectorization, and distributed physical simulations."
 date: "2026-09-10"
 categories: ["HPC", "PHYD57", "Research", "CUDA", "OpenMP", "SIMD", "Fluid Dynamics", "Astrophysics"]
+draft: true
 format:
   html:
     toc: true
