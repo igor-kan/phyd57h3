@@ -1,16 +1,72 @@
 ---
 title: "Linux Environment, Shells & Compiler Toolchains"
 subtitle: "Bash/tcsh scripting, cluster SSH access, stack size limits, and compiler optimization flags."
-date: "2025-09-11"
+date: "2026-09-11"
 categories: ["Reference", "Linux", "Compilers", "HPC"]
 draft: true
 ---
 
-## 🐧 Cluster Remote Access & File Transfer
-- **SSH Connection:** `ssh -X phyd57@art-1.utsc.utoronto.ca`
-- **Secure Copy (sftp / scp):** `scp -r phyd57@art-2.utsc.utoronto.ca:/home/phyd57/game/jpgs .`
+## 🐧 Cluster Remote Access & Connection Parameters
 
-### Stack vs. Heap Allocation
+### Connection Details
+* **Host:** `art-1.utsc.utoronto.ca`
+* **User:** `phyd57`
+* **Password:** `in26itakeD57` *(Classroom access; saved in private draft only)*
+
+### Legacy Host Key Negotiation (`ssh-dss`)
+CentOS 6.6 uses legacy DSA host keys that modern OpenSSH clients reject by default. Connect using:
+```bash
+ssh -X -o HostKeyAlgorithms=+ssh-dss phyd57@art-1.utsc.utoronto.ca
+```
+
+### Streamlining with `~/.ssh/config`
+To avoid typing the `-o` flag every time, add this block to `~/.ssh/config`:
+```ssh-config
+Host art-1
+    HostName art-1.utsc.utoronto.ca
+    User phyd57
+    HostKeyAlgorithms +ssh-dss
+    ForwardX11 yes
+    ServerAliveInterval 60
+```
+Then simply run `ssh art-1`.
+
+---
+
+## 📁 File Viewing, Editing, and Transfer
+
+### 1. Transparent Local Mount via SSHFS
+Mount the remote directory directly into your local filesystem to edit with VS Code or Neovim locally:
+```bash
+mkdir -p ~/mounts/art-1
+sshfs art-1:/home/phyd57 ~/mounts/art-1 -o reconnect,ServerAliveInterval=15
+```
+Open locally:
+```bash
+code ~/mounts/art-1/igor-dir
+```
+Unmount when finished:
+```bash
+fusermount -u ~/mounts/art-1
+```
+
+### 2. Secure File Transfer (SCP & Rsync)
+* **Download a file from cluster:**
+  ```bash
+  scp art-1:~/finalD57-Q-2024.txt ./
+  ```
+* **Download entire workspace directory recursively:**
+  ```bash
+  scp -r art-1:~/igor-dir ./backup/
+  ```
+* **Differential backup with Rsync:**
+  ```bash
+  rsync -avzP art-1:~/igor-dir/ ./backup-igor/
+  ```
+
+---
+
+## ⚙️ Runtime Memory: Stack vs. Heap Allocation
 Large arrays declared statically inside functions are allocated on the **stack**, triggering segmentation faults when exceeding stack memory limits.
 - **In `tcsh`:** `limit stacksize 4000m`
 - **In `bash`:** `ulimit -s unlimited`
