@@ -1,17 +1,17 @@
 [
   {
-    "listing": "/simulations/index.html",
-    "items": []
+    "listing": "/reference/index.html",
+    "items": [
+      "/reference/phyd57-hpc-cluster-and-linux-guide.html"
+    ]
   },
   {
     "listing": "/problems/index.html",
     "items": []
   },
   {
-    "listing": "/reference/index.html",
-    "items": [
-      "/reference/phyd57-hpc-cluster-and-linux-guide.html"
-    ]
+    "listing": "/simulations/index.html",
+    "items": []
   },
   {
     "listing": "/notes/index.html",
