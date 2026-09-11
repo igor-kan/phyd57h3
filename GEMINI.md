@@ -16,13 +16,11 @@ description: PHYD57 Course Website Guidelines
   - `reference/`: Technical references, compiler guides, Linux HPC tutorials, and cluster connection workflows (`art-1`, `art-16`).
 * **DO NOT put general blog posts here**. General articles belong in the main blog (`/home/igorkan/repos/quarto-writing`).
 
-### Git Dual Remotes (MANDATORY)
-* `origin`: `https://github.com/igor-kan/phyd57h3.git` (Public GitHub Pages deployment)
-* `private`: `https://github.com/igor-kan/phyd57h3-drafts.git` (Private companion repo for drafts, passwords, and solutions)
-* **Always push to both**:
-  ```bash
-  git push origin main && git push private main
-  ```
+### Repository Architecture (Public Deployment Site)
+* This is the **Public** deployment repository.
+* `origin`: `https://github.com/igor-kan/phyd57h3.git` (Triggers public GitHub Pages deployment)
+* Contains ONLY published materials and sanitized guides.
+* All raw drafts (`draft: true`), unredacted passwords, and solutions belong strictly in the private companion repository at `/home/igorkan/repos/phyd57h3-drafts/`.
 
 ### Drafts, Security & Credentials
 * "Publish" = ensure `draft: true` is not present (or set to `draft: false`).
