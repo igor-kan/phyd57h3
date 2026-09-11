@@ -366,7 +366,7 @@ window.Quarto = {
   <li><a href="#phyd57h3-course-repository-guidelines" id="toc-phyd57h3-course-repository-guidelines" class="nav-link active" data-scroll-target="#phyd57h3-course-repository-guidelines">PHYD57H3 Course Repository Guidelines</a>
   <ul class="collapse">
   <li><a href="#scope-structure" id="toc-scope-structure" class="nav-link" data-scroll-target="#scope-structure">Scope &amp; Structure</a></li>
-  <li><a href="#git-dual-remotes-mandatory" id="toc-git-dual-remotes-mandatory" class="nav-link" data-scroll-target="#git-dual-remotes-mandatory">Git Dual Remotes (MANDATORY)</a></li>
+  <li><a href="#repository-architecture-public-deployment-site" id="toc-repository-architecture-public-deployment-site" class="nav-link" data-scroll-target="#repository-architecture-public-deployment-site">Repository Architecture (Public Deployment Site)</a></li>
   <li><a href="#drafts-security-credentials" id="toc-drafts-security-credentials" class="nav-link" data-scroll-target="#drafts-security-credentials">Drafts, Security &amp; Credentials</a></li>
   <li><a href="#ui-styling-standards" id="toc-ui-styling-standards" class="nav-link" data-scroll-target="#ui-styling-standards">UI &amp; Styling Standards</a></li>
   </ul></li>
@@ -396,13 +396,13 @@ window.Quarto = {
 <li><strong>DO NOT put general blog posts here</strong>. General articles belong in the main blog (<code>/home/igorkan/repos/quarto-writing</code>).</li>
 </ul>
 </section>
-<section id="git-dual-remotes-mandatory" class="level3">
-<h3 class="anchored" data-anchor-id="git-dual-remotes-mandatory">Git Dual Remotes (MANDATORY)</h3>
+<section id="repository-architecture-public-deployment-site" class="level3">
+<h3 class="anchored" data-anchor-id="repository-architecture-public-deployment-site">Repository Architecture (Public Deployment Site)</h3>
 <ul>
-<li><p><code>origin</code>: <code>https://github.com/igor-kan/phyd57h3.git</code> (Public GitHub Pages deployment)</p></li>
-<li><p><code>private</code>: <code>https://github.com/igor-kan/phyd57h3-drafts.git</code> (Private companion repo for drafts, passwords, and solutions)</p></li>
-<li><p><strong>Always push to both</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main <span class="kw">&amp;&amp;</span> <span class="fu">git</span> push private main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li>This is the <strong>Public</strong> deployment repository.</li>
+<li><code>origin</code>: <code>https://github.com/igor-kan/phyd57h3.git</code> (Triggers public GitHub Pages deployment)</li>
+<li>Contains ONLY published materials and sanitized guides.</li>
+<li>All raw drafts (<code>draft: true</code>), unredacted passwords, and solutions belong strictly in the private companion repository at <code>/home/igorkan/repos/phyd57h3-drafts/</code>.</li>
 </ul>
 </section>
 <section id="drafts-security-credentials" class="level3">
@@ -898,44 +898,42 @@ window.Quarto = {
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">alwaysApply:</span><span class="co"> true</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">always_on:</span><span class="co"> true</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="an">trigger:</span><span class="co"> always_on</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> PHYD57 Course Website Guidelines</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu"># PHYD57H3 Course Repository Guidelines</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">### Scope &amp; Structure</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>This repository (<span class="in">`phyd57h3`</span>) is dedicated exclusively to **PHYD57H3: Advanced Computational Methods in Physics**.</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Directory Layout**:</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="in">`notes/`</span>: Official lecture notes and syllabus.</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="in">`problems/`</span>: Problem sets, past exam prompts, and problem solutions.</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="in">`simulations/`</span>: Numerical simulation code (C, Fortran, CUDA, OpenMP, Python).</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="in">`reference/`</span>: Technical references, compiler guides, Linux HPC tutorials, and cluster connection workflows (<span class="in">`art-1`</span>, <span class="in">`art-16`</span>).</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**DO NOT put general blog posts here**. General articles belong in the main blog (<span class="in">`/home/igorkan/repos/quarto-writing`</span>).</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">### Git Dual Remotes (MANDATORY)</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`origin`</span>: <span class="in">`https://github.com/igor-kan/phyd57h3.git`</span> (Public GitHub Pages deployment)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`private`</span>: <span class="in">`https://github.com/igor-kan/phyd57h3-drafts.git`</span> (Private companion repo for drafts, passwords, and solutions)</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Always push to both**:</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="in">```bash</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">git</span> push origin main <span class="kw">&amp;&amp;</span> <span class="fu">git</span> push private main</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="in">```</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="fu">### Drafts, Security &amp; Credentials</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>"Publish" = ensure <span class="in">`draft: true`</span> is not present (or set to <span class="in">`draft: false`</span>).</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>"Unpublish" / "Draft" = set <span class="in">`draft: true`</span> in the frontmatter.</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>When <span class="in">`draft: true`</span> is set, Quarto automatically excludes the document from public website rendering.</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Sensitive Credentials (e.g. cluster passwords)**:</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>NEVER publish raw passwords to the public website.</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Public documents must redact credentials: <span class="in">`[REDACTED — Provided in class / stored in private draft]`</span>.</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Full credentials may only be stored in documents marked <span class="in">`draft: true`</span>, ensuring they reside solely in the private backup repository.</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="fu">### UI &amp; Styling Standards</span></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Adhere strictly to the Notion.so minimalist aesthetic in light and dark mode.</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Footer must display: <span class="in">`© 2026 Igor Kan`</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">alwaysApply:</span><span class="co"> true</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">always_on:</span><span class="co"> true</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">trigger:</span><span class="co"> always_on</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> PHYD57 Course Website Guidelines</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu"># PHYD57H3 Course Repository Guidelines</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">### Scope &amp; Structure</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>This repository (<span class="in">`phyd57h3`</span>) is dedicated exclusively to **PHYD57H3: Advanced Computational Methods in Physics**.</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Directory Layout**:</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="in">`notes/`</span>: Official lecture notes and syllabus.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="in">`problems/`</span>: Problem sets, past exam prompts, and problem solutions.</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="in">`simulations/`</span>: Numerical simulation code (C, Fortran, CUDA, OpenMP, Python).</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="in">`reference/`</span>: Technical references, compiler guides, Linux HPC tutorials, and cluster connection workflows (<span class="in">`art-1`</span>, <span class="in">`art-16`</span>).</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**DO NOT put general blog posts here**. General articles belong in the main blog (<span class="in">`/home/igorkan/repos/quarto-writing`</span>).</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">### Repository Architecture (Public Deployment Site)</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>This is the **Public** deployment repository.</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`origin`</span>: <span class="in">`https://github.com/igor-kan/phyd57h3.git`</span> (Triggers public GitHub Pages deployment)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Contains ONLY published materials and sanitized guides.</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>All raw drafts (<span class="in">`draft: true`</span>), unredacted passwords, and solutions belong strictly in the private companion repository at <span class="in">`/home/igorkan/repos/phyd57h3-drafts/`</span>.</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">### Drafts, Security &amp; Credentials</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>"Publish" = ensure <span class="in">`draft: true`</span> is not present (or set to <span class="in">`draft: false`</span>).</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>"Unpublish" / "Draft" = set <span class="in">`draft: true`</span> in the frontmatter.</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>When <span class="in">`draft: true`</span> is set, Quarto automatically excludes the document from public website rendering.</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Sensitive Credentials (e.g. cluster passwords)**:</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>NEVER publish raw passwords to the public website.</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Public documents must redact credentials: <span class="in">`[REDACTED — Provided in class / stored in private draft]`</span>.</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Full credentials may only be stored in documents marked <span class="in">`draft: true`</span>, ensuring they reside solely in the private backup repository.</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="fu">### UI &amp; Styling Standards</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Adhere strictly to the Notion.so minimalist aesthetic in light and dark mode.</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Footer must display: <span class="in">`© 2026 Igor Kan`</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
