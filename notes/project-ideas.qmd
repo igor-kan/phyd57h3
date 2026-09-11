@@ -105,28 +105,92 @@ achieving linear complexity $O(N_g \log N_g)$ where $N_g$ is the grid size.
 ### 1. Context & Motivation (Millennium Prize Physics)
 In 2026, researchers at OpenAI published *Finite Time Blowup for Navier–Stokes*, presenting an analytical and Lean-formalized proof of finite-time singularity formation for the 3D incompressible Navier–Stokes equations under smooth, compactly supported external forcing $f \in C_c^\infty(\mathbb{R}^3 \times [0, \infty))$.
 
-The construction posits a contracting self-similar background vortex with aspect ratio $\ell_z / \ell_r \sim \tau^{-h}$ ($\tau = 1 - t$, $0 < h < 1/6$) where peak azimuthal velocity diverges as $\|u_\theta\|_{L^\infty} \sim \tau^{-1/2 - h} \to \infty$ and enstrophy diverges as $\Omega(t) \sim \tau^{-(1+2h)} \to \infty$, while total kinetic energy remains bounded $E(t) \le C < \infty$. The divergent momentum residual is cancelled by an infinite hierarchy of high-frequency oscillatory wave packets whose quadratic Reynolds stress $\nabla \cdot \overline{(w \otimes w)}$ balances the background.
+The construction posits a contracting self-similar background vortex with aspect ratio $\ell_z / \ell_r \sim \tau^{-h}$ (where $\tau = 1 - t$, $0 < h < 1/6$) in which peak azimuthal velocity diverges as $\|u_\theta\|_{L^\infty} \sim \tau^{-1/2 - h} \to \infty$ and enstrophy diverges as $\Omega(t) \sim \tau^{-(1+2h)} \to \infty$, while total kinetic energy remains bounded $E(t) \le C < \infty$. The divergent momentum residual of this background is cancelled by an infinite hierarchy of high-frequency oscillatory wave packets whose quadratic Reynolds stress $\nabla \cdot \overline{(w \otimes w)}$ balances the background.
 
 This project computationally investigates whether this mathematical construction is **structurally stable under numerical perturbations**, whether **Lagrangian continuum breakdown** regularizes the core, and whether **Palasek's dissipation obstacle** quenches the singularity when forcing is removed.
 
-> **Reference Repository:** Full research framework and code available locally at [`/home/igorkan/repos/navier-stokes-singularity`](file:///home/igorkan/repos/navier-stokes-singularity).
+> **Reference Repository:** Complete local research codebase and analytical report available at [`/home/igorkan/repos/navier-stokes-singularity`](file:///home/igorkan/repos/navier-stokes-singularity).
 
-### 2. Concrete Deliverables & Scope
-* **GPU 3D Pseudo-Spectral DNS with Leray Projection:** 
-  Implement incompressible Navier-Stokes in Fourier space on $\mathbb{T}^3 = [0, 2\pi]^3$ using CUDA CUFFT. Apply the exact Leray projection tensor $\hat{P}(k) = I - \frac{k \otimes k}{|k|^2}$ to eliminate kinematic pressure and guarantee divergence-free flow ($\max |\nabla \cdot u| < 10^{-14}$).
-* **Orszag 2/3 Dealiasing & ETD-RK4 Time-Stepping:**
-  Implement the 2/3 dealiasing cutoff ($|k| < \frac{2}{3}k_{\text{max}}$) to prevent nonlinear aliasing instabilities. Integrate using Exponential Time Differencing 4th-order Runge-Kutta (ETD-RK4) across grids up to $1024^3$.
-* **SPH Continuum Breakdown Modeling:**
-  Discretize the singular vortex core using Lagrangian SPH particles. Track whether the contracting core radius $\ell_r \sim \tau^{1/2}$ drops below the particle smoothing length $h_{\text{SPH}}$ and the molecular mean free path $\lambda_{\text{mfp}} \sim 10^{-7}\text{ m}$ (Knudsen number $Kn \ge 0.01$), investigating if discrete particle dynamics physically arrest the mathematical blowup.
-* **Azimuthal Perturbation & Lyapunov Stability ($m=0,1,2,3$):**
-  Seed non-axisymmetric perturbations $\delta u_m(r, z, t) e^{im\theta}$. Compute finite-time Lyapunov exponents (FTLE) to determine if centrifugal, elliptic, or Kelvin-Helmholtz shear instabilities destroy the core before the nominal blowup time $t = 1$.
-* **Palasek Dissipation Quenching Experiment:**
-  Modulate the external body force with a smooth $C^\infty$ bump function $\chi_\delta(t)$ that quenches forcing at $t_{\text{cut}} < 1$. Confirm whether viscous dissipation immediately drains kinetic energy and arrests the singularity:
-  $$\|u(t)\|_{L^2}^2 \le \|u(t_{\text{cut}})\|_{L^2}^2 e^{-2 \nu \lambda_1 (t - t_{\text{cut}})}$$
+---
 
-### 3. Faculty & Industry Relevance
-* **Faculty Alignment:** Directly engages Prof. Artymowicz's core specializations: nonlinear vortex dynamics, fluid instability criteria, and high-performance fluid solvers.
-* **Scientific Impact:** Produces an independent numerical verification dossier testing the physical and structural validity of one of the most significant modern mathematical claims in fluid dynamics.
+### 2. PHYD57 Capstone Final Project Compliance Blueprint
+
+To satisfy all requirements of PHYD57 Assignment 4 (23% course grade) under Prof. Pawel Artymowicz, the project must adhere to the following standards:
+
+1. **Mandatory Language Constraint:**
+   * The core simulation kernels **MUST be compiled in C/C++ or CUDA (`g++ -O3 -fopenmp` or `nvcc -O3`)**.
+   * Pure Python simulations are strictly disallowed by course policy. Python may only be used for the CLI runner, file I/O, and data visualization.
+2. **Hardware Acceleration & Profiling:**
+   * Must demonstrate GPU acceleration (using NVIDIA CUDA CUFFT and shared-memory kernels) or multi-threaded OpenMP CPU scaling across 1 to 16 cores.
+   * Must include empirical execution benchmarks (runtime vs grid size $N^3$, memory bandwidth utilization in GB/s, and speedup curves).
+3. **Physical & Numerical Rigor:**
+   * **Incompressibility Gate:** Prove $\max |\nabla \cdot \mathbf{u}| < 10^{-14}$ at every step via the Leray projection.
+   * **Dealiasing:** Enforce the Orszag 2/3 mask in Fourier space to prevent numerical aliasing instabilities.
+   * **Energy Invariant Tracking:** Monitor the continuous energy balance equation:
+     $$\frac{1}{2} \frac{d}{dt} \|\mathbf{u}\|_{L^2}^2 = \int \mathbf{u} \cdot \mathbf{f} \, dx - \nu \|\nabla \mathbf{u}\|_{L^2}^2$$
+   * **Resolution Convergence:** Verify convergence across $128^3 \to 256^3 \to 512^3$ grids to prove the blowup rate $\Omega(t) \sim \tau^{-(1+2h)}$ is not a grid-resolution artifact.
+4. **Final Deliverables Checklist:**
+   * Reproducible Git repository with `CMakeLists.txt` or `Makefile`.
+   * 5–10 page technical report formatted in LaTeX or Quarto.
+   * In-class live presentation (December 4) featuring 2D/3D vorticity slice visual renders.
+
+---
+
+### 3. Software Architecture: What & How to Actually Build
+
+```
+navier-stokes-singularity/
+├── CMakeLists.txt              # Production build system (-O3, -march=native, CUDA arch)
+├── include/
+│   ├── theory.hpp              # Analytical scaling laws, aspect ratio, energy invariants
+│   ├── spectral_dns.cuh        # GPU CUFFT 3D pseudo-spectral Navier-Stokes solver
+│   ├── leray.cuh               # Exact pressureless projection operator P(k) = I - (k k^T)/|k|^2
+│   ├── sph_core.cuh            # Lagrangian SPH particle discretization & Knudsen tracker
+│   ├── stability.hpp           # Azimuthal modal decomposition (m=0,1,2,3) & FTLE tracker
+│   └── quenching.hpp           # Palasek C^infty cutoff modulation chi_delta(t)
+├── src/
+│   ├── main.cpp                # Master CLI harness and benchmarking runner
+│   ├── theory.cpp              # Self-similar background profile & residual evaluator
+│   ├── spectral_dns.cu         # CUDA kernels: Leray projector, 2/3 dealias, ETD-RK4
+│   ├── sph_core.cu             # SPH density, force, and particle cutoff evaluation
+│   ├── stability.cpp           # Non-axisymmetric perturbation injector & Lyapunov exponent
+│   └── quenching.cpp           # Forcing cutoff integrator & viscous dissipation auditor
+├── python/
+│   ├── run_benchmarks.py       # Automated resolution sweeps (128^3 -> 512^3)
+│   ├── plot_enstrophy.py       # Enstrophy Omega(t) vs theoretical tau^{-(1+2h)} curve
+│   └── render_vorticity.py     # Matplotlib/VTK 3D vortex core isosurface cutaway renderer
+├── tests/
+│   ├── test_divergence.cpp     # Unit test: verify div u < 1e-14
+│   └── test_energy_balance.cpp # Unit test: verify dE/dt = E_in - E_diss
+└── report/
+    └── PHYD57_Final_Report.qmd # 5-10 page formal technical report
+```
+
+#### Step-by-Step Implementation Guide:
+* **Module 1: Background Profile Initializer (`src/theory.cpp`):**
+  Discretize the self-similar coordinates $X = r / \tau^{1/2}$ and $\eta = z / \tau^{1/2-h}$ on a 3D periodic torus $\mathbb{T}^3 = [0, 2\pi]^3$. Compute the initial swirl $u_\theta(r,z,0)$ and axial counterflow $u_z(r,z,0)$.
+* **Module 2: 3D GPU Pseudo-Spectral Solver (`src/spectral_dns.cu`):**
+  1. Allocate complex velocity buffers on GPU VRAM (`cufftComplex* d_u[3]`).
+  2. Perform forward 3D transform using CUFFT: $\mathbf{u}(x) \xrightarrow{\text{CUFFT}} \hat{\mathbf{u}}(k)$.
+  3. Launch CUDA kernel applying the **Leray Projector**:
+     $$\hat{u}_i(k) \leftarrow \hat{u}_i(k) - \frac{k_i (k_j \hat{u}_j(k))}{|k|^2}$$
+  4. Launch CUDA kernel applying the **Orszag 2/3 Dealiasing Mask**: zero all modes where $|k_x| \ge \frac{2}{3} k_{\text{max}}$, $|k_y| \ge \frac{2}{3} k_{\text{max}}$, or $|k_z| \ge \frac{2}{3} k_{\text{max}}$.
+  5. Inverse transform back to physical space to evaluate the nonlinear advection tensor point-wise: $(u \cdot \nabla)u$.
+  6. Advance forward in time using an Exponential Time Differencing 4th-Order Runge-Kutta (ETD-RK4) scheme where linear viscous dissipation $-\nu |k|^2 \hat{u}$ is solved analytically.
+* **Module 3: SPH Continuum Breakdown Probe (`src/sph_core.cu`):**
+  1. Initialize $N_p = 2 \times 10^5$ Lagrangian fluid particles sampling the vortex core.
+  2. Implement M4 cubic spline kernel $W(r, h_{\text{SPH}})$ and Monaghan artificial viscosity $\Pi_{ab}$.
+  3. At each timestep, calculate the minimum vortex radius $\ell_r(\tau) \sim \tau^{1/2}$ and compute the local Knudsen number:
+     $$Kn = \frac{\lambda_{\text{mfp}}}{\ell_r}$$
+     Demonstrate that as $Kn \ge 0.01$, discrete particle interaction prevents the point-singularity by transitioning the flow into the kinetic Boltzmann regime.
+* **Module 4: Azimuthal Modal Perturbation & FTLE (`src/stability.cpp`):**
+  1. Seed perturbations $\delta \mathbf{u}_m(r,z,t) e^{im\theta}$ across modes $m=0, 1, 2, 3$.
+  2. Track divergence between perturbed and unperturbed trajectories to calculate the Finite-Time Lyapunov Exponent $\lambda_{\text{FTLE}}(t)$.
+  3. Determine whether non-axisymmetric shear instabilities destroy the core coherence before $t = 1$.
+* **Module 5: Palasek Dissipation Quenching (`src/quenching.cpp`):**
+  1. Multiply external forcing by smooth $C^\infty$ bump cutoff $\chi_\delta(t)$ that vanishes for $t \ge t_{\text{cut}} = 0.9$.
+  2. Demonstrate that once $\mathbf{f} = 0$, energy injection ceases and viscous dissipation triggers exponential velocity decay:
+     $$\|\mathbf{u}(t)\|_{L^2}^2 \le \|\mathbf{u}(t_{\text{cut}})\|_{L^2}^2 e^{-2 \nu \lambda_1 (t - t_{\text{cut}})}$$
 
 ---
 
@@ -135,25 +199,77 @@ This project computationally investigates whether this mathematical construction
 ## 🧠 Project Option 5: Differentiable Hydrodynamics & GPU Physics-Informed Neural Operators for Fluid Closures
 
 ### 1. Context & Motivation (AI for Science & Differentiable Physics)
-Modern deep learning for physical systems is rapidly moving away from black-box surrogate models and toward **differentiable numerical solvers** and **neural operators** that strictly enforce physical conservation laws. 
+Modern deep learning for physical systems is rapidly moving away from black-box neural networks and toward **differentiable numerical solvers** and **neural operators** that strictly preserve physical conservation laws. 
 
-In turbulence modeling and fluid mechanics, direct numerical simulations (DNS) at high Reynolds numbers require grid resolutions that exceed supercomputer capacities. Traditional Large Eddy Simulations (LES) rely on empirical sub-grid scale (SGS) closures (e.g. Smagorinsky eddy viscosity). In this project, students implement a high-performance numerical fluid engine in CUDA and integrate an end-to-end differentiable pipeline or neural operator to discover data-driven subgrid closures.
+In high-Reynolds-number fluid mechanics, direct numerical simulations (DNS) are computationally intractable for real-world engineering. Large Eddy Simulations (LES) resolve macro-eddies and rely on empirical sub-grid scale (SGS) models (e.g. Smagorinsky eddy viscosity) to represent unresolved micro-turbulence. In this project, students implement a high-performance numerical fluid engine in CUDA and build an end-to-end differentiable pipeline or neural operator to learn optimal, physics-consistent subgrid closures.
 
-*(Note: This project focuses strictly on learning physics closures and inverse parameter estimation; it does NOT require any analysis of the Navier-Stokes Millennium singularity).*
+*(Note: This project focuses strictly on learning physics closures and inverse design; it does NOT require any analysis of the Navier-Stokes Millennium singularity).*
 
-### 2. Concrete Deliverables & Scope
-* **Custom Differentiable CUDA Fluid Kernel (SPH or Spectral):**
-  Implement an adjoint or backward pass in CUDA C++ for a 2D/3D fluid solver (either Lagrangian SPH or Fourier pseudo-spectral). Compute exact gradients of a downstream loss function (e.g., target kinetic energy dissipation or obstacle drag) with respect to simulation parameters.
-* **Neural Subgrid Viscosity Closure ($\Pi_{ij}$ / Reynolds Stress):**
-  Parameterize subgrid dissipation using a compact Neural Network or Graph Neural Operator (GNO). Train the neural network via backpropagation through the simulation time steps to match high-resolution reference data while guaranteeing Galilean invariance and non-negative entropy production.
-* **Fourier Neural Operator (FNO) Multi-Scale Benchmark:**
-  Train a Fourier Neural Operator (FNO) on spectral vorticity snapshots. Evaluate zero-shot super-resolution (training on $64^2$ grids and evaluating on $256^2$ grids) and benchmark prediction accuracy, inference speedup ($> 100\times$), and long-term enstrophy conservation against the native CUDA solver.
-* **Inverse Problem Benchmark:**
-  Use the differentiable engine to solve an inverse engineering problem: optimize initial fluid velocity conditions or obstacle geometry to minimize turbulent vortex shedding (von Kármán vortex street) downstream.
+---
 
-### 3. Faculty & Industry Relevance
-* **Faculty Alignment:** Combines computational fluid mechanics with gradient-based optimization, avoiding unphysical black-box models while adhering to conservation laws.
-* **Industry Alignment:** Direct pathway to frontier AI labs (Google DeepMind Science team, NVIDIA Earth-2 / Modulus, Meta FAIR) and computational engineering firms deploying AI-augmented CFD.
+### 2. PHYD57 Capstone Final Project Compliance Blueprint
+
+To satisfy all requirements of PHYD57 Assignment 4 (23% course grade) under Prof. Pawel Artymowicz, the project must adhere to the following standards:
+
+1. **Mandatory Language Constraint:**
+   * **Writing a simple Python script using standard PyTorch is strictly prohibited for PHYD57.**
+   * Students must write a **custom C++/CUDA extension** (`.cu` and `.cpp` files) implementing custom forward and adjoint backward kernels, exposed to Python via PyTorch C++ bindings (`torch::autograd::Function` or `pybind11`).
+2. **Hardware Acceleration & Profiling:**
+   * Custom CUDA kernels must be profiled using NVIDIA Nsight Compute to verify memory coalescing, warp divergence ($< 15\%$), and shared memory tiling.
+   * Benchmark speedup of custom CUDA differentiable kernels relative to standard finite-difference gradient baselines.
+3. **Physical & Numerical Rigor:**
+   * **Gradient Verification:** Pass standard `torch.autograd.gradcheck` comparing analytical adjoint CUDA gradients against numerical finite-difference approximations to machine precision.
+   * **Conservation Invariant Guarantees:** Hard-code physical constraints into the neural model (Galilean invariance, incompressibility, and non-negative entropy dissipation $\tau_{ij} S_{ij} \le 0$).
+   * **Multi-Scale Generalization:** Demonstrate zero-shot super-resolution (e.g. train on coarse $64^2$ grids and evaluate on fine $256^2$ grids).
+4. **Final Deliverables Checklist:**
+   * Reproducible Git repository containing the C++/CUDA extension, `setup.py` build script, and verification tests.
+   * 5–10 page technical report formatted in LaTeX or Quarto.
+   * Live in-class demonstration displaying learned vortex dynamics against DNS ground truth.
+
+---
+
+### 3. Software Architecture: What & How to Actually Build
+
+```
+differentiable-fluid-ai/
+├── setup.py                    # PyTorch C++ / CUDA extension build config
+├── csrc/
+│   ├── diff_sph_forward.cu     # Custom CUDA forward simulation kernel (density, pressure, forces)
+│   ├── diff_sph_backward.cu    # Custom CUDA adjoint backward kernel (loss gradients w.r.t. parameters)
+│   ├── diff_spectral.cu        # Differentiable 2D/3D pseudo-spectral Fourier kernel
+│   └── bindings.cpp            # Pybind11 / LibTorch C++ binding glue
+├── python/
+│   ├── models/
+│   │   ├── neural_subgrid.py   # Physics-constrained neural closure (predicting subgrid stress tau_ij)
+│   │   └── fno_2d.py           # Fourier Neural Operator (spectral conv layers)
+│   ├── train_closure.py        # End-to-end training loop through differentiable CUDA solver
+│   ├── inverse_vortex_opt.py   # Inverse design benchmark: optimize obstacle to suppress vortex shedding
+│   └── benchmark_speed.py      # Profiling script comparing CUDA adjoint vs PyTorch autograd
+├── tests/
+│   ├── test_gradcheck.py       # Verifies adjoint gradients against numerical finite differences
+│   └── test_conservation.py    # Verifies conservation of mass and linear momentum
+└── report/
+    └── PHYD57_Final_Report.qmd # 5-10 page formal technical report
+```
+
+#### Step-by-Step Implementation Guide:
+* **Module 1: Custom Differentiable CUDA Fluid Solver (`csrc/diff_sph_forward.cu` & `backward.cu`):**
+  1. Write a custom CUDA forward kernel computing fluid particle accelerations:
+     $$\frac{d\mathbf{v}_i}{dt} = -\sum_j m_j \left( \frac{P_i}{\rho_i^2} + \frac{P_j}{\rho_j^2} + \Pi_{ij} \right) \nabla_i W_{ij}$$
+  2. Write the corresponding **hand-crafted Adjoint Backward CUDA kernel**: analytically compute the vector-Jacobian product (VJP) $\frac{\partial \mathcal{L}}{\partial \Pi_{ij}}$ and backpropagate loss gradients $\frac{\partial \mathcal{L}}{\partial \mathbf{v}_0}$ to initial conditions.
+  3. Bind the kernels to Python using `torch.autograd.Function`, enabling PyTorch's gradient engine to backpropagate directly through the raw CUDA solver.
+* **Module 2: Physics-Constrained Neural Subgrid Closure (`python/models/neural_subgrid.py`):**
+  1. Build a compact Neural Network or Graph Neural Operator taking local strain rate $S_{ij} = \frac{1}{2}(\partial_i u_j + \partial_j u_i)$ and vorticity $\omega$ as input.
+  2. Enforce Galilean frame-invariance by expressing inputs only in terms of coordinate-invariant tensor invariants (traces and eigenvalues).
+  3. Enforce the Second Law of Thermodynamics: constrain the predicted subgrid stress tensor $\tau_{ij}$ such that energy transfer is strictly dissipative on average (preventing unphysical energy blowup).
+* **Module 3: Fourier Neural Operator (FNO) Spectral Surrogate (`python/models/fno_2d.py`):**
+  1. Implement 2D Fourier Convolution layers using `torch.fft.rfft2` and `irfft2`, multiplying the lowest $k_{\text{max}} = 16$ Fourier modes by learnable complex weight tensors.
+  2. Train the FNO on 1,000 timesteps of 2D decaying isotropic turbulence generated by your CUDA spectral solver.
+  3. Evaluate **zero-shot super-resolution**: train on $64 \times 64$ grid data and evaluate directly on $256 \times 256$ grid data, measuring speedup ($> 100\times$) and vorticity field preservation.
+* **Module 4: Inverse Design Benchmark (`python/inverse_vortex_opt.py`):**
+  1. Simulate flow past an obstacle exhibiting periodic von Kármán vortex shedding.
+  2. Formulate an objective loss function: $\mathcal{L} = \int (\nabla \times \mathbf{u})^2 \, dx + \lambda \text{Drag}$.
+  3. Run gradient descent backpropagating through the custom CUDA fluid solver to optimize an active suction/blowing boundary condition that actively cancels downstream vortex shedding.
 
 ---
 
