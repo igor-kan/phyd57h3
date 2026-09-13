@@ -112,24 +112,44 @@ nano ~/.ssh/config
 
 Add the following block:
 ```ssh-config
-Host art-1
-    HostName art-1.utsc.utoronto.ca
-    User phyd57
-    HostKeyAlgorithms +ssh-dss
-    ForwardX11 yes
-    Compression yes
-    ServerAliveInterval 60
-    ServerAliveCountMax 3
-
-Host art-16
-    HostName art-16.utsc.utoronto.ca
-    User phyd57
-    ForwardX11 yes
-    ServerAliveInterval 60
-
+# 1. Gateway GPU Node (Publicly accessible from home/off-campus)
 Host phi-10
     HostName phi-10.utsc.utoronto.ca
     User phyd57
+    ForwardX11 yes
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+
+# 2. Legacy Master Node (CentOS 6.6 - Jumped through phi-10, legacy RSA hostkey)
+Host art-1
+    HostName art-1.utsc.utoronto.ca
+    User phyd57
+    ProxyJump phi-10
+    HostkeyAlgorithms +ssh-rsa
+    PubkeyAcceptedAlgorithms +ssh-rsa
+    StrictHostKeyChecking accept-new
+    ForwardX11 yes
+    ServerAliveInterval 60
+
+# 3. Classroom Exercise Node (CentOS 6.6 - Jumped through phi-10, legacy RSA hostkey)
+Host art-2
+    HostName art-2.utsc.utoronto.ca
+    User phyd57
+    ProxyJump phi-10
+    HostkeyAlgorithms +ssh-rsa
+    PubkeyAcceptedAlgorithms +ssh-rsa
+    StrictHostKeyChecking accept-new
+    ForwardX11 yes
+    ServerAliveInterval 60
+
+# 4. Modern Multi-core Node (Rocky Linux 9.6 - Internal Cluster Backplane via art-1)
+Host art-16
+    HostName 192.168.100.160
+    User phyd57
+    ProxyJump art-1
+    HostkeyAlgorithms +ssh-rsa
+    PubkeyAcceptedAlgorithms +ssh-rsa
+    StrictHostKeyChecking accept-new
     ForwardX11 yes
     ServerAliveInterval 60
 ```
