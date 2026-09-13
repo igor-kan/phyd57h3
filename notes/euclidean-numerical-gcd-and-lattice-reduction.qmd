@@ -33,3 +33,19 @@ $$\gcd(a, b) = \gcd(b, a - b)$$
 :::
 
 *Proof*: If $d \mid a$ and $d \mid b$, then $a = k_1 d$ and $b = k_2 d$. The difference is $a - b = (k_1 - k_2)d$, meaning $d \mid (a - b)$. Conversely, if $c \mid b$ and $c \mid (a - b)$, then $a = (a - b) + b = c(m_1 + m_2)$, so $c \mid a$. Thus the common divisors of $(a, b)$ are identical to the common divisors of $(b, a - b)$, and their maxima coincide. $\blacksquare$
+
+---
+
+## 3. The Division Remainder Algorithm and Lamé's Bound
+
+Rather than repeated subtraction ($O(\\max(a, b))$ complexity), the division algorithm subtracts all multiples of $b$ at once:
+$$a = q \cdot b + r, \quad 0 \leq r < b$$
+Yielding the recurrence:
+$$\gcd(a, b) = \gcd(b, a \bmod b)$$
+
+### 3.1 Lamé's Theorem in Computational Physics
+The worst-case input for the Euclidean algorithm occurs when the quotients are all $1$, producing consecutive Fibonacci numbers:
+$$(r_0, r_1) = (F_{k+1}, F_k)$$
+By Lamé's Theorem (1844), the number of division steps $k$ is bounded logarithmically:
+$$k \leq 5 \log_{10}(\\min(a, b))$$
+This guarantees exponential efficiency $\\mathcal{O}(n)$ in bit-length, enabling high-speed arithmetic inside physical simulation loops.
