@@ -27,7 +27,7 @@ Interactive simulations and parallel code benchmarks.
 
 ::: {.course-card}
 ### 📐 [Reference & Math](reference/index.qmd)
-Linux commands and compiler syntax toolkits.
+Linux commands, compiler toolkits, and [Numerical Lattice Reduction](notes/euclidean-numerical-gcd-and-lattice-reduction.qmd).
 :::
 :::
 
