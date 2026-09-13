@@ -1,0 +1,41 @@
+---
+title: "Cheatsheet: Euclidean Algorithms & Lattice Basis Reduction"
+subtitle: "Quick-reference asymptotic complexities, bitwise intrinsics, and crystallographic reduction rules."
+categories: ["Reference", "Cheatsheet", "Algorithms", "HPC"]
+format:
+  html:
+    toc: true
+    math: true
+---
+
+## 1. Quick Algorithm Matrix
+
+| Algorithm | Input Domain | Space Complexity | Time Complexity | Best Cluster Use Case |
+| :--- | :--- | :--- | :--- | :--- |
+| **Subtractive Euclid** | $\\mathbb{Z}^+$ | $O(1)$ | $O(\\max(a, b))$ | Historical analysis, simple FPGA logic gates |
+| **Standard Modulo Euclid** | $\\mathbb{Z}^+$ | $O(1)$ | $O(\\log(\\min(a, b)))$ | Standard CPU host simulation logic |
+| **Stein Binary GCD** | $\\mathbb{Z}^+$ | $O(1)$ | $O(\\log a + \\log b)$ | SIMD / GPU branchless kernel execution |
+| **Extended GCD (EEA)** | $\\mathbb{Z}$ | $O(1)$ | $O(\\log(\\min(a, b)))$ | Modular inverse, modular forms |
+| **2D Gauss-Lagrange** | $\\mathbb{R}^2$ lattice | $O(1)$ | $O(\\log(\\text{cond}(B)))$ | Solid-state Bravais lattice primitive cell |
+| **LLL Reduction** | $\\mathbb{R}^n$ lattice | $O(n^2)$ | Polynomial $O(n^5 \\log^3 B)$ | High-dimensional crystallography, lattice cryptography |
+
+---
+
+## 2. Low-Level C Intrinsics for Cluster Nodes (`art-1` / `art-16`)
+
+```c
+// Extract greatest common divisor with zero hardware division
+#include <stdint.h>
+
+static inline uint64_t fast_gcd(uint64_t u, uint64_t v) {
+    if (!u || !v) return u | v;
+    int shift = __builtin_ctzll(u | v);
+    u >>= __builtin_ctzll(u);
+    do {
+        v >>= __builtin_ctzll(v);
+        if (u > v) { uint64_t t = v; v = u; u = t; }
+        v -= u;
+    } while (v);
+    return u << shift;
+}
+```
