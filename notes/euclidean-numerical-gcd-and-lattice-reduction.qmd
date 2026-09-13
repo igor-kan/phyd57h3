@@ -49,3 +49,17 @@ $$(r_0, r_1) = (F_{k+1}, F_k)$$
 By Lamé's Theorem (1844), the number of division steps $k$ is bounded logarithmically:
 $$k \leq 5 \log_{10}(\\min(a, b))$$
 This guarantees exponential efficiency $\\mathcal{O}(n)$ in bit-length, enabling high-speed arithmetic inside physical simulation loops.
+
+---
+
+## 4. Hardware Optimization: Stein's Binary GCD on HPC Architecture
+
+On high-performance computing clusters (such as the UTSC `art-1` and `art-16` clusters), integer division (`idiv`) costs $20$–$40$ clock cycles, whereas bit-shifts (`>> 1`), bitwise tests (`& 1`), and subtractions execute in a single cycle.
+
+### 4.1 The Binary Invariance Rules
+Stein's algorithm eliminates division entirely:
+1. **Both Even**: $\gcd(2u, 2v) = 2 \gcd(u, v)$
+2. **One Even, One Odd**: $\gcd(2u, v) = \gcd(u, v)$ if $v \equiv 1 \pmod 2$
+3. **Both Odd**: $\gcd(u, v) = \gcd((u - v)/2, v)$ for $u \geq v$
+
+In vector processing (SIMD / AVX-512) and GPU computing (CUDA), this allows branch-free implementations using bitwise intrinsics (`__builtin_ctz` for count-trailing-zeros).
