@@ -1,31 +1,59 @@
 [
   {
-    "objectID": "notes/index.html",
-    "href": "notes/index.html",
-    "title": "Lecture Notes & Syllabus",
+    "objectID": "notes/euclidean-numerical-gcd-and-lattice-reduction.html",
+    "href": "notes/euclidean-numerical-gcd-and-lattice-reduction.html",
+    "title": "Numerical Number Theory: Euclidean Algorithms, Binary Reduction, and Lattice Bases",
     "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
+    "text": "While numerical physics is frequently identified with continuous differential equations (Navier-Stokes, Schrödinger, Einstein field equations), discrete algorithms and algebraic number theory play an indispensable role across modern computational physics: 1. Crystallography and Bravais Lattices: Identifying the primitive unit cell and shortest reciprocal lattice vectors in solid-state physics requires lattice basis reduction algorithms directly descended from the Euclidean algorithm. 2. Periodic Boundary Conditions & Minimum Image Convention: Simulating molecular dynamics on toroidal topologies requires fast integer lattice projections. 3. High-Performance Cluster Arithmetic: Bitwise integer reductions (such as Stein’s binary GCD) are critical in cryptography, pseudo-random number generation (PRNGs for Monte Carlo simulations), and arbitrary-precision arithmetic."
   },
   {
-    "objectID": "GEMINI.html",
-    "href": "GEMINI.html",
-    "title": "",
+    "objectID": "notes/euclidean-numerical-gcd-and-lattice-reduction.html#introduction-number-theory-in-computational-physics",
+    "href": "notes/euclidean-numerical-gcd-and-lattice-reduction.html#introduction-number-theory-in-computational-physics",
+    "title": "Numerical Number Theory: Euclidean Algorithms, Binary Reduction, and Lattice Bases",
     "section": "",
-    "text": "Code\n\n\n\n\n\n\nPHYD57H3 Course Repository Guidelines\n\nScope & Structure\n\nThis repository (phyd57h3) is dedicated exclusively to PHYD57H3: Advanced Computational Methods in Physics.\nDirectory Layout:\n\nnotes/: Official lecture notes and syllabus.\nproblems/: Problem sets, past exam prompts, and problem solutions.\nsimulations/: Numerical simulation code (C, Fortran, CUDA, OpenMP, Python).\nreference/: Technical references, compiler guides, Linux HPC tutorials, and cluster connection workflows (art-1, art-16).\n\nDO NOT put general blog posts here. General articles belong in the main blog (/home/igorkan/repos/quarto-writing).\n\n\n\nRepository Architecture (Public Deployment Site)\n\nThis is the Public deployment repository.\norigin: https://github.com/igor-kan/phyd57h3.git (Triggers public GitHub Pages deployment)\nContains ONLY published materials and sanitized guides.\nAll raw drafts (draft: true), unredacted passwords, and solutions belong strictly in the private companion repository at /home/igorkan/repos/phyd57h3-drafts/.\n\n\n\nDrafts, Security & Credentials\n\n“Publish” = ensure draft: true is not present (or set to draft: false).\n“Unpublish” / “Draft” = set draft: true in the frontmatter.\nWhen draft: true is set, Quarto automatically excludes the document from public website rendering.\nSensitive Credentials (e.g. cluster passwords):\n\nNEVER publish raw passwords to the public website.\nPublic documents must redact credentials: [REDACTED — Provided in class / stored in private draft].\nFull credentials may only be stored in documents marked draft: true, ensuring they reside solely in the private backup repository.\n\n\n\n\nUI & Styling Standards\n\nAdhere strictly to the Notion.so minimalist aesthetic in light and dark mode.\nFooter must display: © 2026 Igor Kan."
+    "text": "While numerical physics is frequently identified with continuous differential equations (Navier-Stokes, Schrödinger, Einstein field equations), discrete algorithms and algebraic number theory play an indispensable role across modern computational physics: 1. Crystallography and Bravais Lattices: Identifying the primitive unit cell and shortest reciprocal lattice vectors in solid-state physics requires lattice basis reduction algorithms directly descended from the Euclidean algorithm. 2. Periodic Boundary Conditions & Minimum Image Convention: Simulating molecular dynamics on toroidal topologies requires fast integer lattice projections. 3. High-Performance Cluster Arithmetic: Bitwise integer reductions (such as Stein’s binary GCD) are critical in cryptography, pseudo-random number generation (PRNGs for Monte Carlo simulations), and arbitrary-precision arithmetic."
+  },
+  {
+    "objectID": "notes/euclidean-numerical-gcd-and-lattice-reduction.html#divisibility-axioms-and-the-subtractive-difference-lemma",
+    "href": "notes/euclidean-numerical-gcd-and-lattice-reduction.html#divisibility-axioms-and-the-subtractive-difference-lemma",
+    "title": "Numerical Number Theory: Euclidean Algorithms, Binary Reduction, and Lattice Bases",
+    "section": "2. Divisibility Axioms and the Subtractive Difference Lemma",
+    "text": "2. Divisibility Axioms and the Subtractive Difference Lemma\n\n2.1 The Divisibility Invariant\nLet \\(a, b \\in \\mathbb{Z}^+\\) with \\(a &gt; b\\). The greatest common divisor \\(\\gcd(a, b)\\) is invariant under subtraction:\n\n\n\n\n\n\nNoteFundamental Subtractive Lemma\n\n\n\n\\[\\gcd(a, b) = \\gcd(b, a - b)\\]\n\n\nProof: If \\(d \\mid a\\) and \\(d \\mid b\\), then \\(a = k_1 d\\) and \\(b = k_2 d\\). The difference is \\(a - b = (k_1 - k_2)d\\), meaning \\(d \\mid (a - b)\\). Conversely, if \\(c \\mid b\\) and \\(c \\mid (a - b)\\), then \\(a = (a - b) + b = c(m_1 + m_2)\\), so \\(c \\mid a\\). Thus the common divisors of \\((a, b)\\) are identical to the common divisors of \\((b, a - b)\\), and their maxima coincide. \\(\\blacksquare\\)"
+  },
+  {
+    "objectID": "notes/euclidean-numerical-gcd-and-lattice-reduction.html#the-division-remainder-algorithm-and-lamés-bound",
+    "href": "notes/euclidean-numerical-gcd-and-lattice-reduction.html#the-division-remainder-algorithm-and-lamés-bound",
+    "title": "Numerical Number Theory: Euclidean Algorithms, Binary Reduction, and Lattice Bases",
+    "section": "3. The Division Remainder Algorithm and Lamé’s Bound",
+    "text": "3. The Division Remainder Algorithm and Lamé’s Bound\nRather than repeated subtraction (\\(O(\\\\max(a, b))\\) complexity), the division algorithm subtracts all multiples of \\(b\\) at once: \\[a = q \\cdot b + r, \\quad 0 \\leq r &lt; b\\] Yielding the recurrence: \\[\\gcd(a, b) = \\gcd(b, a \\bmod b)\\]\n\n3.1 Lamé’s Theorem in Computational Physics\nThe worst-case input for the Euclidean algorithm occurs when the quotients are all \\(1\\), producing consecutive Fibonacci numbers: \\[(r_0, r_1) = (F_{k+1}, F_k)\\] By Lamé’s Theorem (1844), the number of division steps \\(k\\) is bounded logarithmically: \\[k \\leq 5 \\log_{10}(\\\\min(a, b))\\] This guarantees exponential efficiency \\(\\\\mathcal{O}(n)\\) in bit-length, enabling high-speed arithmetic inside physical simulation loops."
+  },
+  {
+    "objectID": "notes/euclidean-numerical-gcd-and-lattice-reduction.html#hardware-optimization-steins-binary-gcd-on-hpc-architecture",
+    "href": "notes/euclidean-numerical-gcd-and-lattice-reduction.html#hardware-optimization-steins-binary-gcd-on-hpc-architecture",
+    "title": "Numerical Number Theory: Euclidean Algorithms, Binary Reduction, and Lattice Bases",
+    "section": "4. Hardware Optimization: Stein’s Binary GCD on HPC Architecture",
+    "text": "4. Hardware Optimization: Stein’s Binary GCD on HPC Architecture\nOn high-performance computing clusters (such as the UTSC art-1 and art-16 clusters), integer division (idiv) costs \\(20\\)–\\(40\\) clock cycles, whereas bit-shifts (&gt;&gt; 1), bitwise tests (& 1), and subtractions execute in a single cycle.\n\n4.1 The Binary Invariance Rules\nStein’s algorithm eliminates division entirely: 1. Both Even: \\(\\gcd(2u, 2v) = 2 \\gcd(u, v)\\) 2. One Even, One Odd: \\(\\gcd(2u, v) = \\gcd(u, v)\\) if \\(v \\equiv 1 \\pmod 2\\) 3. Both Odd: \\(\\gcd(u, v) = \\gcd((u - v)/2, v)\\) for \\(u \\geq v\\)\nIn vector processing (SIMD / AVX-512) and GPU computing (CUDA), this allows branch-free implementations using bitwise intrinsics (__builtin_ctz for count-trailing-zeros)."
+  },
+  {
+    "objectID": "notes/euclidean-numerical-gcd-and-lattice-reduction.html#crystallography-2d-gauss-lagrange-lattice-reduction-as-a-vector-euclidean-algorithm",
+    "href": "notes/euclidean-numerical-gcd-and-lattice-reduction.html#crystallography-2d-gauss-lagrange-lattice-reduction-as-a-vector-euclidean-algorithm",
+    "title": "Numerical Number Theory: Euclidean Algorithms, Binary Reduction, and Lattice Bases",
+    "section": "5. Crystallography: 2D Gauss-Lagrange Lattice Reduction as a Vector Euclidean Algorithm",
+    "text": "5. Crystallography: 2D Gauss-Lagrange Lattice Reduction as a Vector Euclidean Algorithm\nIn condensed matter and computational materials science, an experimental crystal structure is specified by arbitrary non-orthogonal basis vectors \\(\\\\mathbf{v}_1, \\\\mathbf{v}_2 \\in \\\\mathbb{R}^2\\).\nTo identify the primitive Wigner-Seitz cell and construct the first Brillouin zone, one must find a reduced basis satisfying: \\[\\|\\mathbf{u}\\| \\leq \\|\\mathbf{v}\\| \\quad \\text{and} \\quad |\\mu| = \\frac{|\\mathbf{u} \\cdot \\mathbf{v}|}{\\|\\mathbf{u}\\|^2} \\leq \\frac{1}{2}\\]\nThe Gauss-Lagrange algorithm is the exact 2D vector generalization of Euclid’s algorithm: 1. Ensure \\(\\|\\mathbf{u}\\| \\leq \\|\\mathbf{v}\\|\\). 2. Subtract the nearest integer multiple of \\(\\mathbf{u}\\) from \\(\\mathbf{v}\\): \\[q = \\left\\lfloor \\frac{\\mathbf{u} \\cdot \\mathbf{v}}{\\|\\mathbf{u}\\|^2} + 0.5 \\right\\rfloor, \\quad \\mathbf{v} \\leftarrow \\mathbf{v} - q \\mathbf{u}\\] 3. If \\(\\|\\mathbf{v}\\| &lt; \\|\\mathbf{u}\\|\\), swap \\(\\mathbf{u}\\) and \\(\\mathbf{v}\\), and repeat.\nThis algorithm terminates in \\(O(\\log(\\text{cond}(B)))\\) iterations, producing the optimal crystallographic basis for spectral and band-structure computations."
   },
   {
     "objectID": "reference/index.html",
     "href": "reference/index.html",
     "title": "Reference & Math",
     "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\nPHYD57: HPC Infrastructure, Tech Stack, and Linux Guide\n\n\n\nHPC\n\nLinux\n\nPhysics\n\nCompilers\n\nSystems\n\nSSH\n\n\n\n\n\n\n2026-09-11\n\n17 min\n\n\n\n\nNo matching items"
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\nCheatsheet: Euclidean Algorithms & Lattice Basis Reduction\n\n\n\nReference\n\nCheatsheet\n\nAlgorithms\n\nHPC\n\n\n\n\n\n2 min\n\n\n\n\n\n\nPHYD57: HPC Infrastructure, Tech Stack, and Linux Guide\n\n\n\nHPC\n\nLinux\n\nPhysics\n\nCompilers\n\nSystems\n\nSSH\n\n\n\n\n\n\n2026-09-11\n\n17 min\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "problems/index.html",
-    "href": "problems/index.html",
-    "title": "Problem Sets & Projects",
+    "objectID": "simulations/index.html",
+    "href": "simulations/index.html",
+    "title": "Code & Simulations",
     "section": "",
-    "text": "NotePublishing Notice\n\n\n\nI will consult with the professor regarding if and when I can publish solutions to textbook problems or problem sets. In the meantime, unreleased solutions remain in private drafts.\n\n\n\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\nInteractive Gauss-Lagrange 2D Lattice Reduction\n\n\n\nSimulations\n\nCrystallography\n\nAlgorithms\n\nPython\n\n\n\n\n\n\n2026-09-13\n\n2 min\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html#course-roadmap-calendar-fall-2025",
@@ -42,11 +70,39 @@
     "text": "👨‍🏫 Instructor & Contact\n\nLecturer: Prof. Pawel Artymowicz (Email: pawel.artymowicz@utoronto.ca | Office: SW 506G)\n\nSubject MUST contain PHYD57. Please use your mail.utoronto.ca account.\nOffice Hours: Directly after the tutorial on Fridays in HLB108 or SW 5th floor."
   },
   {
-    "objectID": "simulations/index.html",
-    "href": "simulations/index.html",
-    "title": "Code & Simulations",
+    "objectID": "problems/index.html",
+    "href": "problems/index.html",
+    "title": "Problem Sets & Projects",
     "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
+    "text": "NotePublishing Notice\n\n\n\nI will consult with the professor regarding if and when I can publish solutions to textbook problems or problem sets. In the meantime, unreleased solutions remain in private drafts.\n\n\n\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "simulations/gauss-lagrange-lattice-reduction.html",
+    "href": "simulations/gauss-lagrange-lattice-reduction.html",
+    "title": "Interactive Gauss-Lagrange 2D Lattice Reduction",
+    "section": "",
+    "text": "In solid state physics, any 2D periodic crystal lattice can be described by a set of lattice vectors \\(\\\\mathbf{R} = n_1 \\\\mathbf{a}_1 + n_2 \\\\mathbf{a}_2\\) with \\(n_1, n_2 \\in \\mathbb{Z}\\).\nHowever, raw experimental X-ray diffraction or electron microscopy data often yield basis vectors that are highly elongated and nearly parallel. To compute accurate electron band structures, phonon dispersion curves, and Brillouin zones, computational physicists must first reduce the basis to the shortest, most nearly orthogonal pair of vectors."
+  },
+  {
+    "objectID": "simulations/gauss-lagrange-lattice-reduction.html#physical-motivation-primitive-unit-cells",
+    "href": "simulations/gauss-lagrange-lattice-reduction.html#physical-motivation-primitive-unit-cells",
+    "title": "Interactive Gauss-Lagrange 2D Lattice Reduction",
+    "section": "",
+    "text": "In solid state physics, any 2D periodic crystal lattice can be described by a set of lattice vectors \\(\\\\mathbf{R} = n_1 \\\\mathbf{a}_1 + n_2 \\\\mathbf{a}_2\\) with \\(n_1, n_2 \\in \\mathbb{Z}\\).\nHowever, raw experimental X-ray diffraction or electron microscopy data often yield basis vectors that are highly elongated and nearly parallel. To compute accurate electron band structures, phonon dispersion curves, and Brillouin zones, computational physicists must first reduce the basis to the shortest, most nearly orthogonal pair of vectors."
+  },
+  {
+    "objectID": "simulations/gauss-lagrange-lattice-reduction.html#python-simulation-implementation",
+    "href": "simulations/gauss-lagrange-lattice-reduction.html#python-simulation-implementation",
+    "title": "Interactive Gauss-Lagrange 2D Lattice Reduction",
+    "section": "2. Python Simulation Implementation",
+    "text": "2. Python Simulation Implementation\nimport math\n\ndef gauss_reduction(v1, v2):\n    \"\"\"Gauss-Lagrange 2D Lattice Reduction.\"\"\"\n    u, v = v1, v2\n    while True:\n        if u[0]**2 + u[1]**2 &gt; v[0]**2 + v[1]**2:\n            u, v = v, u\n        mu = (u[0]*v[0] + u[1]*v[1]) / (u[0]**2 + u[1]**2)\n        q = round(mu)\n        if q == 0:\n            break\n        v = (v[0] - q*u[0], v[1] - q*u[1])\n        if v[0]**2 + v[1]**2 &lt; u[0]**2 + u[1]**2:\n            u, v = v, u\n    return u, v"
+  },
+  {
+    "objectID": "simulations/gauss-lagrange-lattice-reduction.html#high-performance-c-kernel",
+    "href": "simulations/gauss-lagrange-lattice-reduction.html#high-performance-c-kernel",
+    "title": "Interactive Gauss-Lagrange 2D Lattice Reduction",
+    "section": "3. High-Performance C Kernel",
+    "text": "3. High-Performance C Kernel\nFor exascale Monte Carlo and molecular dynamics simulations, the algorithm is compiled to optimized native machine code: see simulations/euclid_hpc.c in the course repository."
   },
   {
     "objectID": "reference/phyd57-hpc-cluster-and-linux-guide.html",
@@ -103,5 +159,40 @@
     "title": "PHYD57: HPC Infrastructure, Tech Stack, and Linux Guide",
     "section": "7. Automated Local Backup Script",
     "text": "7. Automated Local Backup Script\nTo safeguard your work inside igor-dir/, save this script locally as sync_art1.sh:\n#!/usr/bin/env bash\nset -euo pipefail\n\nREMOTE_HOST=\"art-1\"\nREMOTE_PATH=\"~/igor-dir/\"\nLOCAL_BACKUP_DIR=\"${HOME}/backups/phyd57/$(date +%Y-%m-%d)\"\n\nmkdir -p \"${LOCAL_BACKUP_DIR}\"\n\necho \"Syncing ${REMOTE_HOST}:${REMOTE_PATH} to ${LOCAL_BACKUP_DIR}...\"\nrsync -avzP \\\n  --exclude=\"*.x\" \\\n  --exclude=\"*.o\" \\\n  \"${REMOTE_HOST}:${REMOTE_PATH}\" \"${LOCAL_BACKUP_DIR}/\"\n\necho \"Backup complete at $(date).\"\nRun with:\nchmod +x sync_art1.sh\n./sync_art1.sh"
+  },
+  {
+    "objectID": "reference/euclidean-and-lattice-algorithms-cheatsheet.html",
+    "href": "reference/euclidean-and-lattice-algorithms-cheatsheet.html",
+    "title": "Cheatsheet: Euclidean Algorithms & Lattice Basis Reduction",
+    "section": "",
+    "text": "Algorithm\nInput Domain\nSpace Complexity\nTime Complexity\nBest Cluster Use Case\n\n\n\n\nSubtractive Euclid\n\\(\\\\mathbb{Z}^+\\)\n\\(O(1)\\)\n\\(O(\\\\max(a, b))\\)\nHistorical analysis, simple FPGA logic gates\n\n\nStandard Modulo Euclid\n\\(\\\\mathbb{Z}^+\\)\n\\(O(1)\\)\n\\(O(\\\\log(\\\\min(a, b)))\\)\nStandard CPU host simulation logic\n\n\nStein Binary GCD\n\\(\\\\mathbb{Z}^+\\)\n\\(O(1)\\)\n\\(O(\\\\log a + \\\\log b)\\)\nSIMD / GPU branchless kernel execution\n\n\nExtended GCD (EEA)\n\\(\\\\mathbb{Z}\\)\n\\(O(1)\\)\n\\(O(\\\\log(\\\\min(a, b)))\\)\nModular inverse, modular forms\n\n\n2D Gauss-Lagrange\n\\(\\\\mathbb{R}^2\\) lattice\n\\(O(1)\\)\n\\(O(\\\\log(\\\\text{cond}(B)))\\)\nSolid-state Bravais lattice primitive cell\n\n\nLLL Reduction\n\\(\\\\mathbb{R}^n\\) lattice\n\\(O(n^2)\\)\nPolynomial \\(O(n^5 \\\\log^3 B)\\)\nHigh-dimensional crystallography, lattice cryptography"
+  },
+  {
+    "objectID": "reference/euclidean-and-lattice-algorithms-cheatsheet.html#quick-algorithm-matrix",
+    "href": "reference/euclidean-and-lattice-algorithms-cheatsheet.html#quick-algorithm-matrix",
+    "title": "Cheatsheet: Euclidean Algorithms & Lattice Basis Reduction",
+    "section": "",
+    "text": "Algorithm\nInput Domain\nSpace Complexity\nTime Complexity\nBest Cluster Use Case\n\n\n\n\nSubtractive Euclid\n\\(\\\\mathbb{Z}^+\\)\n\\(O(1)\\)\n\\(O(\\\\max(a, b))\\)\nHistorical analysis, simple FPGA logic gates\n\n\nStandard Modulo Euclid\n\\(\\\\mathbb{Z}^+\\)\n\\(O(1)\\)\n\\(O(\\\\log(\\\\min(a, b)))\\)\nStandard CPU host simulation logic\n\n\nStein Binary GCD\n\\(\\\\mathbb{Z}^+\\)\n\\(O(1)\\)\n\\(O(\\\\log a + \\\\log b)\\)\nSIMD / GPU branchless kernel execution\n\n\nExtended GCD (EEA)\n\\(\\\\mathbb{Z}\\)\n\\(O(1)\\)\n\\(O(\\\\log(\\\\min(a, b)))\\)\nModular inverse, modular forms\n\n\n2D Gauss-Lagrange\n\\(\\\\mathbb{R}^2\\) lattice\n\\(O(1)\\)\n\\(O(\\\\log(\\\\text{cond}(B)))\\)\nSolid-state Bravais lattice primitive cell\n\n\nLLL Reduction\n\\(\\\\mathbb{R}^n\\) lattice\n\\(O(n^2)\\)\nPolynomial \\(O(n^5 \\\\log^3 B)\\)\nHigh-dimensional crystallography, lattice cryptography"
+  },
+  {
+    "objectID": "reference/euclidean-and-lattice-algorithms-cheatsheet.html#low-level-c-intrinsics-for-cluster-nodes-art-1-art-16",
+    "href": "reference/euclidean-and-lattice-algorithms-cheatsheet.html#low-level-c-intrinsics-for-cluster-nodes-art-1-art-16",
+    "title": "Cheatsheet: Euclidean Algorithms & Lattice Basis Reduction",
+    "section": "2. Low-Level C Intrinsics for Cluster Nodes (art-1 / art-16)",
+    "text": "2. Low-Level C Intrinsics for Cluster Nodes (art-1 / art-16)\n// Extract greatest common divisor with zero hardware division\n#include &lt;stdint.h&gt;\n\nstatic inline uint64_t fast_gcd(uint64_t u, uint64_t v) {\n    if (!u || !v) return u | v;\n    int shift = __builtin_ctzll(u | v);\n    u &gt;&gt;= __builtin_ctzll(u);\n    do {\n        v &gt;&gt;= __builtin_ctzll(v);\n        if (u &gt; v) { uint64_t t = v; v = u; u = t; }\n        v -= u;\n    } while (v);\n    return u &lt;&lt; shift;\n}"
+  },
+  {
+    "objectID": "GEMINI.html",
+    "href": "GEMINI.html",
+    "title": "",
+    "section": "",
+    "text": "Code\n\n\n\n\n\n\nPHYD57H3 Course Repository Guidelines\n\nScope & Structure\n\nThis repository (phyd57h3) is dedicated exclusively to PHYD57H3: Advanced Computational Methods in Physics.\nDirectory Layout:\n\nnotes/: Official lecture notes and syllabus.\nproblems/: Problem sets, past exam prompts, and problem solutions.\nsimulations/: Numerical simulation code (C, Fortran, CUDA, OpenMP, Python).\nreference/: Technical references, compiler guides, Linux HPC tutorials, and cluster connection workflows (art-1, art-16).\n\nDO NOT put general blog posts here. General articles belong in the main blog (/home/igorkan/repos/quarto-writing).\n\n\n\nRepository Architecture (Public Deployment Site)\n\nThis is the Public deployment repository.\norigin: https://github.com/igor-kan/phyd57h3.git (Triggers public GitHub Pages deployment)\nContains ONLY published materials and sanitized guides.\nAll raw drafts (draft: true), unredacted passwords, and solutions belong strictly in the private companion repository at /home/igorkan/repos/phyd57h3-drafts/.\n\n\n\nDrafts, Security & Credentials\n\n“Publish” = ensure draft: true is not present (or set to draft: false).\n“Unpublish” / “Draft” = set draft: true in the frontmatter.\nWhen draft: true is set, Quarto automatically excludes the document from public website rendering.\nSensitive Credentials (e.g. cluster passwords):\n\nNEVER publish raw passwords to the public website.\nPublic documents must redact credentials: [REDACTED — Provided in class / stored in private draft].\nFull credentials may only be stored in documents marked draft: true, ensuring they reside solely in the private backup repository.\n\n\n\n\nUI & Styling Standards\n\nAdhere strictly to the Notion.so minimalist aesthetic in light and dark mode.\nFooter must display: © 2026 Igor Kan."
+  },
+  {
+    "objectID": "notes/index.html",
+    "href": "notes/index.html",
+    "title": "Lecture Notes & Syllabus",
+    "section": "",
+    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\nNumerical Number Theory: Euclidean Algorithms, Binary Reduction, and Lattice Bases\n\n\n\nComputational Physics\n\nNumerical Methods\n\nAlgorithms\n\nCrystallography\n\nHPC\n\n\n\n\n\n\n2026-09-13\n\n3 min\n\n\n\n\nNo matching items"
   }
 ]
