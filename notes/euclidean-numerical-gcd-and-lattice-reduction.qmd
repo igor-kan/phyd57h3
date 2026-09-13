@@ -63,3 +63,20 @@ Stein's algorithm eliminates division entirely:
 3. **Both Odd**: $\gcd(u, v) = \gcd((u - v)/2, v)$ for $u \geq v$
 
 In vector processing (SIMD / AVX-512) and GPU computing (CUDA), this allows branch-free implementations using bitwise intrinsics (`__builtin_ctz` for count-trailing-zeros).
+
+---
+
+## 5. Crystallography: 2D Gauss-Lagrange Lattice Reduction as a Vector Euclidean Algorithm
+
+In condensed matter and computational materials science, an experimental crystal structure is specified by arbitrary non-orthogonal basis vectors $\\mathbf{v}_1, \\mathbf{v}_2 \in \\mathbb{R}^2$. 
+
+To identify the **primitive Wigner-Seitz cell** and construct the **first Brillouin zone**, one must find a **reduced basis** satisfying:
+$$\|\mathbf{u}\| \leq \|\mathbf{v}\| \quad \text{and} \quad |\mu| = \frac{|\mathbf{u} \cdot \mathbf{v}|}{\|\mathbf{u}\|^2} \leq \frac{1}{2}$$
+
+The **Gauss-Lagrange algorithm** is the exact 2D vector generalization of Euclid's algorithm:
+1. Ensure $\|\mathbf{u}\| \leq \|\mathbf{v}\|$.
+2. Subtract the nearest integer multiple of $\mathbf{u}$ from $\mathbf{v}$:
+   $$q = \left\lfloor \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\|^2} + 0.5 \right\rfloor, \quad \mathbf{v} \leftarrow \mathbf{v} - q \mathbf{u}$$
+3. If $\|\mathbf{v}\| < \|\mathbf{u}\|$, swap $\mathbf{u}$ and $\mathbf{v}$, and repeat.
+
+This algorithm terminates in $O(\log(\text{cond}(B)))$ iterations, producing the optimal crystallographic basis for spectral and band-structure computations.
