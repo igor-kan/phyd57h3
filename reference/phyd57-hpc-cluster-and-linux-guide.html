@@ -571,24 +571,44 @@ window.Quarto = {
 <p>Rather than typing long flags each time, configure a profile in <code>~/.ssh/config</code>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/.ssh/config</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Add the following block:</p>
-<pre class="ssh-config"><code>Host art-1
-    HostName art-1.utsc.utoronto.ca
-    User phyd57
-    HostKeyAlgorithms +ssh-dss
-    ForwardX11 yes
-    Compression yes
-    ServerAliveInterval 60
-    ServerAliveCountMax 3
-
-Host art-16
-    HostName art-16.utsc.utoronto.ca
-    User phyd57
-    ForwardX11 yes
-    ServerAliveInterval 60
-
+<pre class="ssh-config"><code># 1. Gateway GPU Node (Publicly accessible from home/off-campus)
 Host phi-10
     HostName phi-10.utsc.utoronto.ca
     User phyd57
+    ForwardX11 yes
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+
+# 2. Legacy Master Node (CentOS 6.6 - Jumped through phi-10, legacy RSA hostkey)
+Host art-1
+    HostName art-1.utsc.utoronto.ca
+    User phyd57
+    ProxyJump phi-10
+    HostkeyAlgorithms +ssh-rsa
+    PubkeyAcceptedAlgorithms +ssh-rsa
+    StrictHostKeyChecking accept-new
+    ForwardX11 yes
+    ServerAliveInterval 60
+
+# 3. Classroom Exercise Node (CentOS 6.6 - Jumped through phi-10, legacy RSA hostkey)
+Host art-2
+    HostName art-2.utsc.utoronto.ca
+    User phyd57
+    ProxyJump phi-10
+    HostkeyAlgorithms +ssh-rsa
+    PubkeyAcceptedAlgorithms +ssh-rsa
+    StrictHostKeyChecking accept-new
+    ForwardX11 yes
+    ServerAliveInterval 60
+
+# 4. Modern Multi-core Node (Rocky Linux 9.6 - Internal Cluster Backplane via art-1)
+Host art-16
+    HostName 192.168.100.160
+    User phyd57
+    ProxyJump art-1
+    HostkeyAlgorithms +ssh-rsa
+    PubkeyAcceptedAlgorithms +ssh-rsa
+    StrictHostKeyChecking accept-new
     ForwardX11 yes
     ServerAliveInterval 60</code></pre>
 <p>Set strict file permissions:</p>
@@ -1473,289 +1493,309 @@ drwx------ 11 phyd57 phyd57      4096 Sep  6  2019 stud1
 <span id="cb19-112"><a href="#cb19-112" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-113"><a href="#cb19-113" aria-hidden="true" tabindex="-1"></a>Add the following block:</span>
 <span id="cb19-114"><a href="#cb19-114" aria-hidden="true" tabindex="-1"></a><span class="in">```ssh-config</span></span>
-<span id="cb19-115"><a href="#cb19-115" aria-hidden="true" tabindex="-1"></a><span class="in">Host art-1</span></span>
-<span id="cb19-116"><a href="#cb19-116" aria-hidden="true" tabindex="-1"></a><span class="in">    HostName art-1.utsc.utoronto.ca</span></span>
-<span id="cb19-117"><a href="#cb19-117" aria-hidden="true" tabindex="-1"></a><span class="in">    User phyd57</span></span>
-<span id="cb19-118"><a href="#cb19-118" aria-hidden="true" tabindex="-1"></a><span class="in">    HostKeyAlgorithms +ssh-dss</span></span>
+<span id="cb19-115"><a href="#cb19-115" aria-hidden="true" tabindex="-1"></a><span class="in"># 1. Gateway GPU Node (Publicly accessible from home/off-campus)</span></span>
+<span id="cb19-116"><a href="#cb19-116" aria-hidden="true" tabindex="-1"></a><span class="in">Host phi-10</span></span>
+<span id="cb19-117"><a href="#cb19-117" aria-hidden="true" tabindex="-1"></a><span class="in">    HostName phi-10.utsc.utoronto.ca</span></span>
+<span id="cb19-118"><a href="#cb19-118" aria-hidden="true" tabindex="-1"></a><span class="in">    User phyd57</span></span>
 <span id="cb19-119"><a href="#cb19-119" aria-hidden="true" tabindex="-1"></a><span class="in">    ForwardX11 yes</span></span>
-<span id="cb19-120"><a href="#cb19-120" aria-hidden="true" tabindex="-1"></a><span class="in">    Compression yes</span></span>
-<span id="cb19-121"><a href="#cb19-121" aria-hidden="true" tabindex="-1"></a><span class="in">    ServerAliveInterval 60</span></span>
-<span id="cb19-122"><a href="#cb19-122" aria-hidden="true" tabindex="-1"></a><span class="in">    ServerAliveCountMax 3</span></span>
-<span id="cb19-123"><a href="#cb19-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-124"><a href="#cb19-124" aria-hidden="true" tabindex="-1"></a><span class="in">Host art-16</span></span>
-<span id="cb19-125"><a href="#cb19-125" aria-hidden="true" tabindex="-1"></a><span class="in">    HostName art-16.utsc.utoronto.ca</span></span>
+<span id="cb19-120"><a href="#cb19-120" aria-hidden="true" tabindex="-1"></a><span class="in">    ServerAliveInterval 60</span></span>
+<span id="cb19-121"><a href="#cb19-121" aria-hidden="true" tabindex="-1"></a><span class="in">    ServerAliveCountMax 3</span></span>
+<span id="cb19-122"><a href="#cb19-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-123"><a href="#cb19-123" aria-hidden="true" tabindex="-1"></a><span class="in"># 2. Legacy Master Node (CentOS 6.6 - Jumped through phi-10, legacy RSA hostkey)</span></span>
+<span id="cb19-124"><a href="#cb19-124" aria-hidden="true" tabindex="-1"></a><span class="in">Host art-1</span></span>
+<span id="cb19-125"><a href="#cb19-125" aria-hidden="true" tabindex="-1"></a><span class="in">    HostName art-1.utsc.utoronto.ca</span></span>
 <span id="cb19-126"><a href="#cb19-126" aria-hidden="true" tabindex="-1"></a><span class="in">    User phyd57</span></span>
-<span id="cb19-127"><a href="#cb19-127" aria-hidden="true" tabindex="-1"></a><span class="in">    ForwardX11 yes</span></span>
-<span id="cb19-128"><a href="#cb19-128" aria-hidden="true" tabindex="-1"></a><span class="in">    ServerAliveInterval 60</span></span>
-<span id="cb19-129"><a href="#cb19-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-130"><a href="#cb19-130" aria-hidden="true" tabindex="-1"></a><span class="in">Host phi-10</span></span>
-<span id="cb19-131"><a href="#cb19-131" aria-hidden="true" tabindex="-1"></a><span class="in">    HostName phi-10.utsc.utoronto.ca</span></span>
-<span id="cb19-132"><a href="#cb19-132" aria-hidden="true" tabindex="-1"></a><span class="in">    User phyd57</span></span>
-<span id="cb19-133"><a href="#cb19-133" aria-hidden="true" tabindex="-1"></a><span class="in">    ForwardX11 yes</span></span>
-<span id="cb19-134"><a href="#cb19-134" aria-hidden="true" tabindex="-1"></a><span class="in">    ServerAliveInterval 60</span></span>
-<span id="cb19-135"><a href="#cb19-135" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-136"><a href="#cb19-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-137"><a href="#cb19-137" aria-hidden="true" tabindex="-1"></a>Set strict file permissions:</span>
-<span id="cb19-138"><a href="#cb19-138" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb19-139"><a href="#cb19-139" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 600 ~/.ssh/config</span>
-<span id="cb19-140"><a href="#cb19-140" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-141"><a href="#cb19-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-142"><a href="#cb19-142" aria-hidden="true" tabindex="-1"></a>Now, connecting to any cluster node is as simple as:</span>
-<span id="cb19-143"><a href="#cb19-143" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb19-144"><a href="#cb19-144" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> art-1     <span class="co"># Legacy CPU node (CentOS 6.6)</span></span>
-<span id="cb19-145"><a href="#cb19-145" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> art-16    <span class="co"># Modern CPU node (Rocky Linux 9.6)</span></span>
-<span id="cb19-146"><a href="#cb19-146" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> phi-10    <span class="co"># GPU Compute Node (Dual NVIDIA RTX 3090 &amp; RTX 3080 Ti + Intel oneAPI)</span></span>
-<span id="cb19-147"><a href="#cb19-147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-148"><a href="#cb19-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-149"><a href="#cb19-149" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb19-150"><a href="#cb19-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-151"><a href="#cb19-151" aria-hidden="true" tabindex="-1"></a><span class="fu">### Cluster Nomenclature &amp; Hostname Etymology: Why "art" and "phi"?</span></span>
-<span id="cb19-152"><a href="#cb19-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-153"><a href="#cb19-153" aria-hidden="true" tabindex="-1"></a>When navigating UTSC's computational infrastructure, students frequently wonder about the origin of cluster hostnames like <span class="in">`art-1`</span>, <span class="in">`art-16`</span>, and <span class="in">`phi-10`</span>. These names reflect two deep traditions in university high-performance computing (HPC):</span>
-<span id="cb19-154"><a href="#cb19-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-155"><a href="#cb19-155" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 1. The `art` Nodes (`art-1`, `art-2`, `art-16`): The Principal Investigator (PI) Tradition</span></span>
-<span id="cb19-156"><a href="#cb19-156" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Research Grant Stewardship**: In Canadian academic computing, specialized compute clusters and rack servers are typically funded through individual professors' research infrastructure awards (e.g., NSERC Discovery Grants or Canada Foundation for Innovation / CFI grants).</span>
-<span id="cb19-157"><a href="#cb19-157" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Prof. Pawel Artymowicz**: The nodes prefixed with **`art`** represent machines purchased, configured, and maintained under the research stewardship of **Prof. Pawel Artymowicz** (Full Professor of Physics and Astrophysics at UTSC/U of T) for his research group in astrophysical gas dynamics, planet-disk interactions, and Smoothed Particle Hydrodynamics (SPH):</span>
-<span id="cb19-158"><a href="#cb19-158" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**`art-1`**: The foundational master node (running legacy CentOS 6.6), hosting historical course archives, GNU Fortran (<span class="in">`gfortran`</span>), and the DISLIN graphical plotting libraries.</span>
-<span id="cb19-159"><a href="#cb19-159" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**`art-2`**: A student exercise and compute companion node.</span>
-<span id="cb19-160"><a href="#cb19-160" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**`art-16`**: A modernized 16-core cluster node (running Rocky Linux 9.6) providing high-throughput multi-core CPU capacity.</span>
+<span id="cb19-127"><a href="#cb19-127" aria-hidden="true" tabindex="-1"></a><span class="in">    ProxyJump phi-10</span></span>
+<span id="cb19-128"><a href="#cb19-128" aria-hidden="true" tabindex="-1"></a><span class="in">    HostkeyAlgorithms +ssh-rsa</span></span>
+<span id="cb19-129"><a href="#cb19-129" aria-hidden="true" tabindex="-1"></a><span class="in">    PubkeyAcceptedAlgorithms +ssh-rsa</span></span>
+<span id="cb19-130"><a href="#cb19-130" aria-hidden="true" tabindex="-1"></a><span class="in">    StrictHostKeyChecking accept-new</span></span>
+<span id="cb19-131"><a href="#cb19-131" aria-hidden="true" tabindex="-1"></a><span class="in">    ForwardX11 yes</span></span>
+<span id="cb19-132"><a href="#cb19-132" aria-hidden="true" tabindex="-1"></a><span class="in">    ServerAliveInterval 60</span></span>
+<span id="cb19-133"><a href="#cb19-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-134"><a href="#cb19-134" aria-hidden="true" tabindex="-1"></a><span class="in"># 3. Classroom Exercise Node (CentOS 6.6 - Jumped through phi-10, legacy RSA hostkey)</span></span>
+<span id="cb19-135"><a href="#cb19-135" aria-hidden="true" tabindex="-1"></a><span class="in">Host art-2</span></span>
+<span id="cb19-136"><a href="#cb19-136" aria-hidden="true" tabindex="-1"></a><span class="in">    HostName art-2.utsc.utoronto.ca</span></span>
+<span id="cb19-137"><a href="#cb19-137" aria-hidden="true" tabindex="-1"></a><span class="in">    User phyd57</span></span>
+<span id="cb19-138"><a href="#cb19-138" aria-hidden="true" tabindex="-1"></a><span class="in">    ProxyJump phi-10</span></span>
+<span id="cb19-139"><a href="#cb19-139" aria-hidden="true" tabindex="-1"></a><span class="in">    HostkeyAlgorithms +ssh-rsa</span></span>
+<span id="cb19-140"><a href="#cb19-140" aria-hidden="true" tabindex="-1"></a><span class="in">    PubkeyAcceptedAlgorithms +ssh-rsa</span></span>
+<span id="cb19-141"><a href="#cb19-141" aria-hidden="true" tabindex="-1"></a><span class="in">    StrictHostKeyChecking accept-new</span></span>
+<span id="cb19-142"><a href="#cb19-142" aria-hidden="true" tabindex="-1"></a><span class="in">    ForwardX11 yes</span></span>
+<span id="cb19-143"><a href="#cb19-143" aria-hidden="true" tabindex="-1"></a><span class="in">    ServerAliveInterval 60</span></span>
+<span id="cb19-144"><a href="#cb19-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-145"><a href="#cb19-145" aria-hidden="true" tabindex="-1"></a><span class="in"># 4. Modern Multi-core Node (Rocky Linux 9.6 - Internal Cluster Backplane via art-1)</span></span>
+<span id="cb19-146"><a href="#cb19-146" aria-hidden="true" tabindex="-1"></a><span class="in">Host art-16</span></span>
+<span id="cb19-147"><a href="#cb19-147" aria-hidden="true" tabindex="-1"></a><span class="in">    HostName 192.168.100.160</span></span>
+<span id="cb19-148"><a href="#cb19-148" aria-hidden="true" tabindex="-1"></a><span class="in">    User phyd57</span></span>
+<span id="cb19-149"><a href="#cb19-149" aria-hidden="true" tabindex="-1"></a><span class="in">    ProxyJump art-1</span></span>
+<span id="cb19-150"><a href="#cb19-150" aria-hidden="true" tabindex="-1"></a><span class="in">    HostkeyAlgorithms +ssh-rsa</span></span>
+<span id="cb19-151"><a href="#cb19-151" aria-hidden="true" tabindex="-1"></a><span class="in">    PubkeyAcceptedAlgorithms +ssh-rsa</span></span>
+<span id="cb19-152"><a href="#cb19-152" aria-hidden="true" tabindex="-1"></a><span class="in">    StrictHostKeyChecking accept-new</span></span>
+<span id="cb19-153"><a href="#cb19-153" aria-hidden="true" tabindex="-1"></a><span class="in">    ForwardX11 yes</span></span>
+<span id="cb19-154"><a href="#cb19-154" aria-hidden="true" tabindex="-1"></a><span class="in">    ServerAliveInterval 60</span></span>
+<span id="cb19-155"><a href="#cb19-155" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-156"><a href="#cb19-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-157"><a href="#cb19-157" aria-hidden="true" tabindex="-1"></a>Set strict file permissions:</span>
+<span id="cb19-158"><a href="#cb19-158" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb19-159"><a href="#cb19-159" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 600 ~/.ssh/config</span>
+<span id="cb19-160"><a href="#cb19-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb19-161"><a href="#cb19-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-162"><a href="#cb19-162" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 2. The `phi` Nodes (`phi-10`): Physics, Potentials, and HPC Heritage</span></span>
-<span id="cb19-163"><a href="#cb19-163" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Φυσική (Physics) &amp; DPES Departmental Fleet**: The Greek letter **$\Phi$ / $\phi$ (Phi)** is the universal root for **Physics** (from Ancient Greek *Φυσική* / *Physika*). UTSC's Department of Physical and Environmental Sciences (DPES) designates shared departmental servers and student computing nodes after Greek letters ($\alpha, \beta, \dots, \phi$). <span class="in">`phi-10`</span> designates workstation #10 in the departmental computing pool.</span>
-<span id="cb19-164"><a href="#cb19-164" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Astrophysical &amp; Fluid Dynamics Notation ($\Phi$ and $\phi$)**: In computational astrophysics and numerical hydrodynamics (the mathematical heart of PHYD57), $\Phi$ and $\phi$ represent foundational physical variables:</span>
-<span id="cb19-165"><a href="#cb19-165" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**$\Phi$ (Capital Phi)**: Denotes the **Gravitational Potential** ($\nabla^2 \Phi = 4\pi G \rho$) in stellar dynamics and the **Velocity Potential** ($\mathbf{u} = \nabla \Phi$) in irrotational fluid mechanics.</span>
-<span id="cb19-166"><a href="#cb19-166" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**$\phi$ (Lowercase Phi)**: Denotes the **Azimuthal Angle** in cylindrical $(r, \phi, z)$ and spherical $(r, \theta, \phi)$ coordinate systems—the essential spatial coordinate for simulating circumstellar accretion disks, protoplanetary spiral density waves, and rotational vortices.</span>
-<span id="cb19-167"><a href="#cb19-167" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**HPC Supercomputing Lineage (Intel Xeon Phi)**: In the 2010s, Intel’s flagship many-core supercomputing architecture was the **Intel Xeon Phi** coprocessor family, widely adopted across academic physics clusters. While `phi-10` has since been modernized into a dual-NVIDIA Ampere GPU workstation (RTX 3090 &amp; RTX 3080 Ti), it remains the primary host for the full **Intel oneAPI** development suite (<span class="in">`icx`</span>, <span class="in">`icpx`</span>, <span class="in">`ifx`</span>, Intel MKL, Intel VTune), preserving that lineage.</span>
+<span id="cb19-162"><a href="#cb19-162" aria-hidden="true" tabindex="-1"></a>Now, connecting to any cluster node is as simple as:</span>
+<span id="cb19-163"><a href="#cb19-163" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb19-164"><a href="#cb19-164" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> art-1     <span class="co"># Legacy CPU node (CentOS 6.6)</span></span>
+<span id="cb19-165"><a href="#cb19-165" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> art-16    <span class="co"># Modern CPU node (Rocky Linux 9.6)</span></span>
+<span id="cb19-166"><a href="#cb19-166" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> phi-10    <span class="co"># GPU Compute Node (Dual NVIDIA RTX 3090 &amp; RTX 3080 Ti + Intel oneAPI)</span></span>
+<span id="cb19-167"><a href="#cb19-167" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb19-168"><a href="#cb19-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-169"><a href="#cb19-169" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Hostname <span class="pp">|</span> Etymology &amp; Origin <span class="pp">|</span> Operating System <span class="pp">|</span> Primary Hardware &amp; Role <span class="pp">|</span></span>
-<span id="cb19-170"><a href="#cb19-170" aria-hidden="true" tabindex="-1"></a><span class="pp">| :---</span> <span class="pp">| :---</span> <span class="pp">| :---</span> <span class="pp">| :---</span> <span class="pp">|</span></span>
-<span id="cb19-171"><a href="#cb19-171" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **`art-1`** | **Art**ymowicz (Node 1) <span class="pp">|</span> CentOS 6.6 (Legacy) <span class="pp">|</span> Course archives, GNU Fortran (<span class="in">`gfortran`</span>), DISLIN graphics <span class="pp">|</span></span>
-<span id="cb19-172"><a href="#cb19-172" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **`art-2`** | **Art**ymowicz (Node 2) <span class="pp">|</span> CentOS 6.6 / Rocky <span class="pp">|</span> PHYD57 classroom computational exercises <span class="pp">|</span></span>
-<span id="cb19-173"><a href="#cb19-173" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **`art-16`** | **Art**ymowicz (16-Core Node) <span class="pp">|</span> Rocky Linux 9.6 <span class="pp">|</span> High-throughput CPU multi-threading and OpenMP workflows <span class="pp">|</span></span>
-<span id="cb19-174"><a href="#cb19-174" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **`phi-10`** | **$\Phi$** (Physics / Gravitational Potential) <span class="pp">|</span> Enterprise Linux <span class="pp">|</span> Dual GPU workstation (RTX 3090 + RTX 3080 Ti) &amp; Intel oneAPI <span class="pp">|</span></span>
-<span id="cb19-175"><a href="#cb19-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-176"><a href="#cb19-176" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb19-177"><a href="#cb19-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-178"><a href="#cb19-178" aria-hidden="true" tabindex="-1"></a><span class="fu">### The UTSC `phi-10` GPU Node: Enterprise Hardware Specifications</span></span>
-<span id="cb19-179"><a href="#cb19-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-180"><a href="#cb19-180" aria-hidden="true" tabindex="-1"></a><span class="in">`phi-10.utsc.utoronto.ca`</span> (<span class="in">`142.1.98.212`</span>) is the premier GPU computing node for **PHYD57**, equipped with high-end NVIDIA Ampere hardware and the complete **Intel oneAPI** development suite:</span>
+<span id="cb19-169"><a href="#cb19-169" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb19-170"><a href="#cb19-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-171"><a href="#cb19-171" aria-hidden="true" tabindex="-1"></a><span class="fu">### Cluster Nomenclature &amp; Hostname Etymology: Why "art" and "phi"?</span></span>
+<span id="cb19-172"><a href="#cb19-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-173"><a href="#cb19-173" aria-hidden="true" tabindex="-1"></a>When navigating UTSC's computational infrastructure, students frequently wonder about the origin of cluster hostnames like <span class="in">`art-1`</span>, <span class="in">`art-16`</span>, and <span class="in">`phi-10`</span>. These names reflect two deep traditions in university high-performance computing (HPC):</span>
+<span id="cb19-174"><a href="#cb19-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-175"><a href="#cb19-175" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 1. The `art` Nodes (`art-1`, `art-2`, `art-16`): The Principal Investigator (PI) Tradition</span></span>
+<span id="cb19-176"><a href="#cb19-176" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Research Grant Stewardship**: In Canadian academic computing, specialized compute clusters and rack servers are typically funded through individual professors' research infrastructure awards (e.g., NSERC Discovery Grants or Canada Foundation for Innovation / CFI grants).</span>
+<span id="cb19-177"><a href="#cb19-177" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Prof. Pawel Artymowicz**: The nodes prefixed with **`art`** represent machines purchased, configured, and maintained under the research stewardship of **Prof. Pawel Artymowicz** (Full Professor of Physics and Astrophysics at UTSC/U of T) for his research group in astrophysical gas dynamics, planet-disk interactions, and Smoothed Particle Hydrodynamics (SPH):</span>
+<span id="cb19-178"><a href="#cb19-178" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**`art-1`**: The foundational master node (running legacy CentOS 6.6), hosting historical course archives, GNU Fortran (<span class="in">`gfortran`</span>), and the DISLIN graphical plotting libraries.</span>
+<span id="cb19-179"><a href="#cb19-179" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**`art-2`**: A student exercise and compute companion node.</span>
+<span id="cb19-180"><a href="#cb19-180" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**`art-16`**: A modernized 16-core cluster node (running Rocky Linux 9.6) providing high-throughput multi-core CPU capacity.</span>
 <span id="cb19-181"><a href="#cb19-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-182"><a href="#cb19-182" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**GPU Device 0: NVIDIA GeForce RTX 3090**</span>
-<span id="cb19-183"><a href="#cb19-183" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**VRAM:** **24 GB GDDR6X** (23.570 GB usable)</span>
-<span id="cb19-184"><a href="#cb19-184" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**Compute Capability:** 8.6 (Ampere Architecture)</span>
-<span id="cb19-185"><a href="#cb19-185" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**Multiprocessors (SMs):** 82 SMs (10,496 CUDA Cores)</span>
-<span id="cb19-186"><a href="#cb19-186" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**Threads:** Max 1536 threads/SM, 1024 threads/block</span>
-<span id="cb19-187"><a href="#cb19-187" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**Capability:** Capable of running massive 3D pseudo-spectral grids ($512^3$ in full double-precision or $1024^3$ in single-precision) directly in GPU device memory!</span>
-<span id="cb19-188"><a href="#cb19-188" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**GPU Device 1: NVIDIA GeForce RTX 3080 Ti**</span>
-<span id="cb19-189"><a href="#cb19-189" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**VRAM:** **12 GB GDDR6X** (11.642 GB usable)</span>
-<span id="cb19-190"><a href="#cb19-190" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**Compute Capability:** 8.6 (Ampere Architecture)</span>
-<span id="cb19-191"><a href="#cb19-191" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**Multiprocessors (SMs):** 80 SMs (10,240 CUDA Cores)</span>
-<span id="cb19-192"><a href="#cb19-192" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**Capability:** Excellent for parallel ensemble sweeps of non-axisymmetric azimuthal perturbation modes ($m=1, 2, 3$).</span>
-<span id="cb19-193"><a href="#cb19-193" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Intel oneAPI Development Suite:**</span>
-<span id="cb19-194"><a href="#cb19-194" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>Initialized automatically upon login (<span class="in">`/opt/intel/oneapi/setvars.sh`</span>).</span>
-<span id="cb19-195"><a href="#cb19-195" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>Compilers: <span class="in">`icx`</span> (C), <span class="in">`icpx`</span> (C++), <span class="in">`ifx`</span> (Fortran).</span>
-<span id="cb19-196"><a href="#cb19-196" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>Performance Libraries: Intel oneMKL (BLAS/LAPACK/FFT), Intel MPI, Intel TBB.</span>
-<span id="cb19-197"><a href="#cb19-197" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>Profilers: **Intel VTune Profiler** (microarchitecture memory and cache bottlenecks) and **Intel Advisor** (roofline model analysis and vectorization).</span>
-<span id="cb19-198"><a href="#cb19-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-199"><a href="#cb19-199" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb19-200"><a href="#cb19-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-201"><a href="#cb19-201" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4. Filesystem Artifacts on `art-1` (`ll` Breakdown)</span></span>
-<span id="cb19-202"><a href="#cb19-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-203"><a href="#cb19-203" aria-hidden="true" tabindex="-1"></a>Listing the root directory of <span class="in">`/home/phyd57`</span> reveals the course history and shared resources:</span>
-<span id="cb19-204"><a href="#cb19-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-205"><a href="#cb19-205" aria-hidden="true" tabindex="-1"></a><span class="in">```text</span></span>
-<span id="cb19-206"><a href="#cb19-206" aria-hidden="true" tabindex="-1"></a><span class="in">[phyd57@art-1 ~]$ ll</span></span>
-<span id="cb19-207"><a href="#cb19-207" aria-hidden="true" tabindex="-1"></a><span class="in">total 293180</span></span>
-<span id="cb19-208"><a href="#cb19-208" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  4 phyd57 phyd57     36864 Dec 30  2017 6994</span></span>
-<span id="cb19-209"><a href="#cb19-209" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57         0 Nov  7  2019 A3.c</span></span>
-<span id="cb19-210"><a href="#cb19-210" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  6 phyd57 phyd57      4096 Nov 26  2019 A4FFTSolver</span></span>
-<span id="cb19-211"><a href="#cb19-211" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        13 Sep 14  2019 DO NOT OPEN</span></span>
-<span id="cb19-212"><a href="#cb19-212" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57       429 Sep 12  2020 T1.1.py</span></span>
-<span id="cb19-213"><a href="#cb19-213" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Sep  6  2019 TA</span></span>
-<span id="cb19-214"><a href="#cb19-214" aria-hidden="true" tabindex="-1"></a><span class="in">-rwx------  1 phyd57 phyd57     12912 Nov  9  2019 a3</span></span>
-<span id="cb19-215"><a href="#cb19-215" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57      4587 Nov  9  2019 a3.c</span></span>
-<span id="cb19-216"><a href="#cb19-216" aria-hidden="true" tabindex="-1"></a><span class="in">drwxrwxr-x  7 phyd57 phyd57     36864 Dec  3  2019 avx</span></span>
-<span id="cb19-217"><a href="#cb19-217" aria-hidden="true" tabindex="-1"></a><span class="in">-rwx------  1 phyd57 root      629895 Nov  9  2019 bandwidthTest</span></span>
-<span id="cb19-218"><a href="#cb19-218" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Sep 21  2019 bks</span></span>
-<span id="cb19-219"><a href="#cb19-219" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57 297134160 Jan  5  2019 cm_re.zip</span></span>
-<span id="cb19-220"><a href="#cb19-220" aria-hidden="true" tabindex="-1"></a><span class="in">-rwx------  1 phyd57 root      609556 Nov  9  2019 deviceQuery</span></span>
-<span id="cb19-221"><a href="#cb19-221" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Apr  4  2017 dislin</span></span>
-<span id="cb19-222"><a href="#cb19-222" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Nov 16  2019 fft</span></span>
-<span id="cb19-223"><a href="#cb19-223" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        34 Sep 14  2019 file1.txt</span></span>
-<span id="cb19-224"><a href="#cb19-224" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        21 Jan 25  2017 file_w_strings.txt</span></span>
-<span id="cb19-225"><a href="#cb19-225" aria-hidden="true" tabindex="-1"></a><span class="in">-r--r--r--  1 phyd57 phyd57      8031 Dec 13  2024 finalD57-Q-2024.txt</span></span>
-<span id="cb19-226"><a href="#cb19-226" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Sep 21  2019 findat</span></span>
-<span id="cb19-227"><a href="#cb19-227" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  4 phyd57 phyd57      4096 Feb  8  2017 game</span></span>
-<span id="cb19-228"><a href="#cb19-228" aria-hidden="true" tabindex="-1"></a><span class="in">-rwx------  1 phyd57 phyd57      8480 Sep  5  2020 hello</span></span>
-<span id="cb19-229"><a href="#cb19-229" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        79 Sep  5  2020 hello.c</span></span>
-<span id="cb19-230"><a href="#cb19-230" aria-hidden="true" tabindex="-1"></a><span class="in">drwxrwxr-x  2 phyd57 phyd57      4096 Sep 11 13:30 igor-dir</span></span>
-<span id="cb19-231"><a href="#cb19-231" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Sep 21  2019 imag</span></span>
-<span id="cb19-232"><a href="#cb19-232" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Sep 23  2020 math</span></span>
-<span id="cb19-233"><a href="#cb19-233" aria-hidden="true" tabindex="-1"></a><span class="in">drwxr-xr-x  4 phyd57 phyd57     20480 Apr 18  2017 mie</span></span>
-<span id="cb19-234"><a href="#cb19-234" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57      5511 Sep 16  2020 my_assignment1.py</span></span>
-<span id="cb19-235"><a href="#cb19-235" aria-hidden="true" tabindex="-1"></a><span class="in">-rwx------  1 phyd57 root     1480788 Nov  9  2019 nbody</span></span>
-<span id="cb19-236"><a href="#cb19-236" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        10 Mar 15  2017 old..vimrc</span></span>
-<span id="cb19-237"><a href="#cb19-237" aria-hidden="true" tabindex="-1"></a><span class="in">-r-xr--r--  1 phyd57 phyd57      3675 Dec 13  2024 prob4_w_issue.f95</span></span>
-<span id="cb19-238"><a href="#cb19-238" aria-hidden="true" tabindex="-1"></a><span class="in">-r-x------  1 phyd57 phyd57     51832 Dec 12  2018 prob4_w_issue.x</span></span>
-<span id="cb19-239"><a href="#cb19-239" aria-hidden="true" tabindex="-1"></a><span class="in">drwxr-xr-x  6 phyd57 phyd57     36864 Dec 30  2017 progD57</span></span>
-<span id="cb19-240"><a href="#cb19-240" aria-hidden="true" tabindex="-1"></a><span class="in">drwxrwxr-x  2 phyd57 phyd57      4096 Oct  2  2020 sandbox</span></span>
-<span id="cb19-241"><a href="#cb19-241" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------ 11 phyd57 phyd57      4096 Sep  6  2019 stud1</span></span>
-<span id="cb19-242"><a href="#cb19-242" aria-hidden="true" tabindex="-1"></a><span class="in">-rwx------  1 phyd57 phyd57     12896 Nov  9  2019 t1</span></span>
-<span id="cb19-243"><a href="#cb19-243" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57       312 Sep 12  2020 t1.1.py</span></span>
-<span id="cb19-244"><a href="#cb19-244" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57      4245 Nov  9  2019 t1.c</span></span>
-<span id="cb19-245"><a href="#cb19-245" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        80 Sep  7  2019 test.f90</span></span>
-<span id="cb19-246"><a href="#cb19-246" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        79 Sep  7  2019 test.f90.save</span></span>
-<span id="cb19-247"><a href="#cb19-247" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57       242 Sep 12  2020 tut2.py</span></span>
-<span id="cb19-248"><a href="#cb19-248" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-249"><a href="#cb19-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-250"><a href="#cb19-250" aria-hidden="true" tabindex="-1"></a><span class="fu">### Artifact Catalog</span></span>
-<span id="cb19-251"><a href="#cb19-251" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Isolated Workspace (`igor-dir/`):** Personal workspace directory. Because `phyd57` is a shared cohort user account, **always conduct work inside your designated folder** to avoid modifying shared files or other students' assignments.</span>
-<span id="cb19-252"><a href="#cb19-252" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Assignments &amp; Code:**</span>
-<span id="cb19-253"><a href="#cb19-253" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`A3.c`</span>, <span class="in">`a3`</span>, <span class="in">`a3.c`</span>: Assignment 3 C source and compiled ELF binaries.</span>
-<span id="cb19-254"><a href="#cb19-254" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`A4FFTSolver/`</span>: Group project directory for Fast Fourier Transform gravitational potential solvers.</span>
-<span id="cb19-255"><a href="#cb19-255" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`my_assignment1.py`</span>: Python reference implementation for Assignment 1.</span>
-<span id="cb19-256"><a href="#cb19-256" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`prob4_w_issue.f95`</span> &amp; <span class="in">`prob4_w_issue.x`</span>: Fortran 95 code demonstrating segmentation faults caused by exceeding stack size limits with static array allocations.</span>
-<span id="cb19-257"><a href="#cb19-257" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**GPU &amp; HPC Diagnostics:**</span>
-<span id="cb19-258"><a href="#cb19-258" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`deviceQuery`</span> &amp; <span class="in">`bandwidthTest`</span>: Standard NVIDIA CUDA SDK binaries compiled with <span class="in">`nvcc`</span>. They query device capability, CUDA core counts, and PCIe memory bandwidth.</span>
-<span id="cb19-259"><a href="#cb19-259" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`avx/`</span>: Test directory for Advanced Vector Extensions (AVX) SIMD compiler vectorization.</span>
-<span id="cb19-260"><a href="#cb19-260" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`nbody`</span>: Compiled parallel N-body simulation binary.</span>
-<span id="cb19-261"><a href="#cb19-261" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Reference Scripts &amp; Exam Prompts:**</span>
-<span id="cb19-262"><a href="#cb19-262" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`dislin/`</span>: Local installation of the DISLIN scientific graphics library.</span>
-<span id="cb19-263"><a href="#cb19-263" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`finalD57-Q-2024.txt`</span>: Programming prompt text file from the December 2024 final exam.</span>
-<span id="cb19-264"><a href="#cb19-264" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`old..vimrc`</span>: Legacy Vim editor configuration file.</span>
-<span id="cb19-265"><a href="#cb19-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-266"><a href="#cb19-266" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb19-267"><a href="#cb19-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-268"><a href="#cb19-268" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5. Local Viewing &amp; Editing of Remote Code</span></span>
+<span id="cb19-182"><a href="#cb19-182" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 2. The `phi` Nodes (`phi-10`): Physics, Potentials, and HPC Heritage</span></span>
+<span id="cb19-183"><a href="#cb19-183" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Φυσική (Physics) &amp; DPES Departmental Fleet**: The Greek letter **$\Phi$ / $\phi$ (Phi)** is the universal root for **Physics** (from Ancient Greek *Φυσική* / *Physika*). UTSC's Department of Physical and Environmental Sciences (DPES) designates shared departmental servers and student computing nodes after Greek letters ($\alpha, \beta, \dots, \phi$). <span class="in">`phi-10`</span> designates workstation #10 in the departmental computing pool.</span>
+<span id="cb19-184"><a href="#cb19-184" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Astrophysical &amp; Fluid Dynamics Notation ($\Phi$ and $\phi$)**: In computational astrophysics and numerical hydrodynamics (the mathematical heart of PHYD57), $\Phi$ and $\phi$ represent foundational physical variables:</span>
+<span id="cb19-185"><a href="#cb19-185" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**$\Phi$ (Capital Phi)**: Denotes the **Gravitational Potential** ($\nabla^2 \Phi = 4\pi G \rho$) in stellar dynamics and the **Velocity Potential** ($\mathbf{u} = \nabla \Phi$) in irrotational fluid mechanics.</span>
+<span id="cb19-186"><a href="#cb19-186" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**$\phi$ (Lowercase Phi)**: Denotes the **Azimuthal Angle** in cylindrical $(r, \phi, z)$ and spherical $(r, \theta, \phi)$ coordinate systems—the essential spatial coordinate for simulating circumstellar accretion disks, protoplanetary spiral density waves, and rotational vortices.</span>
+<span id="cb19-187"><a href="#cb19-187" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**HPC Supercomputing Lineage (Intel Xeon Phi)**: In the 2010s, Intel’s flagship many-core supercomputing architecture was the **Intel Xeon Phi** coprocessor family, widely adopted across academic physics clusters. While `phi-10` has since been modernized into a dual-NVIDIA Ampere GPU workstation (RTX 3090 &amp; RTX 3080 Ti), it remains the primary host for the full **Intel oneAPI** development suite (<span class="in">`icx`</span>, <span class="in">`icpx`</span>, <span class="in">`ifx`</span>, Intel MKL, Intel VTune), preserving that lineage.</span>
+<span id="cb19-188"><a href="#cb19-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-189"><a href="#cb19-189" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Hostname <span class="pp">|</span> Etymology &amp; Origin <span class="pp">|</span> Operating System <span class="pp">|</span> Primary Hardware &amp; Role <span class="pp">|</span></span>
+<span id="cb19-190"><a href="#cb19-190" aria-hidden="true" tabindex="-1"></a><span class="pp">| :---</span> <span class="pp">| :---</span> <span class="pp">| :---</span> <span class="pp">| :---</span> <span class="pp">|</span></span>
+<span id="cb19-191"><a href="#cb19-191" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **`art-1`** | **Art**ymowicz (Node 1) <span class="pp">|</span> CentOS 6.6 (Legacy) <span class="pp">|</span> Course archives, GNU Fortran (<span class="in">`gfortran`</span>), DISLIN graphics <span class="pp">|</span></span>
+<span id="cb19-192"><a href="#cb19-192" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **`art-2`** | **Art**ymowicz (Node 2) <span class="pp">|</span> CentOS 6.6 / Rocky <span class="pp">|</span> PHYD57 classroom computational exercises <span class="pp">|</span></span>
+<span id="cb19-193"><a href="#cb19-193" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **`art-16`** | **Art**ymowicz (16-Core Node) <span class="pp">|</span> Rocky Linux 9.6 <span class="pp">|</span> High-throughput CPU multi-threading and OpenMP workflows <span class="pp">|</span></span>
+<span id="cb19-194"><a href="#cb19-194" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **`phi-10`** | **$\Phi$** (Physics / Gravitational Potential) <span class="pp">|</span> Enterprise Linux <span class="pp">|</span> Dual GPU workstation (RTX 3090 + RTX 3080 Ti) &amp; Intel oneAPI <span class="pp">|</span></span>
+<span id="cb19-195"><a href="#cb19-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-196"><a href="#cb19-196" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb19-197"><a href="#cb19-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-198"><a href="#cb19-198" aria-hidden="true" tabindex="-1"></a><span class="fu">### The UTSC `phi-10` GPU Node: Enterprise Hardware Specifications</span></span>
+<span id="cb19-199"><a href="#cb19-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-200"><a href="#cb19-200" aria-hidden="true" tabindex="-1"></a><span class="in">`phi-10.utsc.utoronto.ca`</span> (<span class="in">`142.1.98.212`</span>) is the premier GPU computing node for **PHYD57**, equipped with high-end NVIDIA Ampere hardware and the complete **Intel oneAPI** development suite:</span>
+<span id="cb19-201"><a href="#cb19-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-202"><a href="#cb19-202" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**GPU Device 0: NVIDIA GeForce RTX 3090**</span>
+<span id="cb19-203"><a href="#cb19-203" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**VRAM:** **24 GB GDDR6X** (23.570 GB usable)</span>
+<span id="cb19-204"><a href="#cb19-204" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**Compute Capability:** 8.6 (Ampere Architecture)</span>
+<span id="cb19-205"><a href="#cb19-205" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**Multiprocessors (SMs):** 82 SMs (10,496 CUDA Cores)</span>
+<span id="cb19-206"><a href="#cb19-206" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**Threads:** Max 1536 threads/SM, 1024 threads/block</span>
+<span id="cb19-207"><a href="#cb19-207" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**Capability:** Capable of running massive 3D pseudo-spectral grids ($512^3$ in full double-precision or $1024^3$ in single-precision) directly in GPU device memory!</span>
+<span id="cb19-208"><a href="#cb19-208" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**GPU Device 1: NVIDIA GeForce RTX 3080 Ti**</span>
+<span id="cb19-209"><a href="#cb19-209" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**VRAM:** **12 GB GDDR6X** (11.642 GB usable)</span>
+<span id="cb19-210"><a href="#cb19-210" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**Compute Capability:** 8.6 (Ampere Architecture)</span>
+<span id="cb19-211"><a href="#cb19-211" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**Multiprocessors (SMs):** 80 SMs (10,240 CUDA Cores)</span>
+<span id="cb19-212"><a href="#cb19-212" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>**Capability:** Excellent for parallel ensemble sweeps of non-axisymmetric azimuthal perturbation modes ($m=1, 2, 3$).</span>
+<span id="cb19-213"><a href="#cb19-213" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Intel oneAPI Development Suite:**</span>
+<span id="cb19-214"><a href="#cb19-214" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>Initialized automatically upon login (<span class="in">`/opt/intel/oneapi/setvars.sh`</span>).</span>
+<span id="cb19-215"><a href="#cb19-215" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>Compilers: <span class="in">`icx`</span> (C), <span class="in">`icpx`</span> (C++), <span class="in">`ifx`</span> (Fortran).</span>
+<span id="cb19-216"><a href="#cb19-216" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>Performance Libraries: Intel oneMKL (BLAS/LAPACK/FFT), Intel MPI, Intel TBB.</span>
+<span id="cb19-217"><a href="#cb19-217" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>Profilers: **Intel VTune Profiler** (microarchitecture memory and cache bottlenecks) and **Intel Advisor** (roofline model analysis and vectorization).</span>
+<span id="cb19-218"><a href="#cb19-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-219"><a href="#cb19-219" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb19-220"><a href="#cb19-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-221"><a href="#cb19-221" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4. Filesystem Artifacts on `art-1` (`ll` Breakdown)</span></span>
+<span id="cb19-222"><a href="#cb19-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-223"><a href="#cb19-223" aria-hidden="true" tabindex="-1"></a>Listing the root directory of <span class="in">`/home/phyd57`</span> reveals the course history and shared resources:</span>
+<span id="cb19-224"><a href="#cb19-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-225"><a href="#cb19-225" aria-hidden="true" tabindex="-1"></a><span class="in">```text</span></span>
+<span id="cb19-226"><a href="#cb19-226" aria-hidden="true" tabindex="-1"></a><span class="in">[phyd57@art-1 ~]$ ll</span></span>
+<span id="cb19-227"><a href="#cb19-227" aria-hidden="true" tabindex="-1"></a><span class="in">total 293180</span></span>
+<span id="cb19-228"><a href="#cb19-228" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  4 phyd57 phyd57     36864 Dec 30  2017 6994</span></span>
+<span id="cb19-229"><a href="#cb19-229" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57         0 Nov  7  2019 A3.c</span></span>
+<span id="cb19-230"><a href="#cb19-230" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  6 phyd57 phyd57      4096 Nov 26  2019 A4FFTSolver</span></span>
+<span id="cb19-231"><a href="#cb19-231" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        13 Sep 14  2019 DO NOT OPEN</span></span>
+<span id="cb19-232"><a href="#cb19-232" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57       429 Sep 12  2020 T1.1.py</span></span>
+<span id="cb19-233"><a href="#cb19-233" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Sep  6  2019 TA</span></span>
+<span id="cb19-234"><a href="#cb19-234" aria-hidden="true" tabindex="-1"></a><span class="in">-rwx------  1 phyd57 phyd57     12912 Nov  9  2019 a3</span></span>
+<span id="cb19-235"><a href="#cb19-235" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57      4587 Nov  9  2019 a3.c</span></span>
+<span id="cb19-236"><a href="#cb19-236" aria-hidden="true" tabindex="-1"></a><span class="in">drwxrwxr-x  7 phyd57 phyd57     36864 Dec  3  2019 avx</span></span>
+<span id="cb19-237"><a href="#cb19-237" aria-hidden="true" tabindex="-1"></a><span class="in">-rwx------  1 phyd57 root      629895 Nov  9  2019 bandwidthTest</span></span>
+<span id="cb19-238"><a href="#cb19-238" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Sep 21  2019 bks</span></span>
+<span id="cb19-239"><a href="#cb19-239" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57 297134160 Jan  5  2019 cm_re.zip</span></span>
+<span id="cb19-240"><a href="#cb19-240" aria-hidden="true" tabindex="-1"></a><span class="in">-rwx------  1 phyd57 root      609556 Nov  9  2019 deviceQuery</span></span>
+<span id="cb19-241"><a href="#cb19-241" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Apr  4  2017 dislin</span></span>
+<span id="cb19-242"><a href="#cb19-242" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Nov 16  2019 fft</span></span>
+<span id="cb19-243"><a href="#cb19-243" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        34 Sep 14  2019 file1.txt</span></span>
+<span id="cb19-244"><a href="#cb19-244" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        21 Jan 25  2017 file_w_strings.txt</span></span>
+<span id="cb19-245"><a href="#cb19-245" aria-hidden="true" tabindex="-1"></a><span class="in">-r--r--r--  1 phyd57 phyd57      8031 Dec 13  2024 finalD57-Q-2024.txt</span></span>
+<span id="cb19-246"><a href="#cb19-246" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Sep 21  2019 findat</span></span>
+<span id="cb19-247"><a href="#cb19-247" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  4 phyd57 phyd57      4096 Feb  8  2017 game</span></span>
+<span id="cb19-248"><a href="#cb19-248" aria-hidden="true" tabindex="-1"></a><span class="in">-rwx------  1 phyd57 phyd57      8480 Sep  5  2020 hello</span></span>
+<span id="cb19-249"><a href="#cb19-249" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        79 Sep  5  2020 hello.c</span></span>
+<span id="cb19-250"><a href="#cb19-250" aria-hidden="true" tabindex="-1"></a><span class="in">drwxrwxr-x  2 phyd57 phyd57      4096 Sep 11 13:30 igor-dir</span></span>
+<span id="cb19-251"><a href="#cb19-251" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Sep 21  2019 imag</span></span>
+<span id="cb19-252"><a href="#cb19-252" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------  2 phyd57 phyd57      4096 Sep 23  2020 math</span></span>
+<span id="cb19-253"><a href="#cb19-253" aria-hidden="true" tabindex="-1"></a><span class="in">drwxr-xr-x  4 phyd57 phyd57     20480 Apr 18  2017 mie</span></span>
+<span id="cb19-254"><a href="#cb19-254" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57      5511 Sep 16  2020 my_assignment1.py</span></span>
+<span id="cb19-255"><a href="#cb19-255" aria-hidden="true" tabindex="-1"></a><span class="in">-rwx------  1 phyd57 root     1480788 Nov  9  2019 nbody</span></span>
+<span id="cb19-256"><a href="#cb19-256" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        10 Mar 15  2017 old..vimrc</span></span>
+<span id="cb19-257"><a href="#cb19-257" aria-hidden="true" tabindex="-1"></a><span class="in">-r-xr--r--  1 phyd57 phyd57      3675 Dec 13  2024 prob4_w_issue.f95</span></span>
+<span id="cb19-258"><a href="#cb19-258" aria-hidden="true" tabindex="-1"></a><span class="in">-r-x------  1 phyd57 phyd57     51832 Dec 12  2018 prob4_w_issue.x</span></span>
+<span id="cb19-259"><a href="#cb19-259" aria-hidden="true" tabindex="-1"></a><span class="in">drwxr-xr-x  6 phyd57 phyd57     36864 Dec 30  2017 progD57</span></span>
+<span id="cb19-260"><a href="#cb19-260" aria-hidden="true" tabindex="-1"></a><span class="in">drwxrwxr-x  2 phyd57 phyd57      4096 Oct  2  2020 sandbox</span></span>
+<span id="cb19-261"><a href="#cb19-261" aria-hidden="true" tabindex="-1"></a><span class="in">drwx------ 11 phyd57 phyd57      4096 Sep  6  2019 stud1</span></span>
+<span id="cb19-262"><a href="#cb19-262" aria-hidden="true" tabindex="-1"></a><span class="in">-rwx------  1 phyd57 phyd57     12896 Nov  9  2019 t1</span></span>
+<span id="cb19-263"><a href="#cb19-263" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57       312 Sep 12  2020 t1.1.py</span></span>
+<span id="cb19-264"><a href="#cb19-264" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57      4245 Nov  9  2019 t1.c</span></span>
+<span id="cb19-265"><a href="#cb19-265" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        80 Sep  7  2019 test.f90</span></span>
+<span id="cb19-266"><a href="#cb19-266" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57        79 Sep  7  2019 test.f90.save</span></span>
+<span id="cb19-267"><a href="#cb19-267" aria-hidden="true" tabindex="-1"></a><span class="in">-rw-------  1 phyd57 phyd57       242 Sep 12  2020 tut2.py</span></span>
+<span id="cb19-268"><a href="#cb19-268" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb19-269"><a href="#cb19-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-270"><a href="#cb19-270" aria-hidden="true" tabindex="-1"></a>Developing directly over terminal SSH using basic Vim or Nano can slow down debugging. Here is how to view and edit files using modern local developer tools:</span>
-<span id="cb19-271"><a href="#cb19-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-272"><a href="#cb19-272" aria-hidden="true" tabindex="-1"></a><span class="fu">### Method 1: SSHFS (Virtual Directory Mount) — *Recommended*</span></span>
-<span id="cb19-273"><a href="#cb19-273" aria-hidden="true" tabindex="-1"></a>**SSHFS** mounts the remote cluster folder directly into your local filesystem over SFTP, allowing you to open remote files in local VS Code, Cursor, or Neovim with full language server protocol (LSP) support.</span>
-<span id="cb19-274"><a href="#cb19-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-275"><a href="#cb19-275" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb19-276"><a href="#cb19-276" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Create a local mount directory</span></span>
-<span id="cb19-277"><a href="#cb19-277" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/mounts/art-1</span>
-<span id="cb19-278"><a href="#cb19-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-279"><a href="#cb19-279" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Mount using your ~/.ssh/config alias</span></span>
-<span id="cb19-280"><a href="#cb19-280" aria-hidden="true" tabindex="-1"></a><span class="ex">sshfs</span> art-1:/home/phyd57 ~/mounts/art-1 <span class="at">-o</span> reconnect,ServerAliveInterval=15,ServerAliveCountMax=3</span>
-<span id="cb19-281"><a href="#cb19-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-282"><a href="#cb19-282" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Open your personal folder in local VS Code</span></span>
-<span id="cb19-283"><a href="#cb19-283" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> ~/mounts/art-1/igor-dir</span>
-<span id="cb19-284"><a href="#cb19-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-285"><a href="#cb19-285" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Unmount cleanly when finished</span></span>
-<span id="cb19-286"><a href="#cb19-286" aria-hidden="true" tabindex="-1"></a><span class="ex">fusermount</span> <span class="at">-u</span> ~/mounts/art-1</span>
-<span id="cb19-287"><a href="#cb19-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-288"><a href="#cb19-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-289"><a href="#cb19-289" aria-hidden="true" tabindex="-1"></a>*(macOS users: install via `brew install macfuse gromgit/fuse/sshfs-mac` and unmount using `umount ~/mounts/art-1`).*</span>
-<span id="cb19-290"><a href="#cb19-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-291"><a href="#cb19-291" aria-hidden="true" tabindex="-1"></a><span class="fu">### Method 2: VS Code "SSH FS" (Bypassing CentOS 6 Glibc Limits)</span></span>
-<span id="cb19-292"><a href="#cb19-292" aria-hidden="true" tabindex="-1"></a>The official **VS Code Remote - SSH** extension automatically deploys a remote Node.js server agent that requires **glibc 2.28+**. Because CentOS 6.6 ships with **glibc 2.12**, the extension crashes with:</span>
-<span id="cb19-293"><a href="#cb19-293" aria-hidden="true" tabindex="-1"></a><span class="in">```text</span></span>
-<span id="cb19-294"><a href="#cb19-294" aria-hidden="true" tabindex="-1"></a><span class="in">/lib64/libc.so.6: version `GLIBC_2.28' not found</span></span>
-<span id="cb19-295"><a href="#cb19-295" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-296"><a href="#cb19-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-297"><a href="#cb19-297" aria-hidden="true" tabindex="-1"></a>**The Solution:**</span>
-<span id="cb19-298"><a href="#cb19-298" aria-hidden="true" tabindex="-1"></a>Install the client-side **SSH FS** extension (<span class="in">`HuFlungDu.ssh-fs`</span> or <span class="in">`liximomo.sftp`</span>). This extension runs pure SFTP from your local machine, allowing file browsing and editing inside VS Code without requiring modern glibc libraries on the cluster.</span>
-<span id="cb19-299"><a href="#cb19-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-300"><a href="#cb19-300" aria-hidden="true" tabindex="-1"></a><span class="fu">### Method 3: Terminal Persistence with `screen`</span></span>
-<span id="cb19-301"><a href="#cb19-301" aria-hidden="true" tabindex="-1"></a>If you edit directly inside the remote shell, protect long-running compilations and simulations against network drops using <span class="in">`screen`</span>:</span>
-<span id="cb19-302"><a href="#cb19-302" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb19-303"><a href="#cb19-303" aria-hidden="true" tabindex="-1"></a><span class="co"># Start a detached-capable session</span></span>
-<span id="cb19-304"><a href="#cb19-304" aria-hidden="true" tabindex="-1"></a><span class="ex">screen</span> <span class="at">-S</span> simulation_run</span>
-<span id="cb19-305"><a href="#cb19-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-306"><a href="#cb19-306" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile and execute</span></span>
-<span id="cb19-307"><a href="#cb19-307" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> <span class="kw">&amp;&amp;</span> <span class="ex">./nbody</span></span>
+<span id="cb19-270"><a href="#cb19-270" aria-hidden="true" tabindex="-1"></a><span class="fu">### Artifact Catalog</span></span>
+<span id="cb19-271"><a href="#cb19-271" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Isolated Workspace (`igor-dir/`):** Personal workspace directory. Because `phyd57` is a shared cohort user account, **always conduct work inside your designated folder** to avoid modifying shared files or other students' assignments.</span>
+<span id="cb19-272"><a href="#cb19-272" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Assignments &amp; Code:**</span>
+<span id="cb19-273"><a href="#cb19-273" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`A3.c`</span>, <span class="in">`a3`</span>, <span class="in">`a3.c`</span>: Assignment 3 C source and compiled ELF binaries.</span>
+<span id="cb19-274"><a href="#cb19-274" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`A4FFTSolver/`</span>: Group project directory for Fast Fourier Transform gravitational potential solvers.</span>
+<span id="cb19-275"><a href="#cb19-275" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`my_assignment1.py`</span>: Python reference implementation for Assignment 1.</span>
+<span id="cb19-276"><a href="#cb19-276" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`prob4_w_issue.f95`</span> &amp; <span class="in">`prob4_w_issue.x`</span>: Fortran 95 code demonstrating segmentation faults caused by exceeding stack size limits with static array allocations.</span>
+<span id="cb19-277"><a href="#cb19-277" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**GPU &amp; HPC Diagnostics:**</span>
+<span id="cb19-278"><a href="#cb19-278" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`deviceQuery`</span> &amp; <span class="in">`bandwidthTest`</span>: Standard NVIDIA CUDA SDK binaries compiled with <span class="in">`nvcc`</span>. They query device capability, CUDA core counts, and PCIe memory bandwidth.</span>
+<span id="cb19-279"><a href="#cb19-279" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`avx/`</span>: Test directory for Advanced Vector Extensions (AVX) SIMD compiler vectorization.</span>
+<span id="cb19-280"><a href="#cb19-280" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`nbody`</span>: Compiled parallel N-body simulation binary.</span>
+<span id="cb19-281"><a href="#cb19-281" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Reference Scripts &amp; Exam Prompts:**</span>
+<span id="cb19-282"><a href="#cb19-282" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`dislin/`</span>: Local installation of the DISLIN scientific graphics library.</span>
+<span id="cb19-283"><a href="#cb19-283" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`finalD57-Q-2024.txt`</span>: Programming prompt text file from the December 2024 final exam.</span>
+<span id="cb19-284"><a href="#cb19-284" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span><span class="in">`old..vimrc`</span>: Legacy Vim editor configuration file.</span>
+<span id="cb19-285"><a href="#cb19-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-286"><a href="#cb19-286" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb19-287"><a href="#cb19-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-288"><a href="#cb19-288" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5. Local Viewing &amp; Editing of Remote Code</span></span>
+<span id="cb19-289"><a href="#cb19-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-290"><a href="#cb19-290" aria-hidden="true" tabindex="-1"></a>Developing directly over terminal SSH using basic Vim or Nano can slow down debugging. Here is how to view and edit files using modern local developer tools:</span>
+<span id="cb19-291"><a href="#cb19-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-292"><a href="#cb19-292" aria-hidden="true" tabindex="-1"></a><span class="fu">### Method 1: SSHFS (Virtual Directory Mount) — *Recommended*</span></span>
+<span id="cb19-293"><a href="#cb19-293" aria-hidden="true" tabindex="-1"></a>**SSHFS** mounts the remote cluster folder directly into your local filesystem over SFTP, allowing you to open remote files in local VS Code, Cursor, or Neovim with full language server protocol (LSP) support.</span>
+<span id="cb19-294"><a href="#cb19-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-295"><a href="#cb19-295" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb19-296"><a href="#cb19-296" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Create a local mount directory</span></span>
+<span id="cb19-297"><a href="#cb19-297" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/mounts/art-1</span>
+<span id="cb19-298"><a href="#cb19-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-299"><a href="#cb19-299" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Mount using your ~/.ssh/config alias</span></span>
+<span id="cb19-300"><a href="#cb19-300" aria-hidden="true" tabindex="-1"></a><span class="ex">sshfs</span> art-1:/home/phyd57 ~/mounts/art-1 <span class="at">-o</span> reconnect,ServerAliveInterval=15,ServerAliveCountMax=3</span>
+<span id="cb19-301"><a href="#cb19-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-302"><a href="#cb19-302" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Open your personal folder in local VS Code</span></span>
+<span id="cb19-303"><a href="#cb19-303" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> ~/mounts/art-1/igor-dir</span>
+<span id="cb19-304"><a href="#cb19-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-305"><a href="#cb19-305" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Unmount cleanly when finished</span></span>
+<span id="cb19-306"><a href="#cb19-306" aria-hidden="true" tabindex="-1"></a><span class="ex">fusermount</span> <span class="at">-u</span> ~/mounts/art-1</span>
+<span id="cb19-307"><a href="#cb19-307" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb19-308"><a href="#cb19-308" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-309"><a href="#cb19-309" aria-hidden="true" tabindex="-1"></a><span class="co"># Detach session: Press Ctrl+A, then D</span></span>
-<span id="cb19-310"><a href="#cb19-310" aria-hidden="true" tabindex="-1"></a><span class="co"># Reattach later:</span></span>
-<span id="cb19-311"><a href="#cb19-311" aria-hidden="true" tabindex="-1"></a><span class="ex">screen</span> <span class="at">-r</span> simulation_run</span>
-<span id="cb19-312"><a href="#cb19-312" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-313"><a href="#cb19-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-314"><a href="#cb19-314" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb19-315"><a href="#cb19-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-316"><a href="#cb19-316" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6. Bidirectional File Transfers &amp; FTP/SFTP</span></span>
-<span id="cb19-317"><a href="#cb19-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-318"><a href="#cb19-318" aria-hidden="true" tabindex="-1"></a>Moving files, datasets, and plots between your computer and <span class="in">`art-1`</span> can be done via CLI or graphical interfaces.</span>
+<span id="cb19-309"><a href="#cb19-309" aria-hidden="true" tabindex="-1"></a>*(macOS users: install via `brew install macfuse gromgit/fuse/sshfs-mac` and unmount using `umount ~/mounts/art-1`).*</span>
+<span id="cb19-310"><a href="#cb19-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-311"><a href="#cb19-311" aria-hidden="true" tabindex="-1"></a><span class="fu">### Method 2: VS Code "SSH FS" (Bypassing CentOS 6 Glibc Limits)</span></span>
+<span id="cb19-312"><a href="#cb19-312" aria-hidden="true" tabindex="-1"></a>The official **VS Code Remote - SSH** extension automatically deploys a remote Node.js server agent that requires **glibc 2.28+**. Because CentOS 6.6 ships with **glibc 2.12**, the extension crashes with:</span>
+<span id="cb19-313"><a href="#cb19-313" aria-hidden="true" tabindex="-1"></a><span class="in">```text</span></span>
+<span id="cb19-314"><a href="#cb19-314" aria-hidden="true" tabindex="-1"></a><span class="in">/lib64/libc.so.6: version `GLIBC_2.28' not found</span></span>
+<span id="cb19-315"><a href="#cb19-315" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-316"><a href="#cb19-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-317"><a href="#cb19-317" aria-hidden="true" tabindex="-1"></a>**The Solution:**</span>
+<span id="cb19-318"><a href="#cb19-318" aria-hidden="true" tabindex="-1"></a>Install the client-side **SSH FS** extension (<span class="in">`HuFlungDu.ssh-fs`</span> or <span class="in">`liximomo.sftp`</span>). This extension runs pure SFTP from your local machine, allowing file browsing and editing inside VS Code without requiring modern glibc libraries on the cluster.</span>
 <span id="cb19-319"><a href="#cb19-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-320"><a href="#cb19-320" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. `scp` (Secure Copy Protocol)</span></span>
-<span id="cb19-321"><a href="#cb19-321" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Download a file to your local directory:**</span>
-<span id="cb19-322"><a href="#cb19-322" aria-hidden="true" tabindex="-1"></a>  <span class="in">```bash</span></span>
-<span id="cb19-323"><a href="#cb19-323" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scp</span> art-1:~/finalD57-Q-2024.txt ./</span>
-<span id="cb19-324"><a href="#cb19-324" aria-hidden="true" tabindex="-1"></a>  <span class="in">```</span></span>
-<span id="cb19-325"><a href="#cb19-325" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Download your entire workspace recursively:**</span>
-<span id="cb19-326"><a href="#cb19-326" aria-hidden="true" tabindex="-1"></a>  <span class="in">```bash</span></span>
-<span id="cb19-327"><a href="#cb19-327" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scp</span> <span class="at">-r</span> art-1:~/igor-dir ./backup_igor_dir/</span>
-<span id="cb19-328"><a href="#cb19-328" aria-hidden="true" tabindex="-1"></a>  <span class="in">```</span></span>
-<span id="cb19-329"><a href="#cb19-329" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Upload source code to your cluster folder:**</span>
-<span id="cb19-330"><a href="#cb19-330" aria-hidden="true" tabindex="-1"></a>  <span class="in">```bash</span></span>
-<span id="cb19-331"><a href="#cb19-331" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scp</span> ./my_solver.c art-1:~/igor-dir/</span>
-<span id="cb19-332"><a href="#cb19-332" aria-hidden="true" tabindex="-1"></a>  <span class="in">```</span></span>
+<span id="cb19-320"><a href="#cb19-320" aria-hidden="true" tabindex="-1"></a><span class="fu">### Method 3: Terminal Persistence with `screen`</span></span>
+<span id="cb19-321"><a href="#cb19-321" aria-hidden="true" tabindex="-1"></a>If you edit directly inside the remote shell, protect long-running compilations and simulations against network drops using <span class="in">`screen`</span>:</span>
+<span id="cb19-322"><a href="#cb19-322" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb19-323"><a href="#cb19-323" aria-hidden="true" tabindex="-1"></a><span class="co"># Start a detached-capable session</span></span>
+<span id="cb19-324"><a href="#cb19-324" aria-hidden="true" tabindex="-1"></a><span class="ex">screen</span> <span class="at">-S</span> simulation_run</span>
+<span id="cb19-325"><a href="#cb19-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-326"><a href="#cb19-326" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile and execute</span></span>
+<span id="cb19-327"><a href="#cb19-327" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> <span class="kw">&amp;&amp;</span> <span class="ex">./nbody</span></span>
+<span id="cb19-328"><a href="#cb19-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-329"><a href="#cb19-329" aria-hidden="true" tabindex="-1"></a><span class="co"># Detach session: Press Ctrl+A, then D</span></span>
+<span id="cb19-330"><a href="#cb19-330" aria-hidden="true" tabindex="-1"></a><span class="co"># Reattach later:</span></span>
+<span id="cb19-331"><a href="#cb19-331" aria-hidden="true" tabindex="-1"></a><span class="ex">screen</span> <span class="at">-r</span> simulation_run</span>
+<span id="cb19-332"><a href="#cb19-332" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb19-333"><a href="#cb19-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-334"><a href="#cb19-334" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. `rsync` (Differential Fast Synchronization)</span></span>
-<span id="cb19-335"><a href="#cb19-335" aria-hidden="true" tabindex="-1"></a><span class="in">`rsync`</span> only transfers binary delta changes, making it far superior to <span class="in">`scp`</span> for recurring project backups:</span>
-<span id="cb19-336"><a href="#cb19-336" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb19-337"><a href="#cb19-337" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull remote updates to local folder</span></span>
-<span id="cb19-338"><a href="#cb19-338" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avzP</span> art-1:~/igor-dir/ ./local_igor_dir/</span>
+<span id="cb19-334"><a href="#cb19-334" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb19-335"><a href="#cb19-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-336"><a href="#cb19-336" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6. Bidirectional File Transfers &amp; FTP/SFTP</span></span>
+<span id="cb19-337"><a href="#cb19-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-338"><a href="#cb19-338" aria-hidden="true" tabindex="-1"></a>Moving files, datasets, and plots between your computer and <span class="in">`art-1`</span> can be done via CLI or graphical interfaces.</span>
 <span id="cb19-339"><a href="#cb19-339" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-340"><a href="#cb19-340" aria-hidden="true" tabindex="-1"></a><span class="co"># Push local edits to cluster</span></span>
-<span id="cb19-341"><a href="#cb19-341" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avzP</span> ./local_igor_dir/ art-1:~/igor-dir/</span>
-<span id="cb19-342"><a href="#cb19-342" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-343"><a href="#cb19-343" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-344"><a href="#cb19-344" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. FTP &amp; SFTP (GUI &amp; CLI)</span></span>
-<span id="cb19-345"><a href="#cb19-345" aria-hidden="true" tabindex="-1"></a>Because <span class="in">`art-1`</span> blocks unencrypted FTP (port 21), all FTP transfers must use **SFTP (SSH File Transfer Protocol)** over port 22.</span>
-<span id="cb19-346"><a href="#cb19-346" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-347"><a href="#cb19-347" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Graphical FTP Clients (FileZilla, WinSCP, Cyberduck)</span></span>
-<span id="cb19-348"><a href="#cb19-348" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Protocol:** Select **SFTP - SSH File Transfer Protocol** (Do *not* choose FTP).</span>
-<span id="cb19-349"><a href="#cb19-349" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Host:** <span class="in">`art-1.utsc.utoronto.ca`</span></span>
-<span id="cb19-350"><a href="#cb19-350" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Port:** <span class="in">`22`</span></span>
-<span id="cb19-351"><a href="#cb19-351" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**User:** <span class="in">`phyd57`</span></span>
-<span id="cb19-352"><a href="#cb19-352" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Password:** <span class="in">`[Password provided in lecture / saved in course private draft]`</span></span>
+<span id="cb19-340"><a href="#cb19-340" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1. `scp` (Secure Copy Protocol)</span></span>
+<span id="cb19-341"><a href="#cb19-341" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Download a file to your local directory:**</span>
+<span id="cb19-342"><a href="#cb19-342" aria-hidden="true" tabindex="-1"></a>  <span class="in">```bash</span></span>
+<span id="cb19-343"><a href="#cb19-343" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scp</span> art-1:~/finalD57-Q-2024.txt ./</span>
+<span id="cb19-344"><a href="#cb19-344" aria-hidden="true" tabindex="-1"></a>  <span class="in">```</span></span>
+<span id="cb19-345"><a href="#cb19-345" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Download your entire workspace recursively:**</span>
+<span id="cb19-346"><a href="#cb19-346" aria-hidden="true" tabindex="-1"></a>  <span class="in">```bash</span></span>
+<span id="cb19-347"><a href="#cb19-347" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scp</span> <span class="at">-r</span> art-1:~/igor-dir ./backup_igor_dir/</span>
+<span id="cb19-348"><a href="#cb19-348" aria-hidden="true" tabindex="-1"></a>  <span class="in">```</span></span>
+<span id="cb19-349"><a href="#cb19-349" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Upload source code to your cluster folder:**</span>
+<span id="cb19-350"><a href="#cb19-350" aria-hidden="true" tabindex="-1"></a>  <span class="in">```bash</span></span>
+<span id="cb19-351"><a href="#cb19-351" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scp</span> ./my_solver.c art-1:~/igor-dir/</span>
+<span id="cb19-352"><a href="#cb19-352" aria-hidden="true" tabindex="-1"></a>  <span class="in">```</span></span>
 <span id="cb19-353"><a href="#cb19-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-354"><a href="#cb19-354" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!NOTE</span><span class="co">]</span></span>
-<span id="cb19-355"><a href="#cb19-355" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **GUI Client Legacy Host Key Note:**</span></span>
-<span id="cb19-356"><a href="#cb19-356" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Because of CentOS 6.6's legacy DSA host keys, strictly updated FTP clients (such as latest FileZilla) may drop the connection. If this occurs, enable legacy host keys under FileZilla's SFTP settings, or use **WinSCP** (Windows) or **Cyberduck** (macOS/Windows), which negotiate legacy ciphers automatically.</span></span>
-<span id="cb19-357"><a href="#cb19-357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-358"><a href="#cb19-358" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Interactive Command-Line `sftp`</span></span>
-<span id="cb19-359"><a href="#cb19-359" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb19-360"><a href="#cb19-360" aria-hidden="true" tabindex="-1"></a><span class="ex">sftp</span> art-1</span>
-<span id="cb19-361"><a href="#cb19-361" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-362"><a href="#cb19-362" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`ls`</span> / <span class="in">`lls`</span> : List remote / local directory contents.</span>
-<span id="cb19-363"><a href="#cb19-363" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`cd &lt;dir&gt;`</span> / <span class="in">`lcd &lt;dir&gt;`</span> : Change remote / local directory.</span>
-<span id="cb19-364"><a href="#cb19-364" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`get &lt;remote-file&gt;`</span> : Download file.</span>
-<span id="cb19-365"><a href="#cb19-365" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`put &lt;local-file&gt;`</span> : Upload file.</span>
-<span id="cb19-366"><a href="#cb19-366" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`exit`</span> : Quit session.</span>
-<span id="cb19-367"><a href="#cb19-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-368"><a href="#cb19-368" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb19-369"><a href="#cb19-369" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-370"><a href="#cb19-370" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7. Automated Local Backup Script</span></span>
-<span id="cb19-371"><a href="#cb19-371" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-372"><a href="#cb19-372" aria-hidden="true" tabindex="-1"></a>To safeguard your work inside <span class="in">`igor-dir/`</span>, save this script locally as <span class="in">`sync_art1.sh`</span>:</span>
+<span id="cb19-354"><a href="#cb19-354" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2. `rsync` (Differential Fast Synchronization)</span></span>
+<span id="cb19-355"><a href="#cb19-355" aria-hidden="true" tabindex="-1"></a><span class="in">`rsync`</span> only transfers binary delta changes, making it far superior to <span class="in">`scp`</span> for recurring project backups:</span>
+<span id="cb19-356"><a href="#cb19-356" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb19-357"><a href="#cb19-357" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull remote updates to local folder</span></span>
+<span id="cb19-358"><a href="#cb19-358" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avzP</span> art-1:~/igor-dir/ ./local_igor_dir/</span>
+<span id="cb19-359"><a href="#cb19-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-360"><a href="#cb19-360" aria-hidden="true" tabindex="-1"></a><span class="co"># Push local edits to cluster</span></span>
+<span id="cb19-361"><a href="#cb19-361" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avzP</span> ./local_igor_dir/ art-1:~/igor-dir/</span>
+<span id="cb19-362"><a href="#cb19-362" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-363"><a href="#cb19-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-364"><a href="#cb19-364" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3. FTP &amp; SFTP (GUI &amp; CLI)</span></span>
+<span id="cb19-365"><a href="#cb19-365" aria-hidden="true" tabindex="-1"></a>Because <span class="in">`art-1`</span> blocks unencrypted FTP (port 21), all FTP transfers must use **SFTP (SSH File Transfer Protocol)** over port 22.</span>
+<span id="cb19-366"><a href="#cb19-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-367"><a href="#cb19-367" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Graphical FTP Clients (FileZilla, WinSCP, Cyberduck)</span></span>
+<span id="cb19-368"><a href="#cb19-368" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Protocol:** Select **SFTP - SSH File Transfer Protocol** (Do *not* choose FTP).</span>
+<span id="cb19-369"><a href="#cb19-369" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Host:** <span class="in">`art-1.utsc.utoronto.ca`</span></span>
+<span id="cb19-370"><a href="#cb19-370" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Port:** <span class="in">`22`</span></span>
+<span id="cb19-371"><a href="#cb19-371" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**User:** <span class="in">`phyd57`</span></span>
+<span id="cb19-372"><a href="#cb19-372" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Password:** <span class="in">`[Password provided in lecture / saved in course private draft]`</span></span>
 <span id="cb19-373"><a href="#cb19-373" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-374"><a href="#cb19-374" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb19-375"><a href="#cb19-375" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
-<span id="cb19-376"><a href="#cb19-376" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-euo</span> pipefail</span>
+<span id="cb19-374"><a href="#cb19-374" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!NOTE</span><span class="co">]</span></span>
+<span id="cb19-375"><a href="#cb19-375" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **GUI Client Legacy Host Key Note:**</span></span>
+<span id="cb19-376"><a href="#cb19-376" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Because of CentOS 6.6's legacy DSA host keys, strictly updated FTP clients (such as latest FileZilla) may drop the connection. If this occurs, enable legacy host keys under FileZilla's SFTP settings, or use **WinSCP** (Windows) or **Cyberduck** (macOS/Windows), which negotiate legacy ciphers automatically.</span></span>
 <span id="cb19-377"><a href="#cb19-377" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-378"><a href="#cb19-378" aria-hidden="true" tabindex="-1"></a><span class="va">REMOTE_HOST</span><span class="op">=</span><span class="st">"art-1"</span></span>
-<span id="cb19-379"><a href="#cb19-379" aria-hidden="true" tabindex="-1"></a><span class="va">REMOTE_PATH</span><span class="op">=</span><span class="st">"~/igor-dir/"</span></span>
-<span id="cb19-380"><a href="#cb19-380" aria-hidden="true" tabindex="-1"></a><span class="va">LOCAL_BACKUP_DIR</span><span class="op">=</span><span class="st">"</span><span class="va">${HOME}</span><span class="st">/backups/phyd57/</span><span class="va">$(</span><span class="fu">date</span> +%Y-%m-%d<span class="va">)</span><span class="st">"</span></span>
-<span id="cb19-381"><a href="#cb19-381" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-382"><a href="#cb19-382" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="st">"</span><span class="va">${LOCAL_BACKUP_DIR}</span><span class="st">"</span></span>
-<span id="cb19-383"><a href="#cb19-383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-384"><a href="#cb19-384" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Syncing </span><span class="va">${REMOTE_HOST}</span><span class="st">:</span><span class="va">${REMOTE_PATH}</span><span class="st"> to </span><span class="va">${LOCAL_BACKUP_DIR}</span><span class="st">..."</span></span>
-<span id="cb19-385"><a href="#cb19-385" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avzP</span> <span class="dt">\</span></span>
-<span id="cb19-386"><a href="#cb19-386" aria-hidden="true" tabindex="-1"></a>  <span class="at">--exclude</span><span class="op">=</span><span class="st">"*.x"</span> <span class="dt">\</span></span>
-<span id="cb19-387"><a href="#cb19-387" aria-hidden="true" tabindex="-1"></a>  <span class="at">--exclude</span><span class="op">=</span><span class="st">"*.o"</span> <span class="dt">\</span></span>
-<span id="cb19-388"><a href="#cb19-388" aria-hidden="true" tabindex="-1"></a>  <span class="st">"</span><span class="va">${REMOTE_HOST}</span><span class="st">:</span><span class="va">${REMOTE_PATH}</span><span class="st">"</span> <span class="st">"</span><span class="va">${LOCAL_BACKUP_DIR}</span><span class="st">/"</span></span>
+<span id="cb19-378"><a href="#cb19-378" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Interactive Command-Line `sftp`</span></span>
+<span id="cb19-379"><a href="#cb19-379" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb19-380"><a href="#cb19-380" aria-hidden="true" tabindex="-1"></a><span class="ex">sftp</span> art-1</span>
+<span id="cb19-381"><a href="#cb19-381" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-382"><a href="#cb19-382" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`ls`</span> / <span class="in">`lls`</span> : List remote / local directory contents.</span>
+<span id="cb19-383"><a href="#cb19-383" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`cd &lt;dir&gt;`</span> / <span class="in">`lcd &lt;dir&gt;`</span> : Change remote / local directory.</span>
+<span id="cb19-384"><a href="#cb19-384" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`get &lt;remote-file&gt;`</span> : Download file.</span>
+<span id="cb19-385"><a href="#cb19-385" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`put &lt;local-file&gt;`</span> : Upload file.</span>
+<span id="cb19-386"><a href="#cb19-386" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="in">`exit`</span> : Quit session.</span>
+<span id="cb19-387"><a href="#cb19-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-388"><a href="#cb19-388" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb19-389"><a href="#cb19-389" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-390"><a href="#cb19-390" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Backup complete at </span><span class="va">$(</span><span class="fu">date</span><span class="va">)</span><span class="st">."</span></span>
-<span id="cb19-391"><a href="#cb19-391" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-392"><a href="#cb19-392" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-393"><a href="#cb19-393" aria-hidden="true" tabindex="-1"></a>Run with:</span>
+<span id="cb19-390"><a href="#cb19-390" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7. Automated Local Backup Script</span></span>
+<span id="cb19-391"><a href="#cb19-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-392"><a href="#cb19-392" aria-hidden="true" tabindex="-1"></a>To safeguard your work inside <span class="in">`igor-dir/`</span>, save this script locally as <span class="in">`sync_art1.sh`</span>:</span>
+<span id="cb19-393"><a href="#cb19-393" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-394"><a href="#cb19-394" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb19-395"><a href="#cb19-395" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x sync_art1.sh</span>
-<span id="cb19-396"><a href="#cb19-396" aria-hidden="true" tabindex="-1"></a><span class="ex">./sync_art1.sh</span></span>
-<span id="cb19-397"><a href="#cb19-397" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb19-395"><a href="#cb19-395" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb19-396"><a href="#cb19-396" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-euo</span> pipefail</span>
+<span id="cb19-397"><a href="#cb19-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-398"><a href="#cb19-398" aria-hidden="true" tabindex="-1"></a><span class="va">REMOTE_HOST</span><span class="op">=</span><span class="st">"art-1"</span></span>
+<span id="cb19-399"><a href="#cb19-399" aria-hidden="true" tabindex="-1"></a><span class="va">REMOTE_PATH</span><span class="op">=</span><span class="st">"~/igor-dir/"</span></span>
+<span id="cb19-400"><a href="#cb19-400" aria-hidden="true" tabindex="-1"></a><span class="va">LOCAL_BACKUP_DIR</span><span class="op">=</span><span class="st">"</span><span class="va">${HOME}</span><span class="st">/backups/phyd57/</span><span class="va">$(</span><span class="fu">date</span> +%Y-%m-%d<span class="va">)</span><span class="st">"</span></span>
+<span id="cb19-401"><a href="#cb19-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-402"><a href="#cb19-402" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="st">"</span><span class="va">${LOCAL_BACKUP_DIR}</span><span class="st">"</span></span>
+<span id="cb19-403"><a href="#cb19-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-404"><a href="#cb19-404" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Syncing </span><span class="va">${REMOTE_HOST}</span><span class="st">:</span><span class="va">${REMOTE_PATH}</span><span class="st"> to </span><span class="va">${LOCAL_BACKUP_DIR}</span><span class="st">..."</span></span>
+<span id="cb19-405"><a href="#cb19-405" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avzP</span> <span class="dt">\</span></span>
+<span id="cb19-406"><a href="#cb19-406" aria-hidden="true" tabindex="-1"></a>  <span class="at">--exclude</span><span class="op">=</span><span class="st">"*.x"</span> <span class="dt">\</span></span>
+<span id="cb19-407"><a href="#cb19-407" aria-hidden="true" tabindex="-1"></a>  <span class="at">--exclude</span><span class="op">=</span><span class="st">"*.o"</span> <span class="dt">\</span></span>
+<span id="cb19-408"><a href="#cb19-408" aria-hidden="true" tabindex="-1"></a>  <span class="st">"</span><span class="va">${REMOTE_HOST}</span><span class="st">:</span><span class="va">${REMOTE_PATH}</span><span class="st">"</span> <span class="st">"</span><span class="va">${LOCAL_BACKUP_DIR}</span><span class="st">/"</span></span>
+<span id="cb19-409"><a href="#cb19-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-410"><a href="#cb19-410" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Backup complete at </span><span class="va">$(</span><span class="fu">date</span><span class="va">)</span><span class="st">."</span></span>
+<span id="cb19-411"><a href="#cb19-411" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-412"><a href="#cb19-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-413"><a href="#cb19-413" aria-hidden="true" tabindex="-1"></a>Run with:</span>
+<span id="cb19-414"><a href="#cb19-414" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb19-415"><a href="#cb19-415" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x sync_art1.sh</span>
+<span id="cb19-416"><a href="#cb19-416" aria-hidden="true" tabindex="-1"></a><span class="ex">./sync_art1.sh</span></span>
+<span id="cb19-417"><a href="#cb19-417" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
