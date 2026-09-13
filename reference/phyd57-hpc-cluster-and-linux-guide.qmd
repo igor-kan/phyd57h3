@@ -126,6 +126,12 @@ Host art-16
     User phyd57
     ForwardX11 yes
     ServerAliveInterval 60
+
+Host phi-10
+    HostName phi-10.utsc.utoronto.ca
+    User phyd57
+    ForwardX11 yes
+    ServerAliveInterval 60
 ```
 
 Set strict file permissions:
@@ -133,12 +139,62 @@ Set strict file permissions:
 chmod 600 ~/.ssh/config
 ```
 
-Now, connecting to either cluster is as simple as:
+Now, connecting to any cluster node is as simple as:
 ```bash
-ssh art-1
-# or
-ssh art-16
+ssh art-1     # Legacy CPU node (CentOS 6.6)
+ssh art-16    # Modern CPU node (Rocky Linux 9.6)
+ssh phi-10    # GPU Compute Node (Dual NVIDIA RTX 3090 & RTX 3080 Ti + Intel oneAPI)
 ```
+
+---
+
+### Cluster Nomenclature & Hostname Etymology: Why "art" and "phi"?
+
+When navigating UTSC's computational infrastructure, students frequently wonder about the origin of cluster hostnames like `art-1`, `art-16`, and `phi-10`. These names reflect two deep traditions in university high-performance computing (HPC):
+
+#### 1. The `art` Nodes (`art-1`, `art-2`, `art-16`): The Principal Investigator (PI) Tradition
+* **Research Grant Stewardship**: In Canadian academic computing, specialized compute clusters and rack servers are typically funded through individual professors' research infrastructure awards (e.g., NSERC Discovery Grants or Canada Foundation for Innovation / CFI grants).
+* **Prof. Pawel Artymowicz**: The nodes prefixed with **`art`** represent machines purchased, configured, and maintained under the research stewardship of **Prof. Pawel Artymowicz** (Full Professor of Physics and Astrophysics at UTSC/U of T) for his research group in astrophysical gas dynamics, planet-disk interactions, and Smoothed Particle Hydrodynamics (SPH):
+  * **`art-1`**: The foundational master node (running legacy CentOS 6.6), hosting historical course archives, GNU Fortran (`gfortran`), and the DISLIN graphical plotting libraries.
+  * **`art-2`**: A student exercise and compute companion node.
+  * **`art-16`**: A modernized 16-core cluster node (running Rocky Linux 9.6) providing high-throughput multi-core CPU capacity.
+
+#### 2. The `phi` Nodes (`phi-10`): Physics, Potentials, and HPC Heritage
+* **Φυσική (Physics) & DPES Departmental Fleet**: The Greek letter **$\Phi$ / $\phi$ (Phi)** is the universal root for **Physics** (from Ancient Greek *Φυσική* / *Physika*). UTSC's Department of Physical and Environmental Sciences (DPES) designates shared departmental servers and student computing nodes after Greek letters ($\alpha, \beta, \dots, \phi$). `phi-10` designates workstation #10 in the departmental computing pool.
+* **Astrophysical & Fluid Dynamics Notation ($\Phi$ and $\phi$)**: In computational astrophysics and numerical hydrodynamics (the mathematical heart of PHYD57), $\Phi$ and $\phi$ represent foundational physical variables:
+  * **$\Phi$ (Capital Phi)**: Denotes the **Gravitational Potential** ($\nabla^2 \Phi = 4\pi G \rho$) in stellar dynamics and the **Velocity Potential** ($\mathbf{u} = \nabla \Phi$) in irrotational fluid mechanics.
+  * **$\phi$ (Lowercase Phi)**: Denotes the **Azimuthal Angle** in cylindrical $(r, \phi, z)$ and spherical $(r, \theta, \phi)$ coordinate systems—the essential spatial coordinate for simulating circumstellar accretion disks, protoplanetary spiral density waves, and rotational vortices.
+* **HPC Supercomputing Lineage (Intel Xeon Phi)**: In the 2010s, Intel’s flagship many-core supercomputing architecture was the **Intel Xeon Phi** coprocessor family, widely adopted across academic physics clusters. While `phi-10` has since been modernized into a dual-NVIDIA Ampere GPU workstation (RTX 3090 & RTX 3080 Ti), it remains the primary host for the full **Intel oneAPI** development suite (`icx`, `icpx`, `ifx`, Intel MKL, Intel VTune), preserving that lineage.
+
+| Hostname | Etymology & Origin | Operating System | Primary Hardware & Role |
+| :--- | :--- | :--- | :--- |
+| **`art-1`** | **Art**ymowicz (Node 1) | CentOS 6.6 (Legacy) | Course archives, GNU Fortran (`gfortran`), DISLIN graphics |
+| **`art-2`** | **Art**ymowicz (Node 2) | CentOS 6.6 / Rocky | PHYD57 classroom computational exercises |
+| **`art-16`** | **Art**ymowicz (16-Core Node) | Rocky Linux 9.6 | High-throughput CPU multi-threading and OpenMP workflows |
+| **`phi-10`** | **$\Phi$** (Physics / Gravitational Potential) | Enterprise Linux | Dual GPU workstation (RTX 3090 + RTX 3080 Ti) & Intel oneAPI |
+
+---
+
+### The UTSC `phi-10` GPU Node: Enterprise Hardware Specifications
+
+`phi-10.utsc.utoronto.ca` (`142.1.98.212`) is the premier GPU computing node for **PHYD57**, equipped with high-end NVIDIA Ampere hardware and the complete **Intel oneAPI** development suite:
+
+* **GPU Device 0: NVIDIA GeForce RTX 3090**
+  * **VRAM:** **24 GB GDDR6X** (23.570 GB usable)
+  * **Compute Capability:** 8.6 (Ampere Architecture)
+  * **Multiprocessors (SMs):** 82 SMs (10,496 CUDA Cores)
+  * **Threads:** Max 1536 threads/SM, 1024 threads/block
+  * **Capability:** Capable of running massive 3D pseudo-spectral grids ($512^3$ in full double-precision or $1024^3$ in single-precision) directly in GPU device memory!
+* **GPU Device 1: NVIDIA GeForce RTX 3080 Ti**
+  * **VRAM:** **12 GB GDDR6X** (11.642 GB usable)
+  * **Compute Capability:** 8.6 (Ampere Architecture)
+  * **Multiprocessors (SMs):** 80 SMs (10,240 CUDA Cores)
+  * **Capability:** Excellent for parallel ensemble sweeps of non-axisymmetric azimuthal perturbation modes ($m=1, 2, 3$).
+* **Intel oneAPI Development Suite:**
+  * Initialized automatically upon login (`/opt/intel/oneapi/setvars.sh`).
+  * Compilers: `icx` (C), `icpx` (C++), `ifx` (Fortran).
+  * Performance Libraries: Intel oneMKL (BLAS/LAPACK/FFT), Intel MPI, Intel TBB.
+  * Profilers: **Intel VTune Profiler** (microarchitecture memory and cache bottlenecks) and **Intel Advisor** (roofline model analysis and vectorization).
 
 ---
 
