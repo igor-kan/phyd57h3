@@ -1,0 +1,46 @@
+---
+title: "Interactive Gauss-Lagrange 2D Lattice Reduction"
+subtitle: "Computational materials science simulator for finding primitive Wigner-Seitz cells in crystal structures."
+date: "2026-09-13"
+categories: ["Simulations", "Crystallography", "Algorithms", "Python"]
+format:
+  html:
+    toc: true
+    code-fold: show
+    math: true
+---
+
+## 1. Physical Motivation: Primitive Unit Cells
+
+In solid state physics, any 2D periodic crystal lattice can be described by a set of lattice vectors $\\mathbf{R} = n_1 \\mathbf{a}_1 + n_2 \\mathbf{a}_2$ with $n_1, n_2 \in \mathbb{Z}$. 
+
+However, raw experimental X-ray diffraction or electron microscopy data often yield basis vectors that are highly elongated and nearly parallel. To compute accurate electron band structures, phonon dispersion curves, and Brillouin zones, computational physicists must first reduce the basis to the shortest, most nearly orthogonal pair of vectors.
+
+---
+
+## 2. Python Simulation Implementation
+
+```python
+import math
+
+def gauss_reduction(v1, v2):
+    """Gauss-Lagrange 2D Lattice Reduction."""
+    u, v = v1, v2
+    while True:
+        if u[0]**2 + u[1]**2 > v[0]**2 + v[1]**2:
+            u, v = v, u
+        mu = (u[0]*v[0] + u[1]*v[1]) / (u[0]**2 + u[1]**2)
+        q = round(mu)
+        if q == 0:
+            break
+        v = (v[0] - q*u[0], v[1] - q*u[1])
+        if v[0]**2 + v[1]**2 < u[0]**2 + u[1]**2:
+            u, v = v, u
+    return u, v
+```
+
+---
+
+## 3. High-Performance C Kernel
+
+For exascale Monte Carlo and molecular dynamics simulations, the algorithm is compiled to optimized native machine code: see [`simulations/euclid_hpc.c`](euclid_hpc.c) in the course repository.
