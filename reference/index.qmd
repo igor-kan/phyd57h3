@@ -16,3 +16,8 @@ listing:
   page-size: 15
 page-layout: full
 ---
+
+::: {.callout-note}
+### Reference Materials Archive
+Linux command guides, cluster connection workflows, and compiler flags are maintained in the private course repository.
+:::

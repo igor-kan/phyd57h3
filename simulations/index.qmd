@@ -16,3 +16,8 @@ listing:
   page-size: 15
 page-layout: full
 ---
+
+::: {.callout-note}
+### Computational Physics Lab Archive
+High-performance C/C++, Fortran, OpenMP, and CUDA simulation codes are maintained in the private course repository.
+:::

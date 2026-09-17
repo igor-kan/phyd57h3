@@ -27,7 +27,7 @@ Interactive simulations and parallel code benchmarks.
 
 ::: {.course-card}
 ### 📐 [Reference & Math](reference/index.qmd)
-Linux commands, compiler toolkits, and [Numerical Lattice Reduction](notes/euclidean-numerical-gcd-and-lattice-reduction.qmd).
+Linux commands, compiler toolkits, and numerical algorithms.
 :::
 :::
 
@@ -57,10 +57,5 @@ Linux commands, compiler toolkits, and [Numerical Lattice Reduction](notes/eucli
 
 ::: {.callout-note}
 ### Course Schedule & Grading Notes
-Course grading: Assignments A1–A3 (21%), Group Project A4 (23%), Midterm Exam (16%), Final Exam (40%). Detailed policies on cluster usage (`art-1`, `art-2`), late submissions, and academic integrity are in the official [Course Syllabus](notes/syllabus.qmd).
+Course grading: Assignments A1–A3 (21%), Group Project A4 (23%), Midterm Exam (16%), Final Exam (40%). Detailed policies on cluster usage (`art-1`, `art-2`), late submissions, and academic integrity are in the official course syllabus on Quercus and in private course materials.
 :::
-
-## 👨‍🏫 Instructor & Contact
-- **Lecturer:** Prof. Pawel Artymowicz (Email: `pawel.artymowicz@utoronto.ca` | Office: SW 506G)
-  - Subject MUST contain `PHYD57`. Please use your `mail.utoronto.ca` account.
-  - Office Hours: Directly after the tutorial on Fridays in HLB108 or SW 5th floor.
