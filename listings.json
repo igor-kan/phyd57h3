@@ -1,25 +1,18 @@
 [
   {
-    "listing": "/reference/index.html",
-    "items": [
-      "/reference/euclidean-and-lattice-algorithms-cheatsheet.html",
-      "/reference/phyd57-hpc-cluster-and-linux-guide.html"
-    ]
+    "listing": "/notes/index.html",
+    "items": []
   },
   {
-    "listing": "/simulations/index.html",
-    "items": [
-      "/simulations/gauss-lagrange-lattice-reduction.html"
-    ]
+    "listing": "/reference/index.html",
+    "items": []
   },
   {
     "listing": "/problems/index.html",
     "items": []
   },
   {
-    "listing": "/notes/index.html",
-    "items": [
-      "/notes/euclidean-numerical-gcd-and-lattice-reduction.html"
-    ]
+    "listing": "/simulations/index.html",
+    "items": []
   }
 ]

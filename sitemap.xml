@@ -1,43 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://igor-kan.github.io/phyd57h3/notes/euclidean-numerical-gcd-and-lattice-reduction.html</loc>
-    <lastmod>2026-09-16T01:35:26.461Z</lastmod>
+    <loc>https://igor-kan.github.io/phyd57h3/notes/index.html</loc>
+    <lastmod>2026-09-17T22:23:40.943Z</lastmod>
   </url>
   <url>
     <loc>https://igor-kan.github.io/phyd57h3/reference/index.html</loc>
-    <lastmod>2026-09-16T01:35:26.462Z</lastmod>
-  </url>
-  <url>
-    <loc>https://igor-kan.github.io/phyd57h3/simulations/index.html</loc>
-    <lastmod>2026-09-16T01:35:26.462Z</lastmod>
-  </url>
-  <url>
-    <loc>https://igor-kan.github.io/phyd57h3/index.html</loc>
-    <lastmod>2026-09-16T01:35:26.459Z</lastmod>
+    <lastmod>2026-09-17T22:23:40.943Z</lastmod>
   </url>
   <url>
     <loc>https://igor-kan.github.io/phyd57h3/problems/index.html</loc>
-    <lastmod>2026-09-16T01:35:26.461Z</lastmod>
+    <lastmod>2026-09-17T22:23:40.943Z</lastmod>
   </url>
   <url>
-    <loc>https://igor-kan.github.io/phyd57h3/simulations/gauss-lagrange-lattice-reduction.html</loc>
-    <lastmod>2026-09-16T01:35:26.462Z</lastmod>
+    <loc>https://igor-kan.github.io/phyd57h3/index.html</loc>
+    <lastmod>2026-09-17T22:23:40.943Z</lastmod>
   </url>
   <url>
-    <loc>https://igor-kan.github.io/phyd57h3/reference/phyd57-hpc-cluster-and-linux-guide.html</loc>
-    <lastmod>2026-09-16T01:35:26.462Z</lastmod>
-  </url>
-  <url>
-    <loc>https://igor-kan.github.io/phyd57h3/reference/euclidean-and-lattice-algorithms-cheatsheet.html</loc>
-    <lastmod>2026-09-16T01:35:26.461Z</lastmod>
+    <loc>https://igor-kan.github.io/phyd57h3/simulations/index.html</loc>
+    <lastmod>2026-09-17T22:23:40.943Z</lastmod>
   </url>
   <url>
     <loc>https://igor-kan.github.io/phyd57h3/GEMINI.html</loc>
-    <lastmod>2026-09-16T01:35:26.459Z</lastmod>
-  </url>
-  <url>
-    <loc>https://igor-kan.github.io/phyd57h3/notes/index.html</loc>
-    <lastmod>2026-09-16T01:35:26.461Z</lastmod>
+    <lastmod>2026-09-17T22:23:40.943Z</lastmod>
   </url>
 </urlset>
