@@ -10,3 +10,13 @@ data/raw/
 
 /.quarto/
 **/*.quarto_ipynb
+
+# Downloaded textbooks (too large for git; sourced from course page)
+reference/textbooks/
+reference/reports/
+
+# Lecture slide PDFs (too large for git; downloaded from course page)
+notes/Lecture_*.pdf
+
+# Admin PDFs (midterm, code of behaviour - not for public repo)
+reference/admin/*.pdf
