@@ -11,14 +11,28 @@
     "href": "simulations/index.html",
     "title": "Code & Simulations",
     "section": "",
-    "text": "NoteComputational Physics Lab Archive\n\n\n\nHigh-performance C/C++, Fortran, OpenMP, and CUDA simulation codes are maintained in the private course repository.\n\n\n\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
+    "text": "NoteComputational Physics Lab Archive\n\n\n\nHigh-performance C/C++, Fortran, OpenMP, and CUDA simulation codes are maintained in the private course repository. A full mirror of the 99 course programs from progD57 is preserved locally in simulations/course-progs/."
+  },
+  {
+    "objectID": "simulations/index.html#numerical-physics-simulation-suite",
+    "href": "simulations/index.html#numerical-physics-simulation-suite",
+    "title": "Code & Simulations",
+    "section": "🚀 Numerical Physics Simulation Suite",
+    "text": "🚀 Numerical Physics Simulation Suite\nThe repository includes implementations across key computational physics domains:\n\nGPU Computing (CUDA & Fortran): SAXPY kernels, 2D Laplace relaxation solvers (cudafor-laplace3-dp.f95, ifor-laplace3-dp.f90, pgf-laplace3-dp.f95), GPU memory benchmarks.\nAstrophysics & N-Body: Gravitational 4-body tetrahedral choreographies (tetraDc.f90), N-body cluster integrations (simpler-nb-0.f90), exoplanet orbit fits (kepl-GJ-3512b.py).\nWave & PDE Dynamics: 2D wave equations on shallow water surfaces (pond1.py–pond4.py), double-slit wave diffraction (pond4-2slits4.py), 5-point discrete stencils (laplacian-5t.py).\nControl Theory & Chaos: Nonlinear physical pendulum (phys-pendulum.py), broom-balancing inverted pendulums (broom-ctrl-5.f95, inv-pend-ctrl-4a.f95).\nMonte Carlo & Numerical Quadrature: \\(\\pi\\) convergence scaling (simple_mtc_pi.py), random walks, continued fractions, root finding (simple_newton.py, simple_bisec.py)."
   },
   {
     "objectID": "problems/index.html",
     "href": "problems/index.html",
     "title": "Problem Sets & Projects",
     "section": "",
-    "text": "NotePublishing Notice\n\n\n\nI will consult with the professor regarding if and when I can publish solutions to textbook problems or problem sets. In the meantime, unreleased solutions remain in private drafts.\n\n\n\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
+    "text": "NotePublishing Notice\n\n\n\nOfficial assignment prompt sheets and problem solutions from the course website are archived locally in reference/course-website/."
+  },
+  {
+    "objectID": "problems/index.html#course-assignments-projects-fall-2026",
+    "href": "problems/index.html#course-assignments-projects-fall-2026",
+    "title": "Problem Sets & Projects",
+    "section": "📝 Course Assignments & Projects (Fall 2026)",
+    "text": "📝 Course Assignments & Projects (Fall 2026)\n\n\n\n\n\n\n\n\n\nAssessment\nDue Date\nCore Topics\nStatus / Notes\n\n\n\n\nAssignment 1 (A1)\nOct 02, 2026\nFinite difference stencils (\\(O(h^2)\\) second derivatives), truncation vs roundoff error trade-off (\\(h_{opt} \\approx \\epsilon^{1/4}\\)), Maximum subarray algorithm, projectile drag physics\nSucceeded & Solutions Archived\n\n\nAssignment 2 (A2)\nOct 16, 2026\nMonte Carlo integration (\\(\\pi\\) convergence), diffusion equation & OpenMP parallelization\nIn Progress\n\n\nMidterm Exam\nOct 23, 2026\nTheoretical quiz + written problems + computational execution\n2025 Past Exam & Solution in reference/admin/\n\n\nAssignment 3 (A3)\nNov 20, 2026\nGPU acceleration with CUDA (C & Fortran), FFT convolutions\nUpcoming\n\n\nGroup Project (A4)\nDec 04, 2026\nFinal HPC simulation report & presentation (N-body, SPH, aerodynamics, finance)\nGroup formations due Oct 16"
   },
   {
     "objectID": "index.html#course-roadmap-calendar-fall-2025",
@@ -32,13 +46,27 @@
     "href": "reference/index.html",
     "title": "Reference & Math",
     "section": "",
-    "text": "NoteReference Materials Archive\n\n\n\nLinux command guides, cluster connection workflows, and compiler flags are maintained in the private course repository.\n\n\n\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
+    "text": "NoteReference Materials Archive\n\n\n\nLinux command guides, cluster connection workflows, and compiler flags are maintained in the private course repository. A static local mirror of the course website is preserved in reference/course-website/."
+  },
+  {
+    "objectID": "reference/index.html#technical-references-documentation",
+    "href": "reference/index.html#technical-references-documentation",
+    "title": "Reference & Math",
+    "section": "📚 Technical References & Documentation",
+    "text": "📚 Technical References & Documentation\n\nCourse Website Mirror: Archived static copies of course home, assignment sheets, syllabi (2024 & 2026), and visual assets in reference/course-website/.\nTextbooks & Literature: 50+ textbook volumes covering History of Computing, Linux HPC, Fortran 90/95/2018, CUDA C/C++, OpenMP, Numerical Analysis, and Machine Learning organized in reference/textbooks/.\nCluster Workflow & Admin: Midterm exam materials, academic integrity guides, and SSH/PuTTY cluster profiles in reference/admin/."
   },
   {
     "objectID": "notes/index.html",
     "href": "notes/index.html",
     "title": "Lecture Notes & Syllabus",
     "section": "",
-    "text": "NoteLecture Notes & Materials Archive\n\n\n\nCourse lecture notes, computational methods derivations, and syllabus details are archived in the private course repository.\n\n\n\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\nNo matching items"
+    "text": "NoteLecture Notes & Materials Archive\n\n\n\nCourse lecture notes, computational methods derivations, and syllabus details are archived in the private course repository. Slide PDFs are archived locally."
+  },
+  {
+    "objectID": "notes/index.html#phyd57-fall-2026-lecture-roadmap",
+    "href": "notes/index.html#phyd57-fall-2026-lecture-roadmap",
+    "title": "Lecture Notes & Syllabus",
+    "section": "📅 PHYD57 Fall 2026 Lecture Roadmap",
+    "text": "📅 PHYD57 Fall 2026 Lecture Roadmap\n\n\n\n\n\n\n\n\n\n#\nDate\nLecture Topic\nSlides / Materials\n\n\n\n\nL01\nSep 11\nCourse Scope, History of Computing, Architecture & Float Arithmetic\nLecture_01.pdf (Archived)\n\n\nL02\nSep 18\nLinux HPC, Shell Scripting (bash/tcsh), SSH & Remote Clusters\nLecture_02.pdf (Archived)\n\n\nL03\nSep 25\nScientific Languages, Fortran 90/95 Basics, Compilers & Laplacians\nLecture_03.pdf (Archived)\n\n\nL04\nOct 02\nIn-class session; Assignment 1 Due\nAssignment 1 Solutions Available\n\n\nL05\nOct 09\nAdvanced Fortran, Monte Carlo Methods (\\(\\pi\\) estimation), OpenMP Basics\nLecture_05.pdf (Archived)\n\n\nL06\nOct 16\nModern Parallel Computing, Integrated Circuits & Concurrency Limits\nLecture_06.pdf (Archived)\n\n\nL07\nOct 23\nMidterm Exam (HLB108, 11:10–12:10) & Group Project (A4) Setup\nMidterm Prep\n\n\n–\nOct 30\nReading Week (No Lecture)\n–\n\n\nL08\nNov 06\nOpenMP in C/Fortran, Memory Bandwidth Bottlenecks, SPH & Linked Lists\nUpcoming\n\n\nL09\nNov 13\nCPU vs. MIC (Xeon Phi) vs. GPU CUDA, Vectorization & N-body Dynamics\nUpcoming\n\n\nL10\nNov 20\nProtoplanetary Disks, Fluids GL, FFT Convolutions; Assignment 3 Due\nUpcoming\n\n\nL11\nNov 27\nCUDA C/C++ Kernels, MPI Intro, Machine Learning & Neural Networks\nUpcoming\n\n\nL12\nDec 04\nFinal A4 Group Project Presentations\nGroup Reports"
   }
 ]

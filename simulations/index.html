@@ -389,7 +389,13 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#numerical-physics-simulation-suite" id="toc-numerical-physics-simulation-suite" class="nav-link active" data-scroll-target="#numerical-physics-simulation-suite">🚀 Numerical Physics Simulation Suite</a></li>
+  </ul>
+</nav>
     <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(0)</span></div></div></div>
 <!-- main -->
 <main class="content column-page-left" id="quarto-document-content">
@@ -424,15 +430,26 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>High-performance C/C++, Fortran, OpenMP, and CUDA simulation codes are maintained in the private course repository.</p>
+<p>High-performance C/C++, Fortran, OpenMP, and CUDA simulation codes are maintained in the private course repository. A full mirror of the 99 course programs from <code>progD57</code> is preserved locally in <code>simulations/course-progs/</code>.</p>
 </div>
 </div>
+<section id="numerical-physics-simulation-suite" class="level2">
+<h2 class="anchored" data-anchor-id="numerical-physics-simulation-suite">🚀 Numerical Physics Simulation Suite</h2>
+<p>The repository includes implementations across key computational physics domains:</p>
+<ul>
+<li><strong>GPU Computing (CUDA &amp; Fortran)</strong>: SAXPY kernels, 2D Laplace relaxation solvers (<code>cudafor-laplace3-dp.f95</code>, <code>ifor-laplace3-dp.f90</code>, <code>pgf-laplace3-dp.f95</code>), GPU memory benchmarks.</li>
+<li><strong>Astrophysics &amp; N-Body</strong>: Gravitational 4-body tetrahedral choreographies (<code>tetraDc.f90</code>), N-body cluster integrations (<code>simpler-nb-0.f90</code>), exoplanet orbit fits (<code>kepl-GJ-3512b.py</code>).</li>
+<li><strong>Wave &amp; PDE Dynamics</strong>: 2D wave equations on shallow water surfaces (<code>pond1.py</code>–<code>pond4.py</code>), double-slit wave diffraction (<code>pond4-2slits4.py</code>), 5-point discrete stencils (<code>laplacian-5t.py</code>).</li>
+<li><strong>Control Theory &amp; Chaos</strong>: Nonlinear physical pendulum (<code>phys-pendulum.py</code>), broom-balancing inverted pendulums (<code>broom-ctrl-5.f95</code>, <code>inv-pend-ctrl-4a.f95</code>).</li>
+<li><strong>Monte Carlo &amp; Numerical Quadrature</strong>: <span class="math inline">\(\pi\)</span> convergence scaling (<code>simple_mtc_pi.py</code>), random walks, continued fractions, root finding (<code>simple_newton.py</code>, <code>simple_bisec.py</code>).</li>
+</ul>
 
 
 
 
 <!-- -->
 
+</section>
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="listing-actions-group">
@@ -947,8 +964,18 @@ window.Quarto = {
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">### Computational Physics Lab Archive</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>High-performance C/C++, Fortran, OpenMP, and CUDA simulation codes are maintained in the private course repository.</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>High-performance C/C++, Fortran, OpenMP, and CUDA simulation codes are maintained in the private course repository. A full mirror of the 99 course programs from <span class="in">`progD57`</span> is preserved locally in <span class="in">`simulations/course-progs/`</span>.</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🚀 Numerical Physics Simulation Suite</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>The repository includes implementations across key computational physics domains:</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**GPU Computing (CUDA &amp; Fortran)**: SAXPY kernels, 2D Laplace relaxation solvers (<span class="in">`cudafor-laplace3-dp.f95`</span>, <span class="in">`ifor-laplace3-dp.f90`</span>, <span class="in">`pgf-laplace3-dp.f95`</span>), GPU memory benchmarks.</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Astrophysics &amp; N-Body**: Gravitational 4-body tetrahedral choreographies (<span class="in">`tetraDc.f90`</span>), N-body cluster integrations (<span class="in">`simpler-nb-0.f90`</span>), exoplanet orbit fits (<span class="in">`kepl-GJ-3512b.py`</span>).</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Wave &amp; PDE Dynamics**: 2D wave equations on shallow water surfaces (<span class="in">`pond1.py`</span>–<span class="in">`pond4.py`</span>), double-slit wave diffraction (<span class="in">`pond4-2slits4.py`</span>), 5-point discrete stencils (<span class="in">`laplacian-5t.py`</span>).</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Control Theory &amp; Chaos**: Nonlinear physical pendulum (<span class="in">`phys-pendulum.py`</span>), broom-balancing inverted pendulums (<span class="in">`broom-ctrl-5.f95`</span>, <span class="in">`inv-pend-ctrl-4a.f95`</span>).</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Monte Carlo &amp; Numerical Quadrature**: $\pi$ convergence scaling (<span class="in">`simple_mtc_pi.py`</span>), random walks, continued fractions, root finding (<span class="in">`simple_newton.py`</span>, <span class="in">`simple_bisec.py`</span>).</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
