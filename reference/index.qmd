@@ -19,5 +19,12 @@ page-layout: full
 
 ::: {.callout-note}
 ### Reference Materials Archive
-Linux command guides, cluster connection workflows, and compiler flags are maintained in the private course repository.
+Linux command guides, cluster connection workflows, and compiler flags are maintained in the private course repository. A static local mirror of the course website is preserved in `reference/course-website/`.
 :::
+
+## 📚 Technical References & Documentation
+
+- **Course Website Mirror**: Archived static copies of course home, assignment sheets, syllabi (2024 & 2026), and visual assets in `reference/course-website/`.
+- **Textbooks & Literature**: 50+ textbook volumes covering History of Computing, Linux HPC, Fortran 90/95/2018, CUDA C/C++, OpenMP, Numerical Analysis, and Machine Learning organized in `reference/textbooks/`.
+- **Cluster Workflow & Admin**: Midterm exam materials, academic integrity guides, and SSH/PuTTY cluster profiles in `reference/admin/`.
+

@@ -19,5 +19,24 @@ page-layout: full
 
 ::: {.callout-note}
 ### Lecture Notes & Materials Archive
-Course lecture notes, computational methods derivations, and syllabus details are archived in the private course repository.
+Course lecture notes, computational methods derivations, and syllabus details are archived in the private course repository. Slide PDFs are archived locally.
 :::
+
+## 📅 PHYD57 Fall 2026 Lecture Roadmap
+
+| # | Date | Lecture Topic | Slides / Materials |
+|---|------|---------------|--------------------|
+| **L01** | Sep 11 | Course Scope, History of Computing, Architecture & Float Arithmetic | `Lecture_01.pdf` (Archived) |
+| **L02** | Sep 18 | Linux HPC, Shell Scripting (`bash`/`tcsh`), SSH & Remote Clusters | `Lecture_02.pdf` (Archived) |
+| **L03** | Sep 25 | Scientific Languages, Fortran 90/95 Basics, Compilers & Laplacians | `Lecture_03.pdf` (Archived) |
+| **L04** | Oct 02 | In-class session; Assignment 1 Due | Assignment 1 Solutions Available |
+| **L05** | Oct 09 | Advanced Fortran, Monte Carlo Methods ($\pi$ estimation), OpenMP Basics | `Lecture_05.pdf` (Archived) |
+| **L06** | Oct 16 | Modern Parallel Computing, Integrated Circuits & Concurrency Limits | `Lecture_06.pdf` (Archived) |
+| **L07** | Oct 23 | Midterm Exam (HLB108, 11:10–12:10) & Group Project (A4) Setup | Midterm Prep |
+| -- | Oct 30 | *Reading Week (No Lecture)* | -- |
+| **L08** | Nov 06 | OpenMP in C/Fortran, Memory Bandwidth Bottlenecks, SPH & Linked Lists | Upcoming |
+| **L09** | Nov 13 | CPU vs. MIC (Xeon Phi) vs. GPU CUDA, Vectorization & N-body Dynamics | Upcoming |
+| **L10** | Nov 20 | Protoplanetary Disks, Fluids GL, FFT Convolutions; Assignment 3 Due | Upcoming |
+| **L11** | Nov 27 | CUDA C/C++ Kernels, MPI Intro, Machine Learning & Neural Networks | Upcoming |
+| **L12** | Dec 04 | Final A4 Group Project Presentations | Group Reports |
+

@@ -19,5 +19,16 @@ page-layout: full
 
 ::: {.callout-note}
 ### Publishing Notice
-I will consult with the professor regarding if and when I can publish solutions to textbook problems or problem sets. In the meantime, unreleased solutions remain in private drafts.
+Official assignment prompt sheets and problem solutions from the course website are archived locally in `reference/course-website/`.
 :::
+
+## 📝 Course Assignments & Projects (Fall 2026)
+
+| Assessment | Due Date | Core Topics | Status / Notes |
+|------------|----------|-------------|----------------|
+| **Assignment 1 (A1)** | Oct 02, 2026 | Finite difference stencils ($O(h^2)$ second derivatives), truncation vs roundoff error trade-off ($h_{opt} \approx \epsilon^{1/4}$), Maximum subarray algorithm, projectile drag physics | Succeeded & Solutions Archived |
+| **Assignment 2 (A2)** | Oct 16, 2026 | Monte Carlo integration ($\pi$ convergence), diffusion equation & OpenMP parallelization | In Progress |
+| **Midterm Exam** | Oct 23, 2026 | Theoretical quiz + written problems + computational execution | 2025 Past Exam & Solution in `reference/admin/` |
+| **Assignment 3 (A3)** | Nov 20, 2026 | GPU acceleration with CUDA (C & Fortran), FFT convolutions | Upcoming |
+| **Group Project (A4)** | Dec 04, 2026 | Final HPC simulation report & presentation (N-body, SPH, aerodynamics, finance) | Group formations due Oct 16 |
+

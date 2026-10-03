@@ -1,0 +1,742 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <title>Assignment 1,  PHYD57, solutions </title>
+
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+</head>
+
+<body alink="#ff0000"
+ link="#3300ff" text="#000000" vlink="#aa0000">
+ <body text="#FFFFFF" bgcolor="#000000" link="#33CCFF" vlink="#33CC00"
+ alink="#FF0000"
+ background="http://planets.utsc.utoronto.ca/~pawel/PHYD57/datacenter-whiter8-sc.jpg">
+ <body text="#000000" bgcolor="#FFFFF" link="#6600FF" vlink="#CC0000" alink="#FF0000">
+&nbsp; &nbsp;
+ 
+<h1><b>    Assignment 1, PHYD57, Solutions
+</b></h1>
+ 
+
+This time, you may do numerical calculations in <img height=5% 
+src="http://planets.utsc.utoronto.ca/~pawel/progD57/python-11.jpeg">
+because we did not work with C or Fortran language and compiler yet. But if 
+you're learning C or F, we'll be very impressed to receive your calculations
+(in Quercus Assignments) done in one of those languages!
+<br>
+Please do not assume we will run your code -- do not submit Jupyter raw 
+notebook files. In the problems involving programming, we would like to see 
+the listing of a well-commented program with you own detailed comments, and 
+your description or proofs of results, including plots if applicable. I 
+believe Jupyter can provide a pdf output to help with that. Try to submit 
+everything in one pdf file, if you can, though it's not strictly required and
+we will not award points for the beauty of text formatting, just for the 
+clarity and correctness of your plots and descriptions. 
+
+ 
+ <h2> Problem 1.1 [40 pts] F-16 crash on 28.08.2025
+</h2>
+<img width=330 src="https://planets.utsc.utoronto.ca/~pawel/pix/Loop.png"> 
+ <p>
+
+A fatal accident occured on 28.08.2025 during preparations to the annual airshow
+in Radom, Poland. Polish F-16 fighter jet piloted by Maj. Maciej Krakowian was 
+finishing a loop that he started from about 30 m above the runway. On return, 
+the plane collided with the runway and burst into a fireball. The wind was 
+negligible and the visibility unlimited. On 3 September, during an official 
+visit to Washigton D.C. of the Polish president, four F-35 fighters flew over 
+the White House, followed by the 
+<a href="https://www.aol.com/watch-missing-man-flyover-honor-181329973.html">
+missing man formation</a> of four F-16s (maneuver often seen at commemorations,
+where one of the aircraft departs from the 3 others and flies toward the sky 
+along a partial loop).  
+<p>
+A significant amount of photo evidence such as this graphic video:
+<a href="https://planets.utsc.utoronto.ca/~pawel/pix/F-16-28.08.2025.mp4"> 
+F-16-28.08.2025.mp4 </a> 
+suggests that nothing was wrong with the plane and the accident may have been 
+due to pilot's error. The investigation is ongoing, no official cause of the 
+accident has yet been announced. 
+<p> 
+It is up to you to perform the analytical and then semi-numerical 
+modelling of the idealized, perfectly circular loop. The real trajectory was 
+not perfectly closed and thus crossed the runway surface, but the non-closure 
+i.e. difference of loop radii on ascent and descent relative to average 
+was likely only 1:20, relatively small. Many valid insights follow from 
+assuming, for simplicity, that the path was a perfect circle of radius R.
+<p> 
+Perform a physical analysis of the crash following the provided guidelines
+and answer all the questions asked. This will enable yoassig1-D57-2026-sol.htmlu to, in
+the conclusions section, express your expert opinion as to whether the pilot 
+could have been incapacitated by g-forces, whether the plane stalled, and so on. 
+
+
+<h3> Oversimplified (analytical) model </h3>
+
+In this model, you will assume that the pilot steers the aircraft to produce
+a lift force allowing its center of mass to follow a circular path of radius 
+$R$, and that the variable air drag force on the plane (air drag depends on its 
+airspeed and that the angle of attack of the wing) is always perfectly matched 
+by the opposing, variable engine thrust. Effective drag is thus zero. <br>
+
+This is a nice analytical (i.e., non-numerical) model and only partly 
+unrealistic. Loop's circulatity is a goal of competition aerobatics (judges 
+score a figure to visually assess it). But the drag=thrust situation is 
+very difficult to achieve in practice (no pilot or mechanism can control thrust
+so precisely). We will consider a more realistic situation later. 
+<p>
+Use (i) energy conservation principle, (ii) assumption that a loop of radius 
+R=const. results at its highest point in zero g-force felt by the pilot 
+(weigthlessness). 
+<p>
+Show that the radius R and airspeed $v$ at every point of the trajectory are a 
+function of the initial speed $v_0$. Find the formulae. You can express 
+position of a point on a circle by angle $\phi$ it forms with the downward
+vertical line beginning at the center of the circle. 
+<p>
+Evaluate $R$, the speed $v_1$ at the top of the loop, and the load factor $n_0$
+ (acceleration pushing the pilot into the seat, in units of $g$ = 9.81 
+ m/s<sup>2</sup>) at the bottom of the loop, assuming the typical entry speed 
+ $v_0$ = 180 m/s = 350 knots,
+recommended for the F-16. 
+<br>Load factors $-6 < n < 9$ experienced for up to several 
+seconds are not considered risky for the trained and well-equipped military 
+pilot. Higher overload may lead to greyout, tunnel vision, or even loss
+of conciousness (so-called g-lock). Was the pilot in the accident aircraft 
+in any danger due to g-forces, assuming this model of aircraft dynamics?  
+<p>
+Can you figure out the time $T$ needed to perform the described loop?
+Hint: $$T = \oint dt = R \oint \frac{d\phi}{v(\phi)}.$$  
+
+
+<h4> <font color=magenta> Solution </font></h4>
+
+Energy conservation: $$\frac{E}{M} = \frac{v^2}{2} + g\,h(\phi) = 
+\frac{v_0^2}{2} = const.$$
+where 
+$$ h(\phi) = R\,(1-\cos \phi), $$
+results in 
+$$v^2 = v_0^2 - 2gR\,(1-\cos \phi).$$
+
+The load factor (g-factor) is the sum of centrifugal and gravity component 
+accelerations, divided by $g = 9.81$ m/s$^2$: 
+$$ n(\phi) = \frac{v^2}{gR} + \cos \phi \,.$$
+Condition of weightlessness at the top: $n(\phi=\pi) = v_1^2/(gR) - 1 =  0$, 
+gives $ v_1^2 = gR$. Since, at the top of the loop, by one of the previous
+equations $v_1^2 = v_0^2 - 4gR$, we obtain
+$$ v_0^2 = 5 gR = 5 v_1^2,$$
+or
+$$ R = \frac{v_0^2}{5g}.$$
+<p>
+With this, the formula for airspeed simplifies to 
+ $$v(\phi) = \sqrt{gR\,(3+2\cos \phi)} =  v_1\,\sqrt{3+2\cos \phi} = 
+ v_0 \sqrt{\frac{1}{5}(3+2\cos \phi)}.$$
+ <br>
+Numerically, if $v_0 = 350 $ kt = 180 m/s, then $R=660.5$ m, and $v_1 = 
+v_0/\sqrt{5} = 80.5$ m/s = 156.5 kt. 
+<p>
+We see that the largest g-factor is 6 at the bottom of the loop (at the 
+very beginning and very end). This would be quite tolerable by the pilot. 
+<br>
+As to the possible danger of a stall, it's not there either. Here is the 
+squared ratio of $v(\phi)$ to stall speed $v_S(\phi)$: 
+$$ \frac{v^2(\phi)}{v_S^2(\phi)} = \frac{v_1^2}{(110 \mbox{kt})^2}
+\;\frac{3+2 \cos \phi}{3(1+\cos \phi)}$$ 
+that is reaching a minimum at $\phi=0$. The minimum value is equal $v(0)/v_S(0) 
+= 1.30.$ In other words, the entry and exit speeds are 1.3 or more times the 
+stall speed, in our idealized loop model. It's no coincidence that a factor 
+of precisely 1.3 is used in aviation as a speed safety margin, for instance 
+when a recomended, safe, approach speed is calculated for a rather slowly flying
+airplane on final approach to landing. It's the same factor here. That's why 
+pilots of F-16 are taught to normally enter a loop at the airspeed of 350 kt!
+<p>
+Finally, one can calculate the full time to close the loop
+$$ T =  R\;\oint \frac{d\phi}{v(\phi)} =
+ 2\,\sqrt{\frac{R}{g}} \;\int_0^\pi \frac{d\phi}{\sqrt{3+2\cos \phi}} =
+4\,\sqrt{\frac{R}{5g}} \,K(4/5)$$
+where $K(k)$ is the elliptic integral of the 1st kind.
+  $$ T \simeq 4.0378 \,\sqrt{\frac{R}{g}} \simeq 33.1 s$$
+If you are not familiar with elliptic integrals, notice that 
+the integrated fraction has the following expansion 
+$$ T = 2\,\sqrt{\frac{R}{3g}} \;\int_0^\pi
+\left(1 - \frac{\cos\phi}{3}+ \frac{\cos^2\phi}{6} -\frac{5\cos^3\phi}{54}
++\frac{35\cos^4\phi}{648}+...\right ) \;{d\phi}  =$$
+$$ = 2\pi \sqrt{\frac{R}{3g}} 
+\left(1 +\frac{1}{12} -\frac{35}{288}+... \right ) \simeq 4.0034
+ \,\sqrt{\frac{R}{g}} \simeq 32.9 \,s. $$
+Not a bad approximation, despite $\cos \phi$ not being, in general, 
+$\ll 1$. Our idealized model is not very precise about the timing of the actual
+loop ($T\approx 27$ s); it's a consequence of the thrust=drag assumption plus 
+the weightlessness assumption at the top. Let's do a little better. 
+
+
+<h3> 1-D numerical model </h3>
+
+Relaxing the assumption of the effectively frictionless motion along the loop, 
+consider the forces acting along the circular loop trajectory. The first is
+gravity. It provides acceleration $f_g = -g \, \sin \phi$. 
+<p>
+Next, the engine thrust. In the movie of the accident linked above, a 
+bright streak behind the engine (flame from the afterburner) is seen 
+<i>steadily</i>, throughout the whole loop. We will assume the thrust from the 
+jet engine was constant. Pratt & Whitney jet engine has a large maximum thrust
+force used for takeoff, but during aerobatics it is normally set lower;
+we will assume $F = 9.5$ tonnes, or 9500 kG = 93200 N. Knowing that the
+mass of the F-16 was likely $M=15000$ kg, the thrust force $F$, the plane's 
+unimpeded acceleration becomes $f_t = F/M = 6.213$ m/s$^2 = 0.633$ g. 
+<p>
+Finally, there is air drag acceleration $f_d$ that depends, in some way, on 
+the angle of attack and the square of the airspeed (form drag), because the 
+drag is a sum of parasitic or form drag, and the induced drag. Use this simple
+ansatz
+$$f_d = - \left(\frac{4 + n}{5}\right)\; C_D\, \frac{A}{M}\, 
+\frac{\rho v^2}{2}$$ where $n$ is the instantaneous load factor (along the line
+between the aircraft and loop's center), $C_D = 0.1$ is nondimensional drag 
+coefficient of F-16, $A=28$ m$^2$ is the wing area, and the density of air is
+$\rho = 1.22$ kg/m$^3$. The expression in parentheses is effectively doubling
+the coefficient of drag ($C_D$) when g-forces grow from $n=1$ to $n=6$. 
+<p>
+You can use the same entry speed $v_0$ and $R$ as in analytical model. 
+Carefully set up a second-order differential equation for the position angle 
+$\phi$ of the aircraft, checking the signs and units of all the terms in at 
+least two different characteristic points of the trajectory. Angle $\phi$ 
+starts at $\phi_0 = 0$, is $\phi = \phi_1 = \pi$ at the top of the loop, 
+and $\phi_2 = 3 \pi/2$ at the point where the plane flies down vertically, 
+becoming $\phi = 2\pi$ at the end of the loop.
+<br>
+Also write an equation for $n(\phi)$. The centrifugal acceleration
+formula $a_r = v^2/R$ will help you in this. This part produced a positive 
+load factor. Just don't forget that the g-force or load factor $n$ is a sum of: 
+component of gravity's $\vec{g}$ along the position radius $\vec{R}$ 
+(that component changes not only value but also sign, since the pilot's body 
+is pushed by gravity into the seat at the loop's bottom, while pulled away 
+from the seat at top of the loop).  That's all. Total acceleration of motion 
+along its path is $d^2s/dt^2 = R \,d^2\phi/dt^2$, so you'll have a 2nd-order 
+ODE for the position (angle) of the airplane.  
+<p>
+Since, unlike in the oversimplified model, there are no easy tricks 
+(energy conservation law), and the equation is non-linear in $v$, it is 
+impossible to solve it analytically, and you must resort to numerical 
+integration of the equation of motion in time, breaking it off when $\phi$
+reaches $2\pi$. Explain and use any numerical method you know, the simpler the 
+less time you'll spend debugging. A short time step of integration $dt=0.001$ s
+will guarantee a good accuracy of the result. 
+ <p>
+ Questions to answer include: 
+
+ <br> (i) What is the value of $n_0$, is it in the danger zone for the pilot? 
+
+ <br> (ii) What is the value of $n_1$, load factor at the top? 
+ What is the speed and altitude there?
+
+ <br> (iii) Same as (ii) but at the end, i.e. bottom, of the loop
+
+ <br> (iv) Is the speed v anywhere along the loop smaller than 1.15 times the 
+ stall speed? If yes, where? 
+
+ <br> What is the total time of the loop $T$? How does it compare to the one
+ inferred from the video of the loop? (You may want to make a small correction 
+ to $T$, due to an incomplete range of $\phi$ traversed in the video.)
+
+ <br>(v) How does the oversimplified model stack up against the more realistic 
+ one?
+ <br>(iv) Your own questions.
+ <p>
+Draw conclusions from the model as to how much the pilot is affected by the 
+g-forces, and how close to stall speed the plane is an a standard loop. 
+Notice: stall speed of F-16 without flap extension, at $n=1$, is 110 kt (knots).
+It grows with $n$ in proportion to $\sqrt{n}$, so the full expression is 
+$v_S=110\,\sqrt{n}$ kt. 
+ <p>
+Please print the most interesting quantities from inside the numerical loop
+every 100 timesteps, and while the aircraft passes the characteristic points
+denoted by the subscripts above. 
+ <p> 
+Recommend to Polish authorities the course of action that will in practice 
+prevent similar accidents. Hint: altitude at which Maj. Krakowian began the 
+loop. Research the rules about that aspect at other airshows. Speculate on the 
+possible reason that the seat ejection procedure was apparently not initiated. 
+ <p>
+ 
+* * * 
+<p>
+ Notice: It is more difficult, so I do not require it, but the most ambitious of 
+ you might want to also analyze a non-circular loop of the kind seen in practice
+ (the accident maneuver was of that kind), where parts of the circle are 
+ curved less, and some curved more than the circle. Mathematically, the shape 
+ can be described by the following polar representation: $r(\phi) = 
+ R_0 \,(1+q \,\sin^2 2\phi)$ with $q=0.075 \ll 1$ is the parameter of 
+ noncircularity. Here, $\phi$ is the angle the position vector drawn from the 
+ center of the loop forms with the vertical. It is surprising how even this 
+ small a distortion of a circle changes the local radius of curvature (which 
+ we need to compute centrifugal acceleration). 
+ 
+
+
+<h4> <font color=magenta> Solution </font></h4>
+
+
+<a href="https://planets.utsc.utoronto.ca/~pawel/pix/A1.1-q0.png"> 
+<img width=330 src="https://planets.utsc.utoronto.ca/~pawel/PHYD57/A1.1-q0.png">
+(click to enlarge)</a>
+ <p>
+<i>Figure.1.1a. Circular loop with the shown constant radius and entry speed, 
+done by the F-16 aircraft weighing 15t and producing a constant thrust (9.5 t). 
+Black numbers, printed next to the trajectory points marking full seconds 
+of flight, are the g-factors $n(t) = v(t)^2/R + \cos \phi$. Speed $v$ in knots
+is printed in blue, and the stall speed $v_S = 110 \sqrt{n}$ kt is printed 
+in orange. Ground is hatched red. 
+</i>
+<p>
+We see that the R=660 m circular loop model predicts sub-critical g-loads, 
+which should not be dangerous for a trained, military pilot. Also, we see
+that the stall speed never comes close to or exceeds $v$, which would lead to
+an aerodynamic stall.  The computed time of this loop is in agreement with the
+video of the accident, to within the measurement error (one has to add up to
+1s time to the accident loop, which was not the full circle). 
+ <p>
+<a href="https://planets.utsc.utoronto.ca/~pawel/pix/A1.1a.py">
+Program</a> in Python.  It's way more complicated than necessary to compute 
+a circular loop, because it can also analyze non-circular loops. For instance,
+a squarish looking loop like this which, as you see, *is* very dangerous for 
+the pilot and plane:
+ <br>
+<a href="https://planets.utsc.utoronto.ca/~pawel/PHYD57/A1.1-q06.png"> <img 
+width=330 src="https://planets.utsc.utoronto.ca/~pawel/PHYD57/A1.1-q06.png">
+(click to enlarge)</a>
+ 
+ 
+ <h2> Problem 1.2 [25 pts] Ballistics in air and water </h2>
+ 
+$$ \ddot{\vec{r}} = -g\, \hat{y} -\frac{C_d A}{2M} \rho\, v \; \vec{v}$$
+It's a standard exterior ballistics problem, 
+but the optimum angle is a function of the parameters (diameter and mass) 
+of the bullet and the initial muzzle speed always taken as 710 m/s.
+It requires some computation to reach the required accuracy of the best-range
+angle of 0.005$^\circ$, but not so much that Python cannot handle it. 
+ 
+
+<h4> <font color=magenta> Solution </font></h4>
+
+The solution is based on output from <a href="bullet_2026.py"> this program</a>.
+<p>
+The script uses the simplest method possible (2nd order accuracy leapfrog with 
+timestep dt=0.002 s). Notice that high-order methods are not needed in view of 
+the generally short running time. However, there is a thing which can make 
+the code very slow: graphics done during calculation. Graphics is typically 
+handled by one CPU thread. We avoid storing all points on trajectories, 
+opting to plot them as soon as they are calculated. This is memory-efficient 
+but slow (due to overhead of pyplot.scatter(x,y) instruction). But in the above 
+program, one out of every 50 points is plotted, which speeds up the runtime, 
+and very nicely shows the changing speed of the projectile as variable point 
+spacing. Ten times smaller spacing means ten times smaller speed.   
+<p>
+ 
+
+<a href="bullet-2026.jpg">
+<img width=90% 
+src="bullet-2026.jpg">
+</a>
+<p>
+Let's look at the flight in the air. The 3 cases shown in the figure (5, 20, 
+26.22, 45 degree inclinantion) all have a significantly asymmetric trajectory: 
+longer range and shorter time on ascent i.e. before reaching the top of the 
+trajectory, and shorter range and longer time (smaller speed) on the descent. 
+Since we were instructed to plot points on the trajectory $\Delta t = 0.1$ s
+apart, we can see by the changing spacing of points how the speed decreases by 
+an order of magnitude because of air drag force (the speed sometimes 
+increases a little bit at the end of flight due to gravity). 
+<p>   
+
+<p>
+
+
+<table border="1" style="border-collapse: collapse; width: 50%; text-align: center;">
+  <thead>
+    <tr>
+      <th>&alpha; </th>
+      <td> </td>
+       <th>$R_{air}$</th>
+      <th>$t_{air}$</th>
+      <th>$x_m/R$</th>
+      <th>$h$</th>
+       <th> </th>
+      <th>$v_w$</th>
+      <th>$R_{w}$</th>
+      
+
+    </tr>
+  </thead>
+  <tbody>
+          <tr>
+      <td>1$^\circ$ </td>
+      <td> </td>
+      <td>788 m</td>
+      <td>1.95 s</td> 
+      <td>0.583</td>
+      <td>4.80 m</td>
+      <td> </td>
+      <td>251 m/s</td>
+      <td>5.06 m</td>   
+    </tr>
+   </tr>
+      <tr>
+      <td>5$^\circ$ </td>
+      <td> </td>
+      <td>1487 m</td>
+      <td>6.59 s</td> 
+      <td>0.647</td>
+      <td>58.3 m</td>
+      <td> </td>
+      <td>102 m/s</td>
+      <td>3.99 m</td>   
+    </tr>   
+      <tr>
+      <td>20$^\circ$ </td>
+      <td> </td>
+      <td>2010 m</td>
+      <td>16.6 s</td> 
+      <td>0.690</td>
+      <td>383 m</td>
+      <td> </td>
+      <td>73.6 m/s</td>
+      <td>1.79 m</td>   
+     <tr>
+       <td>26.22$^\circ$ </td>
+       <td> </td>
+       <td>2039 m (maximum)</td>
+       <td>19.8 s</td> 
+       <td>0.696</td>
+       <td>537 m</td>
+       <td> </td>
+       <td>76.6 m/s</td>
+       <td>1.28 m</td>
+    </tr>
+      <tr>
+       <td>45$^\circ$ </td>
+       <td> </td>
+       <td>1828 m</td>
+       <td>27.9 s</td> 
+       <td>0.703</td>
+       <td>998 m</td>
+       <td> </td>
+       <td>82.8 m/s</td>
+       <td>0.51 m</td>
+     </tr>  
+  </tbody>
+</table>
+<p>
+
+I've added one more, very flat shot (at 1$^\circ$ to horizon) at the top of the
+table. It shows that even when flying and braking sharply in the air over 
+distance R=788 m, the final air speed is still very dangerous, though subsonic
+(251 m/s &lt; 340 m/s, Mach number 0.73). 
+<p>
+In the right-hand part of the table devoted to the motion in water, I've added a 
+column $v_w$, the speed of entry. For high inclinations such as $\alpha \approx
+90^\circ$, this speed approaches to within 0.6 m/s the <i>terminal velocity</i>
+in air for the considered bullet,  
+$v_\infty =[(2g/C_d \rho)/(A/M)]^{1/2}=86.2\;\mbox{m/s}$ 
+(that you can obtain from the equation of motion with $\ddot{\vec{r}} =0$). 
+<p>
+I used the interactive zoom tool in the Python window displaying the figure to 
+show the underwater part of the longest-range trajectory:
+<br>
+<a href="bullet_w.png">
+<img width=50% 
+src="bullet_w.png">
+</a>
+<p>
+You see how the trajectory is pretty straight initially (decelerating very 
+rapidly because of high density of water), then abruptly bending downward.
+The bend is around the point where the drag force matched in absolute value the 
+Earth's gravity. The final vertical motion is practically occurring at the
+terminal speed in water, which is $\sqrt{1000/1.225} = 28.6$ times smaller 
+than in the air, namely 3.0 m/s.
+<p>
+We conclude the AK-47 bullets have a lot of energy and range exceeding 2 km. 
+The celebratory fire shot at any inclination falls with speed exceeding 70 m/s, 
+high enough to break through skull and bones. Water does not provide a robust
+shield against a short-range fire, since even at about 800 m range 
+(which is still long range!) the bullet can still fly with 3/4 of the speed of 
+sound and largely stops only after 5 m under water. Only a deep dive 
+can save a person from a gangster with automatic weapon, at close range.  
+To simulate the motion in water at a deeper level (pun intended) we'd have to 
+finesse the drag coefficient, taking into account the possibility of tumbling
+motion. 
+
+
+<h2> Problem 1.3 [22 pts] Subinterval with maximum growth of value </h2>
+
+This problem comes up in the analysis of time series, such as financial data
+(where clients are actually more concerned with the maximum drop than increase
+of value but it's an equivalent problem), and in the physical sciences (e.g., 
+finding the biggest voltage drop measured along some path). 
+<p>
+You are given a series of values $x$ of length $N$; that is a vector of values
+$x_i$, where $i=1...N$. 
+
+
+Formulate an algorithm that finds the maximum increase of $x$ (representing 
+investment or voltage) in some contiguous segment of the data, i.e. the largest
+increase of value from some value $x_i$ to a higher value $x_j$ at index $j > i$. 
+<p>
+For instance, if the series is $x$ = {8, 9, 6, 7, 8, 7, 11, 9, 8, 8, 1, 4, 2} 
+then the largest increase is between positions $i=3$ and $j=7$, and equals 
+$x_j-x_i= 11-6=5$. Notice that we could have even more points between those 
+two, with value somewhere between 6 and 11, and the resulting maximum increase 
+would not change. A different $j$ will be obtained but we are not interested 
+in either $i$ or $j$ themselves, only in the maximum change (location of the
+interval of interest can be provided with very little extra work, but our
+problem does not ask for it). Your algorithm must thus somehow 
+not be overly focused on local extrema.
+<p>
+You can describe your algorithm in words, and/or implement it, commenting the
+program very well, so it is clear how it works and how you proved to yourself 
+that it works correctly.
+<p>
+Remark: Since all contiguous subsets (subintervals) of the dataset provide 
+possible solution, examining them all separately would take an effort of 
+computational complexity $O(N^2)$, because the number of all index pairs 
+{$j\gt i$} is $N(N-1)/2$, so $\sim N^2$. For large $N$ this is an awful lot of
+computation. Try to obtain a cheaper asymptotic scaling with $N$ if possible. 
+If you can't, code an inefficient method scaling like $N^2$, for a partial
+credit of up to 13 pts. 
+
+<h4> <font color=magenta> Solution </font></h4>
+
+This is essentially another problem in disguise. Imagine that you have found
+the subinterval with maximum difference at endpoints,  and consider replacing 
+the original series with first difference series (value at a point minus the 
+value at the previous point), which is similar to numerical differentiation. 
+Then the found subinterval will correspond to a subinterval in the 
+differenced series with a maximum sum of values. In design and analysis of 
+algorithms, this kind of problem is called a maximum subarray problem.  
+<br>
+<a href="https://en.wikipedia.org/wiki/Maximum_subarray_problem">
+https://en.wikipedia.org/wiki/Maximum_subarray_problem </a>
+<p>
+The problem has an $O(N)$ solution, much faster than the simplest $O(N^3)$
+solution consisting in checking all contiguous subintervals of a 1-D set of 
+numbers. [Yes, it's that bad, if you use series of differences, because there
+are of order $O(N^2)$ subintervals, and each requires of order $O(N)$ additions
+to do the sum within subinterval.]  
+<p>
+Every time-series or a 1-D spatial scan of physical variables can be easily
+differentiated numerically, but what about the length of the differenced series? 
+Isn't it smaller by 1? That would mean we lose some information. The 
+differencing will preserve all the information and be reversible if we use the 
+same amount of memory (N-1 differences plus 1 starting value of the original 
+series in the first memory location = N values). Let's call the differentiated 
+array 'numbers'. 
+
+<pre>
+def max_subarray(numbers):
+    """Find the largest sum of any contiguous subarray."""
+    best_sum = float('-inf')
+    current_sum = 0
+    for x in numbers:
+        current_sum = max(x, current_sum + x)
+        best_sum = max(best_sum, current_sum)
+    return best_sum
+</pre>
+
+So that could be used to write a max growth program, except that this would 
+be counter to the spirit of self-sufficient programming. Let us be more 
+ambitious and create our own algorithm that does not involve the above method 
+(differentiation + solving max subarray problem). 
+<p>
+Here is a good analogy to visualize. Think of the varying value of assets 
+or amount of money in some investment account, as a function of discrete time, 
+$X(t_n)$ or $X_n$. The task is to find a contiguous subinterval with the biggest
+increase of account holdings. You start at the beginning of the series and 
+assume for a while that this is where the optimal subinterval begins. 
+Store in some variable the <b>starting value</b>, you can call it $x_0$. 
+If the holdings initially increase, you continue, and just wait to see how big a
+jump you can record. You track the <b>biggest increase encountered so far</b>, 
+i.e. $\Delta = \max (X_n - x_0)$.  
+The values of $X$ will sometimes reverse and go down for a while, fluctuate up
+and down, but you ignore these local extrema, with one notable exception.
+<br> 
+When you encounter a value $X_n$ which is <i>lower</i> than $x_0$,  
+well that may change the situation! It gives you a chance of recording (later)
+a bigger jump from that lower trough, if the values go high enough, which is
+not known in this single pass through the data --  but you must act 
+nevertheless. Overwrite $x_0$ with a lower $X_n$, and continue
+counting $\Delta$'s with the updated $x_0$. 
+You also store somewhere (say, in variable $\Delta_{best}$)
+the <b>best (most positive) $\Delta$</b> encountered so far, 
+just in case you actually can't find any better $\Delta$ in the rest 
+of the data. In the end, you will have scannned the data just once, $O(N)$ work.  
+<p>
+There is a weaker but still somewhat interesting algo - in the worst case it is
+still almost as inefficient as the simplest one (checking all subintervals) 
+since it is still $O(N^2)$, but in practice 
+it should be much faster than literally finding all subintervals among $N$ 
+points; the method typically will have a much better coefficient in front of 
+$N^2$. You first scan the data in $O(N)$ time and forget all individual data, 
+except the local extrema (and their indices). This typically reduces the number
+of points considerably! 
+Paradoxically, focusing on, instead of ignoring, local extrema already should 
+help. How much? Depends on how choppy the original series is. If it's very 
+noisy, then there will be lots of local extrema and the speedup will be so-so, 
+but for smoother data, it should be a big help.
+
+
+<h2> Problem 1.4 [15 pts] 1-D stencil for curvature</h2>
+
+
+<b>1.</b> 
+Prove theoretically by using Taylor series expansion at different values of the 
+argument of function $y(x)$ that the following, symmetrical numerical 
+approximation to the second derivative $y^"(x) = d^2y/dx^2$,  
+$$f(x) = \frac{y(x+h) - 2 y(x) + y(x-h)}{h^2},$$
+$h$ being a small variation of argument $x$ (small in the sense $|h|\ll |x|$), 
+has a second-order accuracy. In other words, show that the deviation $|f(x,h)
+-y^"(x)|$, called <i>truncation error</i>, is proportional to $h^2$, and derive
+the proportionality constant. The function $y(x)$ has non-singular derivatives
+of all required orders.)
+
+<p> 
+<b>2.</b> 
+Demonstrate pt. 1 by finding numerically $f(x)$ for this particular function:
+$$ y(x) = e^{-x^2}+ e^{x-2} $$
+at one particular point $x=0.5$. Make a plot of the absolute value of difference 
+between $y^"$ and its estimate $f$, as a function of $h$. 
+<br>
+The plot should have a log-log scaling to reveal power-law dependencies
+between the error and $h$. (What is the expected slope?)
+The range of $h$ should be from	$10^{-7}$, to $10^{-1}$, the number of
+computed points 600 or 800, and the power of 10 that produces $h$ (not $h$ itself) 
+should cover the range (-7,-1) uniformly. Otherwise there will be a pileup of 
+points toward one end of the log-log plot. 
+<p>
+How well does your analytical work explain the observed curve in large-enough-$h$
+part of the plot?
+<p>
+<b>3.</b> 
+How do you explain the behavior of the plot in the part covering very small $h$?
+Can you develop some quantitative prediction for the upper envelope of that part? 
+<br> Hint: 
+The arithmetic accuracy is finite and has to do with how the machine represents
+floating point numbers (and that may depend on laguage you use).
+If number $\epsilon >0$ is smaller than "machine epsilon" value, the result of
+ $1 \pm \epsilon$ equals number 1, in a given floating point computer 
+arithmetic; the relative accuracy of any of the 4 operations (+,-,*,/) is then
+$O(\epsilon)$.
+
+<h4> <font color=magenta> Solution </font></h4>
+
+<b>1.</b> 
+The solution follows from the Taylor series expansion 
+$$y(x +\epsilon) = y(x) +\frac{y'(x) \epsilon}{1!} + \frac{y^"(x)\epsilon^2}{2!}
+ + \,... = \sum_{k=0}^\infty\, \frac{y^{(k)}\,\epsilon^k}{k!} $$
+We need to keep the terms up to and including 5th ($k=4$, some of you stopped at 
+the 3rd!), and write 3 formulae for $\epsilon = \{-h, 0, +h\}$. [By the way, I 
+hope you're duly impresed by the capability of modern HTML to include LaTex 
+math, through the use of javascript. Cf. the <a href="script.txt">
+.html script </a> of this page.]
+<p>
+Substitution into the $f(x,h) = ...\;$ formula yields:
+$$ f(x,h) = y^"(x) +\frac{1}{12}\,y^{''''}(x) \,h^2 \;+\;...$$
+which proves that the inaccuracy is $O(h^2)$, making the scheme 2nd order, as
+advertised. The error is the second term on the r.h.s. 
+ <br>
+The log-log plot of $|f(x,h)-y^"(x)|$ vs. $h$ should show the slope of +2, i.e.
+error decreasing with decreasing spacing $h$ as $h^2$, down to a point where 
+the accuracy of additions and subtractions in the numerator is affected by the 
+arithmetic roundoff limit. After that, further decrease of $h$ only 
+<i>increases</i> the error, because the numerator is a few times machine 
+epsilon $\epsilon$, while the denominator ($h^2$) quickly decreases with 
+decreasing $h$.
+<p>
+Definition of machine epsilon is that $1+ \epsilon$ has the same floating point
+representation as 1, in a given floating point arithmetic. In Python, variables
+and constants are double precision by default. They use 4 bytes per foating 
+point, and $\epsilon \approx$ 2e-16.  
+[You can enter Python interactively and see this by performing: (1+small 
+number)-1, decreasing the small number until the result reads 0.0; this 
+'machine epsilon' is about $\epsilon \approx 2.2\cdot 10^{-16}$,  
+typical for double precision in Python, C(++) and Fortran. Single precision
+would give a few times 1e-7.] 
+<p>
+The error of the <i>numerator</i> of our approximator $f$ for $y^"$ cannot 
+be much smaller in absolute value than $\epsilon$ (on average), 
+no matter how small $h$ gets. It's a combination of respresentation and of
+inexact arithmetic operations. We can expect that the sign of error varies 
+from point to point. 
+<p>
+Taking numerator and denominator into account, our estimator's minimum error is 
+$O(\epsilon/h^2)$. When $f(x,h)$ is much larger than that, we still get many 
+accurate digits in the answer.  But the machine arithmetic and representational
+inaccuracy completely spoils the computation, even the 1st digit, when $h$ 
+is less than the value at the intersection of two straight 
+lines on a log-log plot: $(y^{''''}(x)/12)\,h^2$ 
+(the value of truncation error, i.e. analytically expected estimation error) 
+and $\epsilon/h^2)$ (estimator's noise). Because, in our case,
+ $y^{''''}(1/2) = e^{-1/4}+e^{-3/2} = 1.00193 \approx 1$, that intersection 
+happens at $h^4 \approx 12\cdot 2.2 \;10^{-16}$, or 
+<br> $h_{opt} = h \approx$ 2.3e-4. <br> This is the optimal $h$, at which both
+types of errors are roughly equal and sum up quadratically to about 
+$\sqrt{2} h_{opt}^2/12 \approx $ 6.2e-9. Let's now see if we have the right 
+predictions, this time using direct numerical computations!
+<p>
+ 
+<p>
+<b>2.</b> 
+A sample numerical program in Python <a href="y_xx_2.py"> computes the 
+$|f-y^"|$</a>. It produces this plot 
+<br>
+<img height=400 src="A1.4-b.jpg"> 
+<p>
+The underlying teal (bluegreen) line is the truncation error  
+$$\mbox{trunc. err} \; = \frac{y^{''''}(1/2)}{12}\,h^2 = 
+ \frac{e^{-1/4} + e^{-3/2}}{12}\,h^2 = 8.35\cdot 10^{-2}\, h^2 $$
+That line so closely follows the computed curve down to a value 
+of error $\approx 6\cdot 10^{-9}$  at $h_{opt}\approx 2.3\cdot 10^{-4}$, 
+that it is invisible underneath the numerically computed blue line.   
+<p>
+<p>
+<b>3.</b> 
+The orange line is the predicted roundoff error, estimated as $\epsilon/h^2$.
+At small $h$ the error of the estimator $f$ followes this dependence. 
+The numerical results are noisy and error frequently changes sign, but its
+upper envelope is the predicted orange line!
+[Sometimes, semi-randomly, the numerical error come out much smaller than
+its anaytical prediction (down to almost 1e-10 in the figure), 
+but it's impossible to know <a> a priori </i>for which $h$ that lucky 
+coincidence of numbers happens for any given $x$, and use it in practice.] 
+<br>
+We do understand the errors qualitatively and quantitatively.
+<br>
+There is no sense to use $h \gg h_{opt}$, or $h \ll h_{opt}$; both choices
+unnecessarily spoil the accuracy, while saving neither time nor memory.
+<p>
+Notice that even though we use double precision arithmetic that does all 
+operations to almost 16 accurate digits, we cannot systematically achieve
+more than 8 accurate digits of the second derivative computed with the 2nd
+order, 3-point stencil. Even when we know the optimum $h$!
+Higher order schemes are needed to achieve better accuracy: their orange line
+will be similar, but the teal line will be steeper, allowing a lower
+position of the intersection (a smaller error). 
+
+<hr>
+<address>
+&copy; Pawel Artymowicz / <a href="mailto: paweli.artymowicz@utoronto.ca">
+pawel.artymowicz@utoronto.ca</a></address>
+</body>
+</html>
+ 
+

@@ -19,5 +19,16 @@ page-layout: full
 
 ::: {.callout-note}
 ### Computational Physics Lab Archive
-High-performance C/C++, Fortran, OpenMP, and CUDA simulation codes are maintained in the private course repository.
+High-performance C/C++, Fortran, OpenMP, and CUDA simulation codes are maintained in the private course repository. A full mirror of the 99 course programs from `progD57` is preserved locally in `simulations/course-progs/`.
 :::
+
+## 🚀 Numerical Physics Simulation Suite
+
+The repository includes implementations across key computational physics domains:
+
+- **GPU Computing (CUDA & Fortran)**: SAXPY kernels, 2D Laplace relaxation solvers (`cudafor-laplace3-dp.f95`, `ifor-laplace3-dp.f90`, `pgf-laplace3-dp.f95`), GPU memory benchmarks.
+- **Astrophysics & N-Body**: Gravitational 4-body tetrahedral choreographies (`tetraDc.f90`), N-body cluster integrations (`simpler-nb-0.f90`), exoplanet orbit fits (`kepl-GJ-3512b.py`).
+- **Wave & PDE Dynamics**: 2D wave equations on shallow water surfaces (`pond1.py`–`pond4.py`), double-slit wave diffraction (`pond4-2slits4.py`), 5-point discrete stencils (`laplacian-5t.py`).
+- **Control Theory & Chaos**: Nonlinear physical pendulum (`phys-pendulum.py`), broom-balancing inverted pendulums (`broom-ctrl-5.f95`, `inv-pend-ctrl-4a.f95`).
+- **Monte Carlo & Numerical Quadrature**: $\pi$ convergence scaling (`simple_mtc_pi.py`), random walks, continued fractions, root finding (`simple_newton.py`, `simple_bisec.py`).
+

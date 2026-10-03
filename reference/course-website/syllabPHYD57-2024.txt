@@ -1,0 +1,109 @@
+2024 SYLLABUS for course PHYD57,  Advanced Computational Methods in Physics 
+(method of delivery: in person)
+Lecturer: prof. Pawel Artymowicz (pawel.artymowicz@utoronto.ca; please put 
+PHYD57 in the subject line and make sure the address is as shown, otherwise 
+mail may be misplaced. Please also use mail.utoronto.ca not gmail! My answers
+to gmail often get lost)
+_______________________________________________________________________________
+Lectures  (L1-L12, 2 hrs with 10 min break) IC 328 on Fridays  11-12 & 13-14
+Tutorials (T1-T10) also in IC 328 in Fridays (days listed below) 14-15. 
+Deadlines for sets of assignments/projects denoted A1-A4 are at 11 am.
+Expect to see them posted 7-10 days before the deadline.
+_______________________________________________________________________________
+
+   September           October                  November             December
+  6  L1              4  L5, T4, A2            1  reading wk        12 Final***
+ 13  L2, T1         11  L6, T5                8  L9, T8, A3      
+ 20  L3, T2, A1     18  L7, T6=midterm       15  L10, *         
+ 27  L4, T3         25  L8, T7               22  L11, T9             
+                                             29  L12, T10, A4**
+_______________________________________________________________________________
+*)  stay if you wish for extra consultations about A4
+**) deadline for writeups is at noon on Wed 28 Nov. Presentations on 29 Nov.
+***) final exam is timed (14:00-17:00), synchronous. You write it at home, using 
+  your favorite editor and programming environment. Be able to execute a non-
+  graphics output program in C/F, have Python ready as a backup and/or calculator.
+ 
+Syllabus is subject to gradual minor changes. Please download the updates 
+every week. 
+
+1	Structure and scope of the course
+	Syllabus of PHYD57
+	Numerical Comp. in Physical Sciences: History and Contemporary efforts
+	
+2	HPC: need for speed, why and how
+	History and modernity: microprocessors, Unix, Linux, and Internet
+	Intro to Linux (CentOS)
+	Command line interface and shells (bash and tcsh)
+	Text editors: vi, nano, gedit, micro, ...
+
+3	Connectivity (ssh & sftp, traceroute & ping)
+	Securing your system against break-ins via /etc/hosts.deny
+	Basic Linux commands (cd, ls, ps, cd, &, bg, fg, alias, setenv,
+		output redirection to file via > , rm)
+	Getting more info: manual pages (man), -h, --help, or -help modifiers
+	Recommended compilers: GNU: gcc, gfortran; Intel: icc, ifort; 
+		PGI: pgcc, pgf95
+	Simple program in C, Fortran95, Python, Matlab and IDL 
+		(Schoerghofer book p.30)
+	More complex program, example of HPC:
+		2nd order Laplace operator stencil for diffusion equation
+	Speed comparison of C/F95 with Python & Numpy: why we learn HPC
+
+4	C and Fortran 95 - compilers, basic usage  
+	Numerical puzzle of 711 - learning C and Fortran
+	Kruskal counts and their connection to linked lists
+	Coding Kruskal counts trick in Python and Fortran 
+	C: Language overview, compilers
+	Integration with Python: calling C from Python
+	examples of programs
+		
+5	More Fortran
+	Examples of programs: Init. value problems for ODEs
+	More C 
+	Parallel execution of programs on CPU and MIC
+ 	Parallel implementations: diffusion and wave equation
+	Modern computing and the success of Integrated Circuits
+	Barriers to single-thread comuting and Moore's law
+
+6-7	Multi-dimensional arrays in C vs. Fortran
+	Bottlenecks: Computation vs. RAM bandwidth (on CPU)
+	An example program in C and Fortran. 	
+	Parallelization via OpenMP in C and F
+	Segmentation faults due to limited stack
+
+8	Brief intro to a choice of Final Projects
+	Intro to parallellism of supercomputing clusters
+	CPU and MIC (many integrated cores, Xeon Phi)
+	Calling C functions from Python
+	Graphics in Fortran and C: DISLIN library 
+
+9 	Parallel implementations: diffusion and wave equation
+	Linked lists, nearest neighbor search 
+	Computations with CPU vs. MIC vs. CUDA 
+	Supercomputing 
+	Particle disks on MIC cluster
+	Optically thick disk calculation (IRI) 
+	N-body integration methods and implementations
+
+10	Interaction of protoplanets with 3D particle and gas disks
+	Fluids by Eulerian vs. Lagrangian methods: CPU and GPU. 
+	Incompressible flow alorithm (fluidsGL)
+	Fourier integral & discrete transform. FFT, N lnN scaling.  
+	Gravitational potential by FFT convolution
+	Aliasing and zero-padding
+	Examples of simple GPU programs written in CUDA Fortran
+	
+11	Discussion of chosen assignment problem solutions 
+	Examples of simple GPU programs in CUDA C/C++
+	CUDA computation of tetrahedrons puzzle & Laplacians
+	Introduction to MPI 	
+	Smoothed Particle Hydrodynamics implementation 
+	
+12	Machine Learning, Artificial Intelligence, Neural Networks
+	Gershenfeld "The Nature of Mathematical Modeling" (1999)
+	Papers on NNs in spectra classifications, exoplanet research
+	Optimum Search: Simplex (Nader-Mead). Overfitting problem.
+	What are NNs and why do they work despite dimensionality curse
+	Programming: Automatic vectorization and compiler reports
+	Further details and hints on four final projects

@@ -1,0 +1,603 @@
+<HTML>
+<HEAD>   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<TITLE>Course page - PHYD57 - References</TITLE>
+<style>
+body
+{
+background-attachment: fixed;
+background-image: url("http://planets.utsc.utoronto.ca/~pawel/PHYD57/DSC2226b-whiter4-sc.jpg"
+);
+background-repeat: repeat;
+font-family: sans-serif; 
+}
+a:link { 
+color: blue;
+font-family: sans-serif;
+text-decoration: none;
+}
+
+a:visited { 
+color: blue;
+font-family: sans-serif;
+text-decoration: none;
+}
+
+a:hover{
+color: red;
+background-color: grey;
+font-size: normal;
+border: none;
+font-family: sans-serif;
+text-transform: none; 
+letter-spacing: 0px;
+word-spacing: 3px;
+font-weight: normal;
+}
+</style>
+</HEAD>
+<!--bgcolor="#0EE5AF" ~green-->
+<body
+bgcolor="#FFFFFA"
+text="#000055"
+vlink="#CC0000"
+link="#6600FF">
+<style>
+body
+{
+background-attachment: fixed;
+background-image:
+url("http://planets.utsc.utoronto.ca/~pawel/PHYD57/DSC2216d-whiter8-sc.jpg");
+background-repeat: repeat;
+}
+</style>
+
+<BR>
+<FONT SIZE=+0>
+
+<FONT size=+2 color="#006666"> PHYD57 <b>  References. PHYD57 Advanced Comp 
+Methods in Physics </b></font>
+
+
+<h3> History of modern computing </h3>
+
+&square; 
+<a href="Ceruzzi-History_of_Modern_Computing.pdf">
+Ceruzzi - History of Modern Computing (2013)</a>   
+<p> &square; 
+<a href="Haigh-New_History_Modern_Comput-2021.pdf">
+Haigh,Ceruzzi - New History of Modern Computing (2021) </a>
+
+<p>
+&square; History of FORTRAN by its creator: 
+<a href="Backus-History_of_Fortran_I,II,III.pdf"> 
+Backus - History of Fortran I,II,III (1978)</a>
+
+<p>
+&square; History of ILLIAC IV - the 1st supercomputer: 
+<a href="Hord-Illiac_IV-1st-supercomp-1982.pdf">
+ Hord - Illiac IV. The 1st supercomputer (1982)</a>
+
+<p> &square; Brochure from 1974 (Burroughs Corp.) 
+<a href="Burroughs.ILLIAC-IV-1974.pdf"> Illiac IV</a>
+
+<h3> General</h3>
+
+Page through this book paying attention mainly to the discussion of Python vs C vs  
+Fortran, and any other topics new to you. You should already know much of the rest 
+- basic numerical methods, that is:
+<br>
+<a href="Schoerghofer-Lessons.pdf"> 
+Sh&ouml;rghofer - Lessons in Scientific Computing </a>
+
+<p>
+New textbook on Python3: <br>
+<a href="Linge-Programming_for_Computations.pdf">
+Linge - Programming for Computations (Python 3) </a>
+
+<p>
+This book would be a good companion to PHYB57:<br>
+<a href="Turner-Applied_Sci_Computing_Python-.pdf"> 
+Turner - Applied Sci Computing w/Python</a>
+
+<p>
+Read chapter 2 of this book on Fortran. Also chapter 3 on Python if you like. <br>
+<a href="Izaac-Computational_QM-2019.pdf">
+Izaac - Computational Quantum Mech.  </a>
+
+<p>
+Finally, I haven't read these books but I <i>love</i> their titles. Take a peek. <br>
+<a href="Shaw-Learn C the Hard Way-2015.pdf">   Shaw - Learn C the Hard Way (2015)  </a> 
+(I'll repeat that link below when we talk about C). <br>
+<a href="Shaw-Learn Python 3 the Hard Way-(2017).pdf"> Shaw - Learn Python 3 the Hard Way (2017) </a><br>
+<a href=" 'Shaw-Learn More Python 3 the Hard Way-(2017).pdf"> Shaw - Learn More Python 3 the Hard Way (2017)</a><br>
+
+<h3>Linux (CentOS 6, Rocky 9) </h3>
+
+Links to online materials are on our course page. 
+<p>
+You are encouraged to install Linux OS on your computer but not required to. 
+On art-1 there is an account for you, and you were shown a password to it;
+if you forgot please ask in person. This system has Centos 6 OS available for 
+your exercises. To be able to do anything there, you need to learn basic Linux,
+and if you're connecting from a Windows system, install an SSH (secure shell)
+client program PuTTY or similar, on the Windows machine. ssh is the way to connect 
+securely and work on a remote linux server, while sftp is a similar client that 
+connects for the purpose of transfering files between two machines on internet.
+Art-1 has a shell (program that interacts with you) called tcsh (the c-shell). 
+<p>
+One more machine with a more powerful graphics processor will be available for your 
+GPU exercises. That machine has a newer operating system called Rocky 9 (ver. 9.5). 
+All the basic linux commands are the same on the two systems, but there are some 
+syntactical differences, especially since on Rocky, another shell called bash is 
+used (Bourne again shell). 
+<p>
+Here is a <a href="https://docs.rockylinux.org/guides/9_6_installation/">
+guide to Rocky Linux installation</a>
+
+<p>
+Brief summary of the most important unix/linux commands<br>
+<a href="Gedris-Intro_Linux_Command_Shell_for_Beginners-2003.pdf">
+Gedris -  Intro Linux_Command_Shell for Beginners</a>
+<p>
+Frankly, the web resouces are as good as books for mastering software, though it's 
+harder to find the right pages. 
+<a href="http://www.linfo.org/"> The Linux Information Project</a> at
+http://www.linfo.org/ is a good entry point to some.
+
+<p>
+And this one (the first 5 chapters)<br>
+<a href="Matthew,Stones-Beginning_Linux_Programming-2008.pdf">
+Matthew - Beginning Linux Programming </a>
+
+<p>
+This one is good and up to date! We may use it in the lecture: <br>
+<a href="Sobell-A_practical_Guide_to_Linux_Commands-2018.pdf ">  
+Sobell - Practical Guide to Linux Commands</a>
+<p>
+In the above books, please <b>skip</b> those sections which deal with: 
+emacs, sed, perl, awk, any SQL databases, semaphores, pipes, sockets, 
+Posix...). <br>
+You <b>do</b> want to know how to use, without trying to know ALL the 
+capabilities of, the following: <br> 
+bash and tcsh shells, text editor (vim, nano, and one other, e.g. gedit which is
+an Xwindow, cursor-driven editor), as well as ssh and sftp.  
+
+<h3>
+FORTRAN and CUDA Fortran</h3> 
+
+Enjoy learning this language and please remember that writing anything in CAPS
+in the text of a program is outmoded (for 30 years :-)
+so write everything in the style of Python, but be aware that variable Var_One
+and var_one, as well as Var_one, are one and the same in Fortran, unlike in C or
+Python!
+
+
+<p>
+&square; History of FORTRAN:  
+<a href="Backus-History_of_Fortran_I,II,III.pdf"> 
+Backus - History of Fortran I,II,III.pdf </a>
+
+<p>
+&square; Here is a good book, though it may have too much detail:  
+<a href="Chivers-Intro_to_Prog_w_Fortran-4ed-2018.pdf"> 
+Chivers - Intro to Prog w Fortran 2018</a>
+
+<p>
+&square; Also this one is good:
+<a href="Chapman-Fortran_for_Scientists_and_Engineers-2018.pdf">
+Chapman - Fortran for Scientists and Engineers </a>
+ 
+<p>
+&square; This one seems outstandingly clear and new:
+<a href="Ray-Fortran_2018_With_Parallel_Programming-2020.pdf">
+Ray - Fortran 2018 with Parallel Programming  </a> 
+
+<p>
+&square; A must-read for GPU programming in Fortran: 
+<a href="Fatica,Ruetsch-CUDA_Fortran_for_Sci_and_Eng-2014.pdf"> 
+Fatica -  CUDA Fortran for Scient and Engineers</a>
+
+<p>
+&square; Maybe you prefer this book for learning Fortran? 
+<a href="Brainerd-Guide_to_Fortran_2008_Programing-2015.pdf"> 
+Brainerd - Guide to Fortran_2008 Programing</a>
+
+<p>
+&square; A must-read for GPU programming in Fortran, virtually the only one:<br>
+<a href="Fatica,Ruetsch-CUDA_Fortran_for_Sci_and_Eng-2014.pdf"> 
+Fatica -  CUDA Fortran for Scientists and Engineers</a>
+
+<p>
+&square; Online: &nbsp;
+<a href="https://docs.nvidia.com/hpc-sdk/compilers/cuda-fortran-prog-guide">
+CUDA F programming guide (Nvidia) </a>
+
+
+
+<h4> Compilation </h4>
+
+Finally, when you program on art cluster, 
+you have intel and nvidia compilers, as well as gfortran (GNU Fortran) available. 
+Use the compilers separately (they do not work together very willingly: 
+they have their separate libraries, idiosyncrasies), so normally avoid compiling
+a part of your project with one and another part by some other compiler.
+Using different compilers lets you select the one producing best execution speed, 
+as well as to provide a different set of diagnostic messages, which is useful for 
+debugging. 
+The following user/programmer guides are useful, because just saying things like 
+<br>
+% compiler_name --help
+<br>
+where compiler_name is either ifort (Intel) [ifx on Rocky], pgif95 (Nvidia) 
+[nvfortran on Rocky OS] or gfortran (GNU project) will spit out some options 
+but not explain them. That's useful for those who've already read compiler docs,
+so, as they say, RTFM.
+<br>
+&square; Intel compiler ifort is documented in  
+<a href="ifort-ug+ref.pdf"> 
+ifort-ug+ref.pdf </a>, Intel Fortran Compiler 16.0 User and Reference Guide. 
+Strangely, this different document 
+<a href="Intel_Fortran_Comp_16.0_User,Ref_Guide.pdf"> 
+Intel Fortran Compiler 16.0 User and Reference Guide.</a> is a competing 
+explanation. Both are more than 2000 pages long. <br>
+And on the Rocky Linux nodes, a recent version of ifortran, instead of ifort is 
+called ifx.
+<br>
+Being a very good compiler, Intel fortran produces the code for either CPU or MIC 
+(57-core processors called Intel Xeon Phi that we have on cluster nodes called 
+phi-# but unfortunately does not do CUDA Fortran, a 
+language extension supprted by competitor Nividia on their graphics cards only.  
+<p>
+Another choice is Nvidia GPU-compatible fortran compiler. 
+On art-1(2) it is invoked as pgf95 (or pgf90). It's a PGI Fortran compiler; 
+Portland Group that first wrote it was later bought by Nvidia. <br>
+&square; <a href="pgi18fortref.pdf"> 
+User guide pgi18fortref.pdf </a> 
+is the description of PGI Fortran. 
+<p>
+PGI fortran recently was renamed Nvidia Fortran, and is invoked as nvf or 
+nvfortran on Rocky 9 machines. Like ifort, it is also a very good compiler
+and it is the only one we have implementing CUDA Fortran language extension for 
+GPU computing (unsurprisingly, it can't produce code for MIC). 
+
+<p>CUDA Fortran  usage is explained in more detail in 
+<a href="pgi18cudaforug.pdf">
+pgi18cudaforug.pdf here </a>, and <br> <a href=
+"https://docs.nvidia.com/hpc-sdk/compilers/hpc-compilers-ref-guide/index.html">
+Cuda fortran documents </a>.
+
+<p>
+&square; GNU Fortran. For gfortran, consult installation documents and guides. 
+It's the most commonly found compiler (open GNU project). One installation I 
+have seen on student's laptop with M3 Apple processor had some strange behaviour
+(read: probably compiler bugs, not present on stable versions for x86_64 Intel 
+CPUs). But that was in 2024.    
+
+<h3>C/C++ Language</h3>
+
+The original book by creators of C language - it's a classic (which in computer
+sci means out of date) but some pieces of code are worth looking at: <br>
+<a href="Kernighan,Ritchie-Ansi_C_Programming.pdf ">
+Kernighan & Ritchie - Ansi_C_Programming (2nd ed., 1988)</a>
+<p>
+Not bad: &nbsp;
+<a href="Deitel-C_How_to_Program.Intro_C++_2016.pdf">
+ Deitel - C. How to Program. Intro to C++ (2016)</a>
+
+<p>
+Nice: &nbsp;
+<a href="Kochan-Programming_in_C.A_Complete_Intro-2004.pdf">
+ Kochan -Programming in C. A Complete Introduction (2004)</a>
+<p>
+<a href="Shaw-Learn C the Hard Way-2015.pdf">   Shaw - Learn C the Hard Way 
+(2015)  </a><br>
+
+
+<h3>CUDA C/C++ language extension</h3>
+<p> <a href=
+"http://planets.utsc.utoronto.ca/~pawel/PHYD57/CUDA_C_Programming_Guide-2019.pdf">
+ CUDA C Programming Guide (2019). </a>
+<br>
+<a href="Cook-CUDA_programming.pdf">
+Cook - CUDA_programming (2013).</a>
+<br>
+<a href="Han-Learn_CUDA-2019.pdf">
+Han - Learn CUDA. For Beginners (2019). </a>
+<br>
+<a href="Storti-CUDA_for_Engineers-2016.pdf">
+Storti - CUDA for Engineers (2016).  </a>
+<br>
+<a href="Sanders-CUDA_by_Example:Intro2_General-Purpose_GPU-2010.pdf">
+ Sanders - CUDA by eample (2010).</a>
+<br>
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/CUDA_C_Best_Practices-2019.pdf">
+ CUDA C Best Practices Guide (2019).   </a>
+
+<br>
+<a href="Wilt-The_CUDA_Handbook-2013.pdf ">
+Wilt - The CUDA Handbook (2013)  </a>
+<br>
+<a href="Farber-CUDA_Applications.pdf ">
+Farber - CUDA Applications (2011) (less useful?)</a>
+
+<h4> Compilation </h4> 
+
+Every C++ compiler should compile a straight C code. We have cc (GNU) C compiler, 
+gcc (GNU c++ compiler). On Rocky systems Nvidia C compiler is invoked as nvc or nvc++. 
+You can also use Intel compilers icc and icpc. 
+<p>
+The nvcc compiler does more:  it understands CUDA C extensions and will 
+separately compile program's cpu and gpu components, and glue them together in 
+a single executable file at the end (remember that CUDA programs are started on 
+CPU, GPU is a coprocessor). 
+
+
+<h3> Numerical Analysis including Optimization </h3>
+
+One of the sources would be the book 
+<a href="Kincaid-Num_Analysis-2002.pdf"> Kinkaid - Numerical Analysis. Math of 
+Scientific Computing (2002). </a>
+
+
+<h2> Links useful for A4</h2>
+
+<h2><font color=black> Group project report (A4) </font></h2>
+
+&square; <a href="A4-report-1-2026.pdf"> Group 1 report </a> <br>
+&square; <a href="A4-report-2-2026.pdf"> Group 2 report </a> <br>
+&square; <a href="A4-report-3-2026.pdf"> Group 3 report </a> <br>
+&square; <a href="A4-report-4-2026.pdf"> Group 4 report </a> <br>
+<p>
+
+<!--
+<h3>Grades and feedback</h3>
+
+<h4>>
+Group 1 - ML in finance
+</h4>
+The good things about the prject were: multiple approaches tried,
+a of unfamiliar reading done on financial calculations, implementations
+that lead to working codes.
+<p>
+Weak points: A horrible overrun of allotted presentation time.
+Listeners could see that instead of a group project, theses were 4
+individual projects loosely bound together, but without a clear
+statement of what each method gave, which method is best, and
+what the results in real-world trading would be (you limited your
+goal to deriving prediciton capability, expressed it in somewhat
+unclear terms, and did not attempt any simulated trading, which would
+result in an easy-to-grasp gain or loss of money. Also no comparison
+with methods other than Neural Nets.
+<p>
+Many undefined and possibly not well undestood term used.
+(Examples: "(...) a piecewise continuous function of the recent state
+of the limit-order book and trading activity." What's limit-order book?
+"next minute movemment of ETF". What ETF? You weren't using any.)
+<p>
+The main objection is that some of the methods, using N data instances
+(minutes), were changing the network parameters up to N times as
+the program scanned through the historical data. You supplied the network
+with new inputs every time you change the parameters, so the network did not
+really have a chance to learn. Standard method it to throw a lot of data
+at a network with a fixed set of parameters, and only after that judge
+how well the network worked, and adjust parameter set.
+<p>
+You get 77 out of 100 for this project.
+
+<h4>
+Group 2 - Particle-mesh N-body (Galaxy collapse). FFT gravity solver.
+</h4>
+You got your code to work, which is nice!
+Another good thing is your visualization worked well. Analysis
+included guesses about the origin of errors that were essentially correct.
+Even though you did finish the presentation with only a small delay, 
+the full 20 first minutes were devoted to preliminaries like comput. method
+- too much!
+<p>
+Weak sides: Motion of BHs for unclear reason made perioding on grid.
+Constant size of grid in space ==> during the brief maximum
+contraction interval most of the particles will be found in relatively
+few grid points, and the accuracy will greatly suffer.
+You observed a big error in energy, with nearly none expected in
+symplectic scheme(s). Also, in Virial relationship. Could that be
+due to the inaccuracies connected with use of fixed-scale (non-adaptive)
+grid? Too large a mass growth of BH due to too larege an accretion radius
+of each BH.
+<p>
+Final mark for the project = 81 out of 100
+
+<h4>
+Group 3 - TU-154M airliner crash - lift forces on asymmetric wing.
+</h4>
+Nice: Good understanding evident from the presentation. Picking the
+right equations from books and implementing their use.
+Nice presentation.
+<p>
+Neutral feature: Python. It's ok since the use of HPC languages
+would not significantly improve the performance, which was good
+enough.
+<p>
+Weak features:  Imprecise estimation of longitudinal moment if
+ inertia - and some other things, but curiously you did get reasonable
+ results. The shape of lift distribution was not very good, since
+ for some strange reason you hugely overestimated the chord length of wing
+ under the fuselage, so you got a peak lift force from the fuselage,
+ not the wing sections.
+ You could have made the idea of a Helmholtz vortex with 1/r profile of
+ velocity vs. distance more clear.
+ <p>
+ Final grade for the project - 82 out of 100.
+
+ <h4>
+ Group 4 - SPH calculation of accretion rate onto a binary
+ </h4>
+ Good points: Programming skills; it's an accomplishment to run 40 mln
+ particle-SPH on one machine, long-term. Good grasp of the method
+ including nearestneighbor finding (linked list), very smoothed presentation, 
+ with perfect timing. Visualization.
+ <p>
+ Objections to: Omission of viscous forces from calculation. This shows
+ incomplete understanding of the method that really needs the artificial
+ viscosity to simulate supersonic gas.
+ Very schetchy figures of time-variability of accretion, higher
+ time-resolution of output would allow you to see the true
+ fine-scale variability of accretion.
+ Videos not made easily accessible, no link to them in Literature section
+ that is too short anyway.
+ <p>
+ Overall mark for the project - 84/100
+ <p>
+-->
+
+
+<h3>Econophysics, Trading  </h3>
+
+<p>
+<a href="Pal-Pract_time_series_anal_Python.pdf">
+Pal - Practical time series analysis in Python</a>
+
+<br>
+<a href="Jovanovic-Econophysics_and_finan_econ-2017.pdf">Jovanovic - 
+Econophysics & financial econ. (2017)</a>
+
+
+<h3> Neural Nets and Math Modeling of very noisy data </h3>
+
+<a href="Gershenfeld-The_Nature_of_Mathematical_Modeling-1999.pdf">
+Gershenfeld  - The_Nature_of_Mathematical_Modeling. 1999. </a>
+This book is a great intro to many topics. For instance, NNs,curse of
+dimensionality. 
+<p>
+Other books, some good some great and and some meh..,
+are listed in a subpage to this page; append /markets to this URL. I'll 
+<br>
+<a href="markets/Prado-Adv_in_Financial_ML-2018.pdf"> Prado - Advances in 
+Financial ML (2018) - I find it very good</a>
+<br>
+<a href="markets/Prado-ML_for_Asset_Managers-2020.pdf"> Prado - ML for 
+Asset Managers(2020) - probably less useful(?)</a>
+
+<h3> Aerodynamics of airfoil and one airliner catastrophe </h3> 
+
+You should get acquainted with the great 100-year old research by a
+Bavarian physicist Ludwig Prandtl, who created a whole school od aerodynamics,
+both theoretical and experimental. His students included Theodore von Karman, 
+who became the father of American theoretical aerodynamics & helped U.S. develop
+first supersonic jets, and Richard von Mises, who achieved many outstanding 
+results in elasticity theory of solids, boundary layer theory and also airfoil
+theory. Von Mises needs to be mentioned in the context of bad political ideas 
+Prandtl upheld during the Nazi regime in Germany in 1933-1945, which Prandl 
+generally liked and praised (Mises was a Jew from Lemberg = Lwów = L'vov = Lviv). 
+<p> 
+Page through Prandtl's century-old books 
+<a href="Prandtl-Fundam_of_Hydro-and_Aeromechanics.pdf">
+Prandtl - Funadamentals of Hydro- and Aeromechanics</a>
+and 
+<a href="Prandtl-Applic_modern_hydrodyn_to_aeronautics.pdf">
+ Prandtl - Application of modern hydrodynamics to aeronautics</a>
+<br>
+The more modern re-telling of classical works by Prandtl is the subject of 
+<a href="Oertel-Prandtls_Essent_Fluids_Mech-2004.pdf">
+Oertel et al. - Prandtl's "Essential Fluid Mechanics" (2004) </a> <br>
+
+The part you are particularly interested in is 
+<a href="https://en.wikipedia.org/wiki/Lanchester%E2%80%93Prandtl_wing_theory">
+Lanchester-Prandtl lifting line theory</a> of airfoils. 
+<p>
+<a
+href="Pope-Basic_Wing_and_Airfoil_Theory-1951.pdf">
+Pope - Basic Wing and Airfoil Theory (1951) </a> is a great resource.
+<br>
+There are web pages that explain the lifting line calculations.  
+<br> <a href="Katz,Plotkin-Low-Speed-Aero-2001.pdf"> Katz & Plotkin - Low Speed 
+Aerodynamics (2001) </a> is even better - it's actually all you need to learn 
+about lifting lines/vortices (chapter 8, plus some contents from 9 and 10). You
+need to generalize to the actual shape of the wing, though, so instead of 
+rectangular vortex with two parts shed and departing to infinity and one part on
+the straight wing, you need to position N vortices at 1/4 chord behind the 
+leading edge, and N test points at 3/4 chord distance, whatever shape the 
+particular wing has.
+<br>
+Wing shape and other parameters of TU-154M airplane can be figured out 
+from tables and figures in the first chapter in  <a href=
+"http://planets.utsc.utoronto.ca/~pawel/prakticheskaya_aerodinamika_samoleta_tu_154m.pdf">
+this book (in Russian) </a>.
+
+<p>
+Your task is to first create a lifting-line theory of a full (test case) and 
+a damaged wing of TU-154 airliner (for which you'll only need the top view
+of the aircraft and the distance from its axis where a birch tree tore off
+about 1/3 of the left wingspan, and some infor about the AOA = angle of attack).
+The theory is formulated as in integral equation, discretized it becomes an NxN
+linear equations problem, which can be solved with Python. It yields the 
+distribution of stationary lift force along the wing of any shape and asymmetry,
+so you can derive a torque on a damaged aircraft, needed to predict the precise
+history of the roll to the left that develops, wheter or not the aircraft was 
+controllable by pilots at this stage and such.
+<p>
+Next, given sufficient time, you may want to generalize the method to full panel 
+method in which vortex lines are layed out not in the form of lines like in 
+Prandtl's scheme, but around N polygonal panels covering the upper and lower
+surface of the wing. I haven't gone so far in my calculations, we'll see if the
+panel theory gives similar results.
+<p>
+Finally, learn about SPH method (below) and use it for full 3-D fluid dynamics,
+if you still have time left! It's an open-ended project, like most..
+<br>
+A lot of information on the Smolensk catastrophe is on a hopefully well
+hidden page; replace the "PHYD57" in the URL of our course with "s" and don't 
+ever link to it please.
+
+<h3> Galactic dynamics for N-body project </h3>
+
+<a href="Binney,Tremaine-Galactic_Dynamics,2ed-2008.pdf"> 
+Binney & Tremaine - Galactic_Dynamics</a>
+<br>
+<a href="https://github.com/MarcVivas/N-body"> 
+N-body CUDA-ized codes from github </a>
+
+
+<h3>Fast Fourier transform (FFT) </h3>
+
+<p>
+<a href="Brigham-The-fast-Fourier-transform-and-its-app-1988.pdf">
+ Brigham - The fast Fourier transform</a>
+
+<br>
+<a href="https://docs.nvidia.com/cuda/archive/10.1/pdf/CUFFT_Library.pdf">
+CUFFT_Library.pdf</a>
+
+
+<h3> SPH project </h3>
+
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/monaghan-sph2005.pdf">
+ Monaghan (2005).   </a> &nbsp;
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/SPH-monaghan1997.pdf">
+ Monaghan (1997).   </a>
+<br> 
+Or this detailed description from Lagrangian point of view (maybe not 
+necessary! I cannot remember which book it is from)
+<a href="https://arxiv.org/pdf/1007.1245.pdf"> Chapter 3 (2010).</a>
+
+<br> 
+Finally, there is this recent, long, review article that is taking SPH (too?) 
+far into the relativistic regime: <a href="https://arxiv.org/pdf/0903.5075.pdf">
+Astrophysical SPH</a> by S. Rosswog.
+
+
+<h3> The Golden Gate project</h3>
+
+<p>
+<a href="Gimsing-Cable_Supported_Bridges.pdf">
+Gimsing - Cable Supported Bridges </a>
+
+<br>
+<a href="Gazzola-Math_Models_for_Suspension_Bridges.pdf"> 
+Gazzola - Math Models for Suspension Bridges </a>
+
+<hr>
+<font size=-1> Last updated in 2025 </font> 
+</body>
+</html>
+

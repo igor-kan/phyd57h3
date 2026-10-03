@@ -1,0 +1,34 @@
+Advice on linux on Windows
+___________________________
+
+  
+Since I am sure several students have Windows laptops they are likely hesitant to do a full
++install of Linux on I wanted to share this link to installing the windows builtin Linux VM
++(much less work that finding some other VM setup and has nice integrations with VSCode)
+
+https://learn.microsoft.com/en-us/windows/wsl/install
+
+
+This will let those interested have the Linux experience (default Ubuntu distro but other
++options are available) on windows if they desire, I believe WSL2 is the second interation also
++described near that page and has some added functionality.
+
+The other thing is some friends have asked me about setting up their windows environment for
++Fortran.
+I found this GUI installer (though there are others) for the mingw set of gcc and Fortran
++compilers here:
+
+https://github.com/niXman/mingw-builds-binaries
+
+They likely need to add mingw/bin to their system environment path after installation to use it
++(it claims it does this for you but didn't seem to).
+
+Just wanted to put these out there for anyone on a windows laptop, I dual boot with Linux at
++home but still prefer to keep the laptops manufacturer OS so I thought some others might feel
++the same.
+
+Regards,
+
+Daniel Harrington
+
+

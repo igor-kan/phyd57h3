@@ -1,0 +1,1034 @@
+<HTML>
+<HEAD>   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<TITLE>PHYD57 - Advanced Computational Methods in Physics </TITLE>
+<style>
+body
+{
+background-attachment: fixed;
+background-image: url("http://planets.utsc.utoronto.ca/~pawel/PHYD57/DSC2226b-whiter4-sc.jpg");
+background-repeat: repeat;
+font-family: sans-serif; 
+}
+a:link { 
+color: blue;
+font-family: sans-serif;
+text-decoration: none;
+}
+
+a:visited { 
+color: blue;
+font-family: sans-serif;
+text-decoration: none;
+}
+
+a:hover{
+color: red;
+background-color: grey;
+font-size: normal;
+border: none;
+font-family: sans-serif;
+text-transform: none; 
+letter-spacing: 0px;
+word-spacing: 3px;
+font-weight: normal;
+}
+</style>
+</HEAD>
+<!--bgcolor="#0EE5AF" ~green-->
+<body
+bgcolor="#FFFFFA"
+text="#000055"
+vlink="#CC0000"
+link="#6600FF">
+<style>
+body
+{
+background-attachment: fixed;
+background-image:
+url("http://planets.utsc.utoronto.ca/~pawel/PHYD57/DSC2216d-whiter8-sc.jpg");
+background-repeat: repeat;
+}
+</style>
+
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<BR>
+<FONT SIZE=+0>
+
+<FONT size=+2 color="#006666">Course PHYD57. Advanced Computational 
+Methods in Physics    </font>
+
+<hr>
+<p>
+Welcome to the course that will help you become a more knowledgeable 
+and better scientific programmer! You already know basic programming in Python 
+(cf. next section). Now is the time to learn some history and even some physics 
+behind our technical civilization, where computing is helping us everywhere. 
+Powerful operating system (linux) and languages will be discussed and tried out, 
+networking, and the principles of parallel programming that enables you as 
+a scientist to run large-scale simulations of the physical world. 
+We will also discuss some advanced algorithms used in Physics. The course 
+includes practical exercises in writing and optimizing programs  on single 
+node(s) of a computational cluster.  Although we'll outline the methods, we 
+leave out the node-to-node communication and writing message-passing programs. 
+You can acquire those skills later, as part of a research in undergrad or grad 
+course. <p>
+Things highlighted in red on this page are newly added or 
+important in the near future.
+
+<h2> Brief Intro </h2>
+
+  
+<h4>  <font color="magenta"> 2026 Syllabus </font></h4>
+
+<A HREF="http://planets.utsc.utoronto.ca/~pawel/PHYD57/syllabPHYD57-2026.txt">
+TXT file with dates of lectures and exams, topics</a>
+
+<h4>  <font color="black"> Quercus</font></h4>
+
+This page provides the sole access to all the materials, up-to-date SYLLABUS 
+(any changes in schedule will be seen there), texts of assignments, 
+and preliminary grades. The present page will be modified with new contents 
+as the course progresses.   <br>
+Quercus will be used for: submission of your term work, announcements via 
+email, and posting of recordings in Media Gallery (old ones - because 
+our classroom does not have the AURA equipment to record our meetings).
+<p>  
+<h4>Prerequisites</h4> 
+
+The only crucial prerequisite is programming using basic Python at the level 
+of PHYB57, Introduction to Computing in Physics. If you are 
+rusty in Python, refresh your practical skills a.s.a.p. - solve a pendulum 
+problem, two weakly coupled pendula, or something else.. include a comparison
+with an analytical solution in the code. 
+
+
+
+<h3> Course grading scheme</h3>
+
+3 sets of assignments A1-A3  &nbsp; &nbsp;&nbsp;  21% (7% ea.)
+<br> group project (assignment A4) &nbsp; &nbsp;23%
+&nbsp;&nbsp;<br> midterm exam  &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; 
+&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 16% (8% Probl + 8% Quiz) 
+<br> final exam  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;  40%  (23%
+Probl + 17% Quiz)
+
+<h2> <font color="gray">More about this course</font></h2>
+
+<h4>Languages</h4> 
+
+This course assumes you are interested in: <br>
+(i) Intermediate and advanced numerical methods used in physical sciences; 
+<br> 
+(ii) HPC (High Performance Computing), including parallelization of algorithms;
+<br>
+(iii) Coding in one of the HPC languages more powerful than Python. 
+<br>
+After this course you will understand programs (with their arithmetic, 
+iterations/loops, conditional statements, functions/subroutines and their 
+calling, array declaration and usage, pseudorandom numbers, and so on) in 
+<b>both</b> C and Fortran. You will be required to actively express your
+ideas (a more demanding task) in one of those languages, you choose which one.
+In other words, we want you to acquire passive knowledge of C(++) <i>AND</i>
+modern Fortran, and active knowledge of C(++) <i>OR</i> Fortran. 
+<br>
+The pros and cons of C vs. Fortran will be discussed in the first meetings, 
+but here is a brief take. By Fortran we mean modern fortran: 90, 95, 2003, 
+2008, or 2015 definitions; they are actually almost the same for our purposes. 
+Avoid books/tutorials on really old, earlier FORTRAN versions (IV, 77), even 
+though Fortran, unlike Python, is virtually backward compatible. Knowing Python,
+Fortran is easier to learn/use than C++. It has changed much since its inception
+long time ago, but one thing remained constant. From supercomputers to laptops,
+scientific simulations in Fortran (typically using multidimensional arrays) are
+among the fastest-executing. Which may be a surprise, because literally 
+thousands of languages have been invented since Fortran. But very few with 
+advanced physical computations in mind!  
+<p>  
+C(++) is also old, though a few decades younger, and different: 
+more wordy, with more bells and whistles, it is lower level 
+(we'll discuss what that means). It is better known
+and thus more marketable outside academia. C is a <i>sine qua non</i> for 
+operating system writers, guardians and hackers. Many programmers are not happy
+with C++ (see the section with links on HPC languages below). Scientists have 
+a love/hate relationship with C++; even though they weren't originally meant 
+for each other, they've been together for ages and gave birth to many great 
+implementations and program packages. 
+<p>
+Intel and Nvidia are providing both C and Fortran in their separate, powerful 
+compiler suites for free. And there are open-projects such as gcc and gfortran 
+(every linux, macos & other OS has C/C++ compiler named gcc installed; g stands
+for GNU, which is an inside joke (ask your AI friend what GNU means). 
+<p>
+<A HREF="http://planets.utsc.utoronto.ca/~pawel/PHYD57/trust-me.jpeg">
+<img  height=180 
+src="http://planets.utsc.utoronto.ca/~pawel/PHYD57/human_computersmain-1041.jpg">
+</a>
+<A HREF="http://planets.utsc.utoronto.ca/~pawel/PHYD57/punch-cards-hires.png">
+<img  height=180 src="http://planets.utsc.utoronto.ca/~pawel/PHYD57/mavac.jpg">
+</a> &nbsp; 
+<br> 
+
+
+
+<h3>Lectures, Tutorials, Office hours, UofT Code of Conduct, etc.</h3>
+
+Lectures (see syllabus for dates and times) follow the organization outlined in
+syllabus & are in-person. You are expected to take own notes of what's happening
+on the blackboard, while this page will serve the pdf's of on-screen 
+presentations (slides). Media gallery on Quercus will have recordings for 
+optional use. Informative pages or animations direct from the web sometimes 
+appear during lectures as well; it's a good practice to note down some keywords
+or their URLs, and visiting them later.  
+
+<p> 
+Tutorials are NOT meant for the explanation of Lectures, even though 
+occasionally they do so. There will be no cookie points for attendance/activity. 
+Negative aspects of not attending and not being active will be automatic
+and obvious enough. We are a small bunch of people interested in HPC; it makes
+the course de facto a bit like a graduate course.
+<p>
+
+Office hours: let's discuss things immediately after the tutorial. I'll try 
+to stay until all topics you want to talk about are discussed or until I have 
+to leave. We will see where we can talk, if our classroom is
+busy we'll move to one of the rooms on 5th floor (SW). Other times may be
+arranged on Thursdays.
+<p> 
+The <a href=
+"http://planets.utsc.utoronto.ca/~pawel/PHYD57/Code_of_Behaviour_on_Academic_Matters_2019.pdf">
+Code of Behaviour</a> on Academic Matters at UofT should be respected. 
+If you have not read it, you may unknowingly find yourself in trouble. 
+This document succinctly defines conduct that constitutes plagiarism, i.e. 
+misrepresentation of authorship, e.g., cheating that the assigned work is yours
+and original, while you merely rephrase somebody's code by changing its 
+appearance. It is an <i>equal</i> offense to help somebody plagiarize your own 
+work. The Code mentions how any reasonably grounded suspicions must be 
+addressed by your Instructor, by Dept. Chair, and so on. Of course a group work
+on assignment 4 a different matter. So please read <a href=
+"https://www.utm.utoronto.ca/academic-integrity/students/scenarios/plagiarism"> 
+more here</a>. 
+<p>
+Last but not least, using generative AI to plagiarize solutions of an assignment
+or test is a serious offense. Do not use it, unless it's clearly stated as 
+needed in the text of the assignment. 
+<p>
+There are many problematic aspects with "AI". Some will be obvious when you spot 
+at least 10 impossible things in <a href="heroes.JPG">this</a> seemingly OK 
+poster (AI-generated). The role of such software in today's world, in education, 
+and your own future, are of course all interesting issues, which we may discuss
+during the breaks, but that's not really a subject of PHYD57. 
+Having said that, you must understand how neural nets (NN) work, so toward the
+end of the course you will see examples of NN-based machine learning; 
+you may also study ML more deeply yourself in your group project. <p>
+See the recent news about the Millenium Prize problem at the bottom of this page.
+
+<h3>Contact</h3>
+
+Email or visit the instructor Prof. 
+<a href="http://planets.utsc.utoronto.ca/~pawel">Pawel Artymowicz</a>
+(guide to pronunciation: w=v, cz=ch, so: PAvel ArtyMOvich), in SW 506G, on the
+5th floor (Physics & Astrophysics) in old Science Wing. Email: 
+pawel.artymowicz@utoronto.ca, importantly with a subject line "PHYD57", or else
+it may be accidentally ignored. Please send mail from your utor acount, not 
+gmail, hotmail etc. 
+<p>Tutorials are given by the lecturer.  
+This course's TA/marker is William Dallaway [email: lowercase 
+firstname.lastname@mail.utoronto.ca]. 
+Please contact TA with questions, difficulties, or about the grading. 
+If needed, the TA will transfer the matter to me. 
+
+<h3>  Course contents </h3>
+
+You have learned how to program (in PHYB57) and saw some basic numerical 
+methods. Now it's time for more algorithms and techniques, used in numerical 
+physics. You will discover the world of High Performance Computing (HPC): 
+how and why it emerged in the history of computing. You will get to understand
+two HPC languages.  
+<p>
+Practical skills will include a basic familiarity with the Linux operating 
+system. If not familiar with it, you may want to read about it on the net even
+before the course starts. You are encouraged but not required to install 
+some linux (Rocky, Red Hat, Fedora, Ubuntu, Mint or other flavor of Linux) on 
+your computer (or use MacOS, which is basically Linux customized by Apple). 
+<br>
+You will have access to one node of a cluster housed in BV building (there is
+a banner with a photo of the art cluster next to the entrance to DPES office in 
+EV bldg). It has Centos 6 flavor of linux and the basic software, enough for 
+doing exercises on your own remotely. 
+<br>
+Physical access to the server room is restricted, even I don't have the codes 
+and the key, so if the machine(s) crash because of something (e.g. power outage)
+and don't reboot correctly then we have a problem. Therefore you'll backup 
+your work on your machine, as will I. As a disclaimer, making 
+the research machine(s) available to you is outside the scope of u/g courses 
+and is an extra benefit to you given by me without explicit or implicit 
+promises. You should try to develop, debug and run codes on your own machine, 
+it's not difficult.  
+<p>
+On your computer, you will sometimes use your Python3, and will be asked to 
+install compiler(s) for HPC languages Fortran and/or C(++), and familiarize 
+yourself with how they function. (If you already know both these languages, 
+which of course would be a nice surprise, then please try to install 
+the Julia language compiler. Julia was born at MIT, for purposes consistent 
+with ours. Sharing your experience will be appreciated - we'll think of exactly
+how once we get to that point.)  
+<p>
+In summary, our goals are to help you become a better scientific programmer, 
+able to solve numerically demanding problems on a workstation or a good 
+laptop. While the practice of cluster supercomputing is outside the scope 
+of this undergraduate course, you will hear a lot about it, and even have an 
+option to try it small-scale if you want.  
+<p>
+<i>
+This is a 4th year (upper u/g) course. It explains the issues, tries to 
+interest you in some directions and put you on the right track, but
+it's your job to move along. This means your own initiative in learning 
+is expected. Lots of materials, books, web pages, will be suggested to 
+you, and often you will make your own choice which of them to pursue closer. 
+Start very soon. Happy experimenting with the kind of computing you likely
+haven't experienced yet.   
+</i>
+
+
+<h2>  <font color="red"> The Code Page </font></h2>
+
+Continuously updated codes & disussions, mostly from the tutorials: <br>
+&nbsp; <a href="http://planets.utsc.utoronto.ca/~pawel/progD57"> 
+http://planets.utsc.utoronto.ca/~pawel/progD57 </a>
+<br>
+You will download and run the codes. At first, before you gather the experience
+in compiling and running some of them, you can just take a look at them. As a 
+registered PHYD57 student you are free to copy & develop theprograms to do more
+ things, change their output style, etc. That is how programmers learn 
+programming. Only you have the right to do that - please don't share the link to
+this code page with the rest of the world. 
+<br>
+Knowledge of basic structures and methods used in these codes is a course 
+requirement. You must acquire a passive knowledge (i.e., ability to understand) 
+of both the basic C and Fortran. You may actively program your assignments in 
+one chosen language, C or C++ or Fortran, unless the particular assignment 
+explicitly asks for Python script.
+
+
+<h2> <font color="black"> Assignments </font> </h2>
+  
+The deadline is at the beginning of the meeting (11 am) on lecture days marked
+in syllabus. Submission format is explained in the text of assignment 1. 
+Submission late by more than 3 hr earns 50% of points. There are <b>no 
+extensions</b>. This policy is motivated both by the need to discuss/publish 
+solutions a.s.a.p. in the tutorial, and basic fairness to those who respect 
+deadlines.
+
+<p>
+
+<i>Accommodation for emergencies (assig's and midterm):</i> 
+<br>
+Transfer of points for personal or medical emergencies is offered, following
+the UofT rules of self-declaration on ACORN (<b>maximum one</b> per term; 
+can cover multiple courses for up to 7 days). Please send me a medical note
+(Verification of Illness Form, VOI) or self-declaration for the 1st absence, 
+and <b>VOI</b> for any further or longer absences. 
+Do not use questionable medical notes (there are doctors who will
+issue them for a fee, without seeing a student personally). 
+<p>
+If you skip more than 1/2
+of term work using VOIs, I will not grant further accommodations - you will be
+advised to drop the course before academic penalty deadline, since 
+(i) this is an in-person, interactive course, and 
+(ii) there is no historic precedent of 
+someone missing most of the term work but writing successfully a final exam. 
+Should there be a need for a deadline extension, it will apply to all
+of you, and be announced. 
+<br>
+For ways to file the self-declared absence please see <a href=
+"https://www.utsc.utoronto.ca/physsci/self-declaration-absence-form-0"> this
+page</a>. Please also forward the documents to me; sending them only to DPES may 
+not assure fast delivery. 
+ 
+<p>
+
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/assig1-D57-2026.html">
+<font color=red> Text of assignment set #1</a>. Due 2 Oct.</font>
+<a 
+href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/assig1-D57-2026-sol.html">
+<font color=blue> Solutions </font></a>
+
+<br>
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/assig2-D57-2026.html">
+	<font color=darkblue>Text of assignment set #2. Due 16 Oct..</font>
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/assig2-D57-2026-sol.html">
+<font color=blue> Solutions of A2</font></a></a> 
+<br> 
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/assig3-D57-2026.html">
+<font color=darkblue> Text of assignment set #3</a> (re-worded)</font>. 
+Due 20 Nov. 
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/assig3-D57-2026-sol.html">
+  Solutions of A3 </a>
+<br> 
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/assig4-D57-2026.html">
+<font color=darkblue>Assignment set #4</font> </a>.  Group research project. 
+Presentation on 4 Dec.  
+
+
+<hr>
+<p>
+<A HREF="http://planets.utsc.utoronto.ca/~pawel/PHYD57/volcano-3.png">
+<img height=180 src="http://planets.utsc.utoronto.ca/~pawel/PHYD57/volcano-3.png">
+</a>
+<A HREF="https://upload.wikimedia.org/wikipedia/commons/1/12/Tvashtarvideo.gif">
+<img  height=180 
+src="https://upload.wikimedia.org/wikipedia/commons/1/12/Tvashtarvideo.gif">
+</a> Volcano on Io.  Outputs Dislin graphics directly from this source code in
+ F90: 
+<A HREF="http://planets.utsc.utoronto.ca/~pawel/progD57/volcano-disl.f90">
+ <font size=-1> volcano-disl.f90 </font></a>
+<hr>
+
+
+<H2> <font color="black"> Books</font> </H2>
+
+Please see the guide to literature in the lecture notes section below. Add a 
+secret ingredient to the end of the URL you are viewing, to see a helpful web 
+page.
+<br>
+Books discussed below should be in UofT library, in electronic form. If not, 
+let me know.
+<br>  <i><font color="#445566"> 
+Find books in the <a href="   https://onesearch.library.utoronto.ca/">library 
+catalog</a>. 
+I do not recommend only watching videos on YouTube about programming; most of
+them are only very remotely relevant to PHYD57. </font> </i>  
+<p>
+Our textbooks and materials will be shown in Lecture notes, and will be 
+specific to the current lecture. For instance,  2nd or 3rd lecture will 
+benefit from your reading the parts of
+<p>
+N. Schroeghofer, "Lessons in Scientific Computing", CRC 2019.
+<br>
+Please focus on subjects not discussed in introductory course PHYB57, for 
+instance author's views on different programming languages and how to select 
+the best combination of two complementary ones. If you read a chapter and 
+the contents seems really familiar, skip and begin the next chapter.
+<p>
+For L2 and later lectures, and for the knowledge of Fortran, please browse 
+through: <p>
+J. Izaac and J. Wang, "Computational Quantum Mechanics", Springer 2018.<br>
+and<br>
+P. Turner, T. Arildsen, K. Kavanagh, "Applied Scientific Computing with 
+  Python", Springer 2018.  <br>
+and make sure all the subjects are known to you, even if not in great detail.
+<p>
+<p> 
+Non-required book for those who want to brush up on Python: 
+<p>
+S. Linge, H. Langtangen, "Programming for Computations - Python",  
+   Springer 2019 [2nd edition uses Python3]
+<p>
+ 
+
+
+<h2><font color="black"> Lecture notes and guides</font></h2>
+
+Programs discussed in lecture notes are available from 
+<a href="http://planets.utsc.utoronto.ca/~pawel/progD57">
+http://planets.utsc.utoronto.ca/~pawel/progD57</a> 
+<p>
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/refs">
+Guide to literature L1-L5, approximately</a> &nbsp; &nbsp;&nbsp;&nbsp; 
+<p>
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/L1-D57-2026.pdf">
+Lecture 1</a> &nbsp; &nbsp;&nbsp;&nbsp; 
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/L2-D57-2026.pdf">
+Lecture 2 </a> &nbsp; &nbsp;&nbsp;&nbsp; 
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/L3-D57-2026.pdf">
+Lecture 3 </a> &nbsp; &nbsp;&nbsp;&nbsp;
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/L4-D57-2026.pdf">
+Lecture 4 </a> <br>
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/L5-D57-2026.pdf">
+Lecture 5 </a> &nbsp; &nbsp;&nbsp;&nbsp;
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/L6-D57-2026.pdf">
+Lecture 6 </a>  &nbsp; &nbsp;&nbsp;&nbsp;
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/L7-D57-2026.pdf">
+Lecture 7  </a>   &nbsp; &nbsp;&nbsp;&nbsp;
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/L8-D57-2026.pdf">
+Lecture 8  </a>  <br>
+
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/L9-D57-2026.pdf">
+Lecture 9  </a>  &nbsp; &nbsp;&nbsp;&nbsp; 
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/L10-D57-2026.pdf">
+Lecture 10  </a>   &nbsp; &nbsp; 
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/L11-D57-2026.pdf">
+Lecture 11 </a>    &nbsp; &nbsp; 
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/L12-D57-2026.pdf">
+Lecture 12 </a> <br>  &nbsp; &nbsp; 
+<br>
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/sim.gif">
+
+<img height=150 src="http://planets.utsc.utoronto.ca/~pawel/PHYD57/sim.gif">
+</a> &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; 
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/NNs.png">
+<img height=150 src="http://planets.utsc.utoronto.ca/~pawel/PHYD57/NNs.png"></a>
+<p>
+Two papers recommended for Neural Networks in application to Astronomy, 
+<br>
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/NNs-spect.pdf">
+NNs-spect.pdf</a>, and 
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/NN-exoplanets.pdf">
+NN-exoplanets.pdf</a>. Also, look at the NN section of the private, 
+auxiliary page!
+  
+
+<h2> <font color="black"> Midterm exam </font></h2>
+
+This page:   
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/mid-prep-2026.html">
+mid-prep-2026.html</a> will help you prepare for midterm exam. 
+<br> <a
+href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/midtermD57-2025-sol.pdf">
+ 2025 Midterm</a> with Quiz solutions. Wrong words (non-unique set!) are 
+ between quadruple asterisks. 
+
+<p>
+
+<h2><font color="black"> Group project (A4) </font></h2>
+
+All the descriptions are or will be  published in the assignment 4 well ahead 
+of the due date. For orientation, here are some suggested topics: 
+<br> &square; Machine Learning from very noisy data: econophysics, algorithmic
+trading etc.  
+<br> &square; What happens to an airliner after it loses a part of the wing: 
+panel simulation of ideal aerodynamics  
+<br> &square; Planetary system dynamics and stability: The Trappist-1 system. 
+<br> &square; SPH: Particle simulation of fluid dynamics on CPU or 
+Intel Xeon Phi, in application to either: a planet exciting density waves, 
+turbulent jet, gas streams 
+feeding a young binary star, or an airplane wing.
+<br> &square; N-body simulation of collapsing galaxy with massive black holes, 
+using FFT gravity solver on GPU
+<br> &square; Structural dynamics: build a virtual 
+Golden Gate bridge, study its deformation under dynamically applied loads
+<br> &square; Speech enhancement: can one make noisy recordings more 
+understandable?
+<br> &square; Simulation of phase transitions in spin lattice 
+(computational thermodynamics)
+<br> &square; Mie theory of scattering with application to glories and specters
+<br> &square; Your group's proposal (to be approved by the lecturer)
+
+
+<h2><font color="black"> Final exam </font></h2>
+      
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/final-exam-2026.html">
+The exam in 2026 </a> will be 40% of course mark: 23% of that for problems, 
+17% for the quiz. 
+<p>
+<br>You will write a 3-hr final exam in person. 
+It will consist of a computer-free first part (quiz + written problems in the 
+booklet), taking about 1.5 hours. You will have some leeway in adjusting the 
+length of that part individually, but not beyond the range of 1.25-1.75 hrs. 
+<p> 
+The second part requires computing. 
+Please MAKE PRIOR ARRANGEMENTS to bring a computer (laptop or tablet) that will
+assist you with the following: 
+(i) edit text files (programs), (ii) compile & run programs in C(++) or Fortran
+(your choice) or connect via command-line interface (e.g. ssh or puTTY) to 
+art-1 or art-2 linux servers to do that remotely, (iii) submit files with your 
+results to Quercus. For the first part of the exam, please also bring a 
+calculator. 
+<p>
+Use of any remote help (browser, "AI", phone) during the exam(s) is 
+forbidden. 
+<p>
+The tasks will not require doing graphics straight out of C/F. Practical 
+knowledge of multithreading by OMP (OpenMP) and the ability to input/output 
+data to a file will be assumed. Writing simple kernels in CUDA is required. 
+Writing a code that you cannot successfully debug and run during the exam will
+earn partial credit, so don't hesitate to explain the difficulties and submit 
+imperfect programs (we may make remarks but will not correct them while 
+grading). 
+<p>
+In addition to written problems, there will be a midterm-style Quiz 
+(with approx. 50 questions). Please carefully review all the lecture notes.
+As in the midterm, you are allowed to use your own handwritten notes. The limit
+is <b>8 pages</b>, either single or double-sided (4 sheets in the latter case).
+
+<p>
+It is not known yet if you will need to have a working Python on your computer 
+for the possible task of plotting of functions representing your results 
+(after inputting them from a text file produced by C/F program; you may submit 
+screenshots of your computer's screen or .png/.jpg files). We will announce that
+a few weeks before exam. But it is useful to have a working Python anyway!
+<br> 
+Your exam may be submitted in one or in several files: the 
+source codes you create may be in file(s) separate from the text of description
+of solutions, and any graphics files/screenshots). 
+<p>
+ 
+I can give you these further hints about the final exam: 
+<p>
+The exam will have 4 written problems, one or two analytical ones (in part 1
+of exam). One or two problems will be numerical; you will create a code 
+(detailed comments inside the code required!) & run it. Include the code output 
+in a text file or PDF, which discusses methods of solution, implementation, and
+results. Unless you have a way to nicely paste the code into the results file, 
+separately upload to Quercus the code file and results. 
+<br>
+The tasks may deal with the numerical dynamics of some simple physical system,
+or may deal with the numerical calculus, convolution, PDEs, or 
+optimization methods.
+<br> 
+There will be no complicated datasets given as input. Knowledge of how to write
+a simple CUDA kernel or OMP directives for parallelization may be a part of the 
+required solution. 
+<p>
+Description of all important steps of your algorithm should be 
+placed inside the code as brief comment lines, and a longer description of the 
+algorithm and/or implementation, in a separate file in .pdf, .docx or plain 
+text format (it would be convenient to have one such file uploaded to Quercus 
+for all the problems, but it's up to you). 
+<p>
+When you modify or create codes, give them files names including problem number
+and the last 3 digits of your student number, please. Strangely, Quercus does 
+not show the student numbers.) As you know from the assignments, infinite 
+updates are allowed, in case you need them - but indicate in the name that 
+it's an update, for instance by including the version number.
+
+
+<h2> <font color="black"> Results   </font></h2>
+  
+Please see the
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/resPHYD57-2026.txt">
+current tally </a>
+  
+<h2> Links</h2>
+
+
+<h4> <font color="red"> Advice for Windows users </font></h4>
+ 
+<b>1. </b> Please see this  
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/advice1.txt">
+advice </a>on linux emulation provided by Daniel.
+<p>
+<b>2.</b> Our TA William Dallaway recommends to look at an emulator of 
+linux described <a href="https://learn.microsoft.com/en-us/windows/wsl/about">
+on this page</a>.
+
+
+
+If you can't install Linux on your machine, do install compilers on Windows
+and use then in command window. It is good to have 2 different compilers. 
+This, among others, will help you understand error messages better. 
+
+
+<h4> History </h4> 
+
+A cartoon from 1980s <img height=300 src="
+http://planets.utsc.utoronto.ca/~pawel/progD57/Real-Men-Dont-Use-Menus.jpg">
+
+<p>
+ • <A HREF="http://www.linfo.org/bit.html">http://www.linfo.org/bit.html </A>. 
+A bit of a history of bit (b). Please study it, and follow links to other 
+important basic concepts in that short article, which you will be <i>required</i> 
+to understand and define during exams and quizzes, such as: bitrate, bandwidth, 
+data bus, 32- vs. 64-bit systems, ASCII code, pixels, various powers of 10 in 
+computer lingo, and RAM memory. Note that this online encyclopedia is slightly 
+outdated as (from 2004); in 2019 "current" hardware capabilities are a bit 
+higher (pun intended). 
+
+<p>
+•  <A HREF="http://www.linfo.org/byte.html">http://www.linfo.org/byte.html </A>.
+A bit (a bite?) of a history of Byte (B). Another bunch of important basic 
+terminology. 
+
+<p>
+• <A HREF=https://en.wikipedia.org/wiki/Marian_Rejewski>
+https://en.wikipedia.org/wiki/Marian_Rejewski </a>. 
+Are you interested in ENIGMA and its decoding before and during WWII?<br>
+ Then you have to dig deeper than the related Hollywood
+movies, which are at times extremely short on real history (better cf. 
+Max Hastings, "The secret War: Spies, Codes and Guerillas 1939-1945", 
+London, 2015). ENIGMA machines were used by Hitler's military for coded 
+communications between the headquarters and units in the field.  
+ENIGMA decoding, first achieved in Poland by Marian Rejewski's team, 
+may eventually have preserved millions of lives,  by saving England from 
+German invasion, tipping the balance in favor of Allies, and shortening WWII. 
+<p>
+After the pre-war Polish cryptologic breakthroughs, hardware devices were 
+built there, implementing the decoding algorithms called Bomba 
+(cryptographic bomb; or "bombe" in top-secret U.S. Army reports of the time).  
+ <a href="https://en.wikipedia.org/wiki/Bomba_(cryptography)">
+ https://en.wikipedia.org/wiki/Bomba_(cryptography)</a>. Copies of ENIGMA 
+machines were also built. Eventually an even faster hacking of the gradually 
+more numerous combination wheels inside ENIGMAs became necessary. 
+<p>
+This was organized by the British government using extension of the same 
+approach as invented by the secret Polish Cipher Bureau. Electromechanical 
+versions of the Polish Bomba were built in Blatchely Park near London by an 
+outstanding pioneer of computational science Alan Turing. He also created 
+some statistical theory to aid this work. <br> 
+The recent biographical movie on A. Turing and the British Enigma-cracking 
+effort titled <i>"The imitation game"</i> distorts the history, as the Turing's
+team is incorrectly given the sole credit for breaking ENIGMA code. 
+In fact, they were neither the first nor the most amazing innovators. For 
+instance, a half-forgotten team of brilliant engineers of the British Post 
+Office headed by Thomas Flowers, working around the clock for months, 
+constructed the specialized "Colossus" computer and transferred it to the
+Turing's bureau. That device is shown in the movie, but was neither Turing's 
+invention nor tasked with deciphering the ENIGMA codes! It dealt with other 
+German codes. It contained a super-fast correlator running two punched paper 
+tape loops at 25 ft/s, and then doing arithmetic calculations that we estimate 
+at 1 MFLOP rate (1 million floating point operations per second), way ahead of 
+its time. 
+<p>
+Even more powerful machines were developed during the WWII by 
+<a href="https://en.wikipedia.org/wiki/Bombe#/media/File:%27bombe%27.jpg">
+American government (Navy)</a>, in order to decipher the changing coding 
+procedure used by German submarines. Such devices were the first modern computers, 
+though not general-purpose <i>electronic</i> computers we have today. They were
+mostly electromechanical, that is to say, based on relays and automatic switches. 
+<p>
+As you see, computing from the beginning was and continues to be <i> very very
+</i> useful for some people. Unfortunately these days it is often used for 
+spying on... you (and everyone with a smartphone). Anyway, enjoy the four 
+ENIGMAtic movies nicely broken down for you  <a href=
+"https://www.cliomuse.com/the-enigma-machine--four-movies-about-the-enigma-machine.html">
+on this page </a>. 
+<p>
+• <A HREF="http://mason.gmu.edu/~montecin/computer-hist-web.htm">
+http://mason.gmu.edu/~montecin/computer-hist-web.htm </a> Computing history
+<p>
+• <A HREF="https://cs.uwaterloo.ca/~shallit/Courses/134/history.html">
+https://cs.uwaterloo.ca/~shallit/Courses/134/history.html</a> Computer science
+history, with further links.
+
+<h4> Supercomputers </h4>
+
+• <A HREF="https://www.top500.org/statistics/perfdevel/">
+https://www.top500.org"</a>. Supercomputing stats. Explore the site, 
+incl. the most recent list of the fastest supercomps in the world: 
+<a href="https://www.top500.org/lists/top500/2025/11/">
+https://www.top500.org/list/2025/11/ </a>.
+<p>
+• Article about once-#1 (now #7+)   
+<A HREF="https://www.scientific-computing.com/feature/exascale-ambitions"> 
+Fugaku supercomputer</a> and the goal of exaflop computing.
+
+<h4> Python </h4>
+<p>
+• <A HREF="https://wiki.python.org/moin/BeginnersGuide/Programmers">
+https://wiki.python.org/moin/BeginnersGuide/Programmers </a> Introductions of 
+all sorts to Python language for beginnig coders.  
+<br>
+• <A HREF=https://docs.python.org/3.0/reference/> 
+https://docs.python.org/3.0/reference</a> is Python Language Reference straight
+from the horses mouth.
+<br>
+• <A HREF=https://docs.python.org/3.0> 
+https://docs.python.org/3.0/reference/index.html</a>. Site with docs and 
+resources on Python 
+<br>
+• <A HREF="https://matplotlib.org/3.1.0/tutorials/introductory/pyplot.html">
+https://matplotlib.org/3.1.0/tutorials/introductory/pyplot.html</a>.
+Tutorial on MatPlotlib and Pyplot</a>
+<br>
+• <A HREF="https://docs.scipy.org/doc/numpy/index.html"> 
+https://docs.scipy.org/doc/numpy/index.html</a>. Tutorial and user guide to NumPy
+<br>
+• <A HREF="https://matplotlib.org/3.1.1/tutorials/introductory/pyplot.html#sphx-glr-tutorials-introductory-pyplot-py"> 
+https://matplotlib.org/3.1.1/tutorials/introductory/pyplot.html</a>. 
+Tutorial on Pyplot (part of Matplotlib based on MATLAB syntax). 
+
+<p> 
+<h4> Linux, its flavours and shells </h4>
+<p>
+• You are encouraged, but not required, to install linux on your computer. If
+you cannot and you run Windows, see the Advice for Windows users elsewhere on 
+this page - there is a linux emulation software. On art-1 there is an account 
+for you, and you will be shown a password to it, if you later forget it please 
+ask the prof via email. This system, available for your exercises, has Centos 
+6 OS.There will be a possibility to login to another node, phi-10, with a 
+similar but more recent OS named Rocky 9 (from 2025). Version numbers mean that
+these flavors are related to RedHat Linux version 6 and 9, respectively. 
+Another difference is that on art-1,2 your shell is /sh/tcsh and on Rocky linux
+it's /sh/bash (Bash shell). This will give you a chance to experiment with 
+different shells.  
+
+<br> &clubs; <a 
+href="https://www.youtube.com/playlist?list=PLxl6w8_DOOLsyk7ZokhJVO7XiJvtfg2f5">
+Centos 6 tutorials</a>
+<br> &spades; <a 
+href="https://www.youtube.com/playlist?list=PLB-l-Ezt_uPqn0l1FSINlCgOwLwiNPUl7">
+Rocky 9 tutorials</a>
+<br>
+
+To be able to do anything there, you need to learn basic Linux,
+and if you're connecting from Windows, to use an SSH (secure shell)
+client program PuTTY or similar, on your machine. The ssh is the way to connect 
+securely and work on a remote linux server, while sftp is a similar client that 
+connects for the purpose of transferring files between two machines on internet. 
+See more in the references cited on our page 
+<a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/refs"> of references 
+and literature.</a> For instance, cf. p. 52+ in Membrey's book on CentOS. 
+<p>
+• <a href="https://www.freecodecamp.org/news/the-best-linux-tutorials/">
+https://www.freecodecamp.org/news/the-best-linux-tutorials/</a>. 
+Getting Started with Linux, with links to tutorials. 
+<br>
+• <a href="http://www.linfo.org/"> http://www.linfo.org</a>. Linux info page,
+including some history pages and explanations of commands. Follow the links.</a>
+<br>
+• <a href="http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html#toc7">
+http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html#toc7 </a>. Programming in bash shell
+(Bourne-Again Shell, likely the most popular one.)
+<br>
+• <a href="https://docs.freebsd.org/44doc/usd/04.csh/paper.html">
+https://docs.freebsd.org/44doc/usd/04.csh/paper.html </a>.  Programming in csh shell.
+<br>
+• <a href="https://www.wisdomjobs.com/e-university/shell-scripting-tutorial-174.html">
+https://www.wisdomjobs.com/e-university/shell-scripting-tutorial-174.html </a>.
+ Shell scripting tutorial in different shells.
+
+
+<h4> Links about Languages </h4>
+
+• <A HREF="http://planets.utsc.utoronto.ca/~pawel/PHYD57/refs/">
+http://planets.utsc.utoronto.ca/~pawel/PHYD57/refs/ </a> This is your primary 
+reference. Remember about its confidential, sister page. 
+<p>
+Let's consider the different HPC languages a little closer. They divide into 
+those people complain about and the ones nobody uses. <p>
+Notice that,
+although we often write C/C++ (because C++ once started as a superset of C, and 
+usually a C++ compiler will compile C code), these languages call for a 
+different programming style and syntax, and the criticisms of one does not 
+automatically apply to the other. So, it could be said that in PHYD57, we give 
+you a choice to actively program in 3 different languages: Ftn, C, C++.   
+<p>
+• <a href="https://www.youtube.com/watch?v=7fGB-hjc2Gc"> 
+https://www.youtube.com/watch?v=7fGB-hjc2Gc </a>. <i>Trigger warning:</i> 
+the title of this extensive video about C++ from 2025 is "The worst programming 
+language of all time". Check the comments too. The Final Verdict (which you 
+should see) starts at 1:57:45. <p>
+• <a 
+href="https://arstechnica.com/science/2014/05/scientific-computings-future-can-any-coding-language-top-a-1950s-behemoth/"> This article </a> proposes that:
+ <i>"It certainly seems likely, in light of the above, that Fortran will remain
+the fastest option for numerical supercomputing for the foreseeable future—at 
+least if 'fast' refers to the raw speed of compiled code. But there are other
+reasons for Fortran’s staying power."</i>
+<p>
+I personally prefer Fortran for demanding research and Python and/or another 
+scripting language IDL for small tasks and visualization. 
+C/C++, in which (Unix and) Linux operating systems are written, is very useful
+too, as it sometimes provides the most direct way to tinker with graphics cards
+(GPUs) to make them do CUDA. [CUDA is the extension of C/C++ (and Nvidia 
+Fortran) that directs data transfer to/from CPU and the computation on GPU. 
+C programs are callable from Python (as we will learn),
+so you can practice multi-language programming and interfacing.
+<p>
+• <a href="https://flow.byu.edu/posts/sci-prog-lang"> 
+https://flow.byu.edu/posts/sci-prog-lang</a> Page by Andrew Ning from 
+Flight, Optimization, and Wind Laboratory. Provides views similar to my own on
+the best scientific programming languages (Python+Fortran and C but not C++, 
+Julia in the near future or now, at graduate level). 
+
+<p>
+• <a href="https://docs.julialang.org/en/v1/">
+https://docs.julialang.org/en/v1/</a>. Julia language. We don't cover it, 
+but if you already know Ftn and C/C++, then either Julia or maybe Ruby is your 
+next choice.
+<p>
+• <a href="https://www.learn-c.org/">https://www.learn-c.org</a>. Interactive C tutorial.
+<p>
+• <a href="https://beginnersbook.com/2014/01/c-tutorial-for-beginners-with-examples/">
+https://beginnersbook.com/2014/01/c-tutorial-for-beginners-with-examples</a>.
+C Tutorial – Learn C Programming with examples. Also C++. 
+<p>
+• <a href="https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/fortran.html">
+https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/fortran.html</a>.
+A Fortran tutorial</a>.
+<p>
+• <a href="https://www.youtube.com/watch?v=vcFBwt1nu2U"> Just for fun</a>.
+Semi-serious stuff on computer languages, which teaches you history of
+programming. Description of a new language called BS. 
+Combines the worst features of all existing languages. 
+
+<h4> Networking </h4>
+
+• <a href="https://www.youtube.com/playlist?list=PLQVJk9oC5JKp_8F9LPa3Pv67boA80KLm1">
+https://www.youtube.com/playlist?list=PLQVJk9oC5JKp_8F9LPa3Pv67boA80KLm1</a>
+. First of 14 videos in a series on networking. See the next ones on YT. 
+<p>
+
+
+
+<h4> Parallel computing - OpenMP </h4>
+
+
+• <a href="https://www.openmp.org/wp-content/uploads/omp-hands-on-SC08.pdf">
+https://www.openmp.org/wp-content/uploads/omp-hands-on-SC08.pdf</a>
+OpenMP, "Hands-on intro to OpenMP", a 
+slide show by Intel programmers from SC08, Austin, TX
+<br>
+
+
+• <a href="http://jakascorner.com/blog/2016/04/omp-introduction.html">
+http://jakascorner.com/blog/2016/04/omp-introduction.html </a>
+OMP: Introduction  
+
+<br>
+
+• <a href="http://jakascorner.com/blog/2016/05/omp-for.html">
+http://jakascorner.com/blog/2016/05/omp-for.html </a>
+OMP: for loops
+<br>
+
+• <a href="http://jakascorner.com/blog/2016/05/omp-sections.html">
+http://jakascorner.com/blog/2016/05/omp-for-sections.html </a>
+OMP: Sections
+<br> 
+
+• <a href="http://jakascorner.com/blog/2016/06/omp-for-scheduling.html">
+http://jakascorner.com/blog/2016/06/omp-for-scheduling.html </a>
+ OMP: for loop scheduling (assignment of threads to pieces of work)
+
+<br>
+
+• <a href="http://jakascorner.com/blog/2016/06/omp-for-reduction.html">
+http://jakascorner.com/blog/2016/06/omp-for-reduction.html </a>
+ OMP: Reduction
+
+<br>
+
+• <a href="https://www.openmp.org/wp-content/uploads/openmp-4.5.pdf">
+https://www.openmp.org/wp-content/uploads/openmp-4.5.pdf </a> 
+OpenMP, a detailed manual by the creators
+<br>
+
+
+• <a href="https://www.openmp.org/wp-content/uploads/openmp-4.5.pdf">
+https://www.openmp.org/wp-content/uploads/openmp-4.5.pdf </a> 
+OpenMP, examples in C(++) and Fortran. Lots of code fragments, with 
+some advanced concepts.
+<br>
+
+• <a href="https://software.intel.com/en-us/articles/performance-obstacles-for-threading-how-do-they-affect-openmp-code">
+ https://software.intel.com/en-us/articles/performance-obstacles-for-threading-how-do-they-affect-openmp-code</a>, 
+this page discusses the Performance Obstacles in fork-join parallelism using 
+OpenMP.
+<br>
+
+<h4> Parallel computing - CUDA C  and CUDA Fortran </h4>
+
+CUDA used to be an acronym (Compute Unified Device Archit.) It happens to
+be somewhat of an inside joke for people coming from my part of the world. The 
+word "cuda" (pron.: chuda or tsuda) means "miracles" in all Slavic languages, as
+well as in Hungarian (csodák, pron.: chodak). In Serbo-Croatian "čudak" means a 
+weirdo :/] We do learn to perform miracles in this course. 
+<br>
+Below you'll find a lot of internet resources. Remember to read 
+materials on our extra page with pdf's (see 1st announcement email if you 
+forgot how to access it).
+<p>
+• <a href="https://devblogs.nvidia.com/easy-introduction-cuda-fortran/">
+CUDA Fortran blog</a> by Greg Ruetsch (author of one of recommended books on 
+extra page.)<br>
+
+• <a href="https://devblogs.nvidia.com/even-easier-introduction-cuda/">
+CUDA C blog by Mark Harris, NVIDIA</a><br>
+
+• <a href="http://www.int.washington.edu/PROGRAMS/12-2c/week3/clark_01.pdf">
+CUDA C presentation </a> - different modes of usage, by Cyril Zeller, NVIDIA.<br>
+
+• <a href="http://planets.utsc.utorolnto.ca/~pawel/PHYD57/CUDA_C_Programming_Guide.pdf">
+CUDA C Programming Guide.</a> Detailed. Definitive (By Nvidia!). Read the 
+first 30 pages.<br>
+
+• <a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/CUFFT_Library.pdf">
+CUFFT library description - useful when you need FFT.</a> 
+When mastered, the world of DSP is yours. Contains code examples.<br>
+
+• <a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/CUDA_Compiler_Driver_NVCC.pdf">
+CUDA nvcc compiler manual </a><br>
+
+• <a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/CUDA_Fortran_paper.pdf"> 
+Paper comparing CUDA in Fortran and C with CPU </a> performance, as a function 
+of job size. <br>
+
+• <a href="https://www.drdobbs.com/parallel/cuda-supercomputing-for-the-masses-part/207200659">
+Dr. Dobbs blog CUDA, Supercomputing for the Masses. </a> Links to all 12 pieces. 
+Old but informative.<br>
+
+• <a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/pgi18cudaforug.pdf">
+CUDA Fortran compiler, PGI ver.18 User Guide </a><br>
+
+• <a href="http://planets.utsc.utoronto.ca/~pawel/PHYD57/pgi18ug-x86.pdf">
+Fortran compiler, PGI ver.18 User Guide </a><br>
+ • Let's end with a GPU version of a program using CUDA. </i> 
+Compile with PGI Fortran compiler pgf90/95 on art-1/Centos, or nvfortran on 
+art-16/Rocky:
+ <a href="http://planets.utsc.utoronto.ca/~pawel/progD57/tetraDg-3.f95">
+http://planets.utsc.utoronto.ca/~pawel/progD57/tetraDg-3.f95</a>. Find some 
+results on art-1 at the bottom of program listing. Newer GPU on art-16 computes
+up to 3x faster. 
+<br>   
+
+
+<h4> Old and new technologies </h4>
+
+• <a href="https://www.hpcwire.com/"> hpcwire.com</a> is a journal of HPC.
+<br> 
+• <a href="https://www.scientific-computing.com/"> 
+https://www.scientific-computing.com - if you want to dig (a tiny little bit) 
+below the surface level of buzzwords.
+<br>
+• <a href="https://www.youtube.com/watch?time_continue=414&v=Qm-LLfDPYYQ&feature=emb_logo">
+ https://www.youtube.com/watch?time_continue=414&v=Qm-LLfDPYYQ&feature=emb_logo</a>. 
+The Coming Age of Extreme Heterogeneity ǀ Jeffrey Vetter. ORNL
+<br>
+• Overview of <a href=
+"https://www.admin-magazine.com/HPC/Articles/Desktop-Supercomputers-Past-Present-and-Future">
+desktop supercomputing</a>, in the past and recently (written in 2021).
+
+<h4> <font color=magenta> 
+Connectivity (ciphers) to login to the cluster </font></h4>
+
+Try using these options to ssh, creating an alias like so (it's not 
+important but you can change 38 to some other number between, say, 30 and 90, 
+so we don't ping the machines at the same time interval):
+ <br>
+alias ssh='ssh -X -o TCPKeepAlive=no -o ServerAliveInterval=38 <font color=red>
+-o HostKeyAlgorithms=+ssh-dss</font>'
+
+
+<h4> <font color=green> Navier-Stokes blow-up (Millenium Problem) 
+problem solved on September 8, 2026?
+ </font></h4> 
+
+We will spend a few moments talking about the Millenium prize problem involving 
+the Navier-Stokes equation blow-up in finite time, supposedly just solved
+on September 8, 2026 by company OpenAI, using lots of graphics cards (GPUs). 
+Since nobody yet seems to understand the 160+ page math proof, even after asking
+(I'm sure many tried) AI to summarize it, for now you can only listen to 
+discussions of a feud this already caused among the AI teams like Anthropic and 
+OpenAI, such as this: 
+<a href="https://www.youtube.com/watch?v=cvTHBXyXM2I"> 
+The Controversy Behind AI Solving A Million Dollar Math Problem.</a>
+
+<p>
+<p>
+<hr>
+&copy; Pawel Artymowicz (2026)
+</body>
+</html>

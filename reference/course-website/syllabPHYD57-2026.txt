@@ -1,0 +1,133 @@
+2026 SYLLABUS for course PHYD57,  Advanced Computational Methods in Physics 
+
+Lecturer: prof. Pawel Artymowicz  pawel.artymowicz@utoronto.ca ; please put 
+PHYD57 in the subject line otherwise mail may be misplaced. Please use your 
+mail.utoronto.ca account, not gmail! My answers to gmail often get lost.)
+Expect tha the answer may come from yahoo.com (temporary troubles with sending
+mail from planets server, incoming mail not affected.)
+________________________________________________________________________________
+Lectures (L1..L12, 2 hrs with a break) are immediately followed by 1 hr tutorial 
+(T1..T10). We meet in HLB108 on Fridays, 11:00 to 14:00. 
+Deadlines for sets of assignments/projects, denoted A1-A4, are at 11 am. 
+Assignments are posted >= 7 days before they are due. 
+  
+Date_____Event_____________________Comments____________________________________
+September:                                     
+ 11  	L1,  T1       
+ 18  	L2z                         L2 is synchron. online (on zoom)
+ 25     L3,  T2                                 	    
+October:
+  2 	L4,  T3,  A1    
+  9  	L5,  T4         
+ 16  	L6,  T5,  A2                please form groups for A4 by this date
+ 23  	L7,  T6              <--- midterm in class (11:10-12:10) 
+ 30  	-- (reading week)  
+November:  
+  6  	L8,  T7
+ 13 	L9,  T8 
+ 20  	L10,      A3 
+ 27  	L11, T9    
+December:  
+ 4      L12, T10, A4              
+ ??  	Final*  
+______________________________________________________________________________ 
+*) - 3hr final exam in person. It will consist of a computer-free first part 
+(quiz + written problems in the booklet), taking about 1.5 hrs, and the 2nd
+part that requires computing. Please MAKE PRIOR ARRANGEMENTS to bring a 
+computer (laptop, tablet) that will assist you with the following: 
+(i) edit text files (programs), 
+(ii) compile & run programs in C(++) or Fortran (your choice) or connect via
+command-line interface like ssh or puTTY to art-1 or art-2 linux server,
+to do that remotely, 
+(iii) submit files with your results to Quercus.
+For the first part of the exam, please also bring a calculator. Use of any 
+remote help (www browser, "AI" etc.) during the exam(s) is forbidden.  
+______________________________________________________________________________ 
+  
+Detailed contents of the course
+
+will evolve slightly. Please re-download this file weekly. 
+
+1	Structure and scope of the course
+	Syllabus of PHYD57
+	Numerical Comp. in Physical Sciences: History and Contemporary efforts
+	
+2	HPC: need for speed, why and how
+	History and modernity: microprocessors, Unix, Linux, and Internet
+	Intro to Linux (CentOS)
+	Command line interface and shells (bash and tcsh)
+	Text editors: vi, nano, gedit, micro
+
+3	Connectivity (ssh & sftp, traceroute & ping)
+	Securing the linux system against break-ins via /etc/hosts.deny
+	Basic Linux shells and commands (bash, tcsh, cd, ls, ps, cd, &, bg, fg, 
+	   alias, export/setenv, rm, output redirection to file via >)
+	Getting more info: manual pages (man), -h, --help, or -help modifiers
+	Recommended compilers:  GNU: gcc, gfortran; Intel: icc, ifort or ifx; 
+       		Nvidia: nvcc/nvc++, nvfortran (formerly pgf95) 
+	Simple program in C, Fortran95, Python, Matlab, IDL (Schoerghofer,p.30)
+	More complex program, example of HPC:
+		2nd order Laplace operator stencil for the diffusion equation
+	Speed comparison of C/F95 with Python & Numpy: why we learn HPC
+
+4	C and Fortran 95 - compilers, basic usage  
+	Numerical puzzle of 711 - learning C and Fortran
+	Kruskal counts and their connection to linked lists
+	Coding Kruskal counts trick in Python and Fortran 
+	C: Language overview, compilers
+	Integration with Python: calling C from Python
+	Examples of programs
+		
+5	Dicussion of the solutions of A2 assignment set 
+	More Fortran. Monte Carlo method (MtC)
+	Examples of programs: Random numbers and MtC (finding π)
+	Slow convergence: const./sqrt(N) scaling of error in MtC
+	Parallel execution on CPU using OpenMP fork-join method in loops
+ 	Parallel implementations: in-depth diffusion equation 
+
+6	Modern computing in the era of Integrated Circuits
+	2000s: Appearence of barriers to single-thread computing
+	The only solution: parallelism 
+	Moore's law: sustainable or not?
+
+7	Introduction to various offered group projects (A4) 
+	CPU and MIC (many integrated cores, Xeon Phi)
+	art and phi cluster at UTSC
+	Supercomputers and supercomputing in 2020s
+	Particle disks on an MIC cluster
+	More C. Multi-dimensional arrays in C vs. Fortran
+	
+8	Parallelization via OpenMP in C and F
+	Segmentation faults due to limited stack
+	Bottlenecks: Computation vs. RAM bandwidth (on CPU) 
+	Calling C functions from Python
+	Graphics in Fortran and C: DISLIN library 
+	Parallel implementations: diffusion and wave equation
+	Linked lists, nearest neighbor search 
+	Smoothed Particle Hydrodynamics implementation 
+
+9 	Computations with CPU vs. MIC vs. CUDA 
+	Automatic vectorization and compiler reports
+	Optically thick disk calculation (IRI) 
+	N-body integration methods and implementations
+	Basic Neural Net: teaching a broom to stand upside down
+
+10	Interaction of protoplanets with 3D particle and gas disks
+	Fluids by Eulerian vs. Lagrangian methods: CPU and GPU. 
+	Incompressible flow alorithm (fluidsGL)
+	Fourier integral & discrete transform. FFT, N lnN scaling.  
+	Gravitational potential by FFT convolution
+	Aliasing and zero-padding
+	Examples of simple GPU programs written in CUDA Fortran
+	
+11	Discussion of assignment A3 solutions 
+	Simple GPU programs in CUDA C/C++
+	CUDA computation of tetrahedrons puzzle & Laplacians
+	Introduction to MPI 	
+	What are NNs and why do they work despite the dimensionality curse
+	Machine Learning, Artificial Intelligence, Neural Networks
+	The overfitting problem [Gershenfeld "The Nature of Mathematical 
+		Modeling" (1999)]
+	Optimum Search: Simplex (Nelder-Mead) method
+
+12 	Presentation of your A4 group projects
