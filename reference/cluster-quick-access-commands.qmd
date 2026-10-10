@@ -1,0 +1,86 @@
+---
+title: "PHYD57 HPC Cluster Quick Access Reference"
+subtitle: "CLI connection commands, SSH config shorthand, proxy jumps, and access topology for phi-10, art-1, art-2, and art-16."
+date: "2026-10-10"
+draft: false
+categories: [HPC, Linux, SSH, Systems, PHYD57]
+---
+
+## 1. Shorthand Commands via `~/.ssh/config`
+
+When using your local configuration in `~/.ssh/config`, the connection aliases route traffic through the appropriate gateway and host key algorithms automatically:
+
+```bash
+# Gateway GPU node (Rocky Linux / Dual RTX 3090 + RTX 3080 Ti & Intel oneAPI)
+ssh phi-10
+
+# Legacy master node (CentOS 6.6, gfortran, DISLIN graphics — jumps through phi-10)
+ssh art-1
+
+# Classroom exercise node (CentOS 6.6 — jumps through phi-10)
+ssh art-2
+
+# 16-Core modern compute node (Rocky Linux 9.6, internal cluster backplane via art-1)
+ssh art-16
+```
+
+---
+
+## 2. Direct CLI Commands (Bypassing SSH Config)
+
+If connecting from a fresh machine, lab workstation, or portable terminal without `~/.ssh/config`:
+
+### `phi-10` (Public Gateway / GPU Node)
+```bash
+ssh -X phyd57@phi-10.utsc.utoronto.ca
+```
+
+### `art-1` (Legacy Master Node — Requires DSA Host Key)
+- **On-campus / Direct UTSC Network:**
+  ```bash
+  ssh -X -o HostKeyAlgorithms=+ssh-dss phyd57@art-1.utsc.utoronto.ca
+  ```
+- **Off-campus (Proxy Jump through `phi-10`):**
+  ```bash
+  ssh -J phyd57@phi-10.utsc.utoronto.ca -X -o HostKeyAlgorithms=+ssh-rsa,ssh-dss phyd57@art-1.utsc.utoronto.ca
+  ```
+
+### `art-2` (Exercise Node — Proxy Jump through `phi-10`)
+```bash
+ssh -J phyd57@phi-10.utsc.utoronto.ca -X -o HostKeyAlgorithms=+ssh-rsa,ssh-dss phyd57@art-2.utsc.utoronto.ca
+```
+
+### `art-16` (16-Core Modern CPU Node — Dual Jump via `phi-10` and `art-1`)
+```bash
+ssh -J phyd57@phi-10.utsc.utoronto.ca,phyd57@art-1.utsc.utoronto.ca -X phyd57@192.168.100.160
+```
+
+---
+
+## 3. Account Credentials
+
+- **Username:** `phyd57`
+- **Classroom Password:** `[REDACTED — Provided in class / stored in private draft]`
+
+---
+
+## 4. Node Role & Specification Matrix
+
+| Hostname | Role | OS | Hardware / Compilers | Access Route |
+| :--- | :--- | :--- | :--- | :--- |
+| **`phi-10`** | Gateway & GPU Compute | Rocky Linux | Dual RTX 3090 + RTX 3080 Ti, Intel oneAPI (`icx`, `ifx`, MKL) | Public IP (`142.1.98.212`) |
+| **`art-1`** | Legacy Master Node | CentOS 6.6 | GNU Fortran (`gfortran`), DISLIN graphics, course archives | Jumps through `phi-10` |
+| **`art-2`** | Classroom Exercises | CentOS 6.6 | GNU Fortran, OpenMP exercises | Jumps through `phi-10` |
+| **`art-16`** | High-Throughput CPU | Rocky Linux 9.6 | 16-Core CPU, OpenMP / MPI multi-threaded jobs | Backplane (`192.168.100.160`) via `art-1` |
+
+---
+
+## 5. File Synchronization One-Liners
+
+```bash
+# Upload a Fortran file to art-1
+scp -o ProxyJump=phyd57@phi-10.utsc.utoronto.ca simulation.f95 phyd57@art-1.utsc.utoronto.ca:~/
+
+# Download DISLIN plot outputs from art-1
+scp -o ProxyJump=phyd57@phi-10.utsc.utoronto.ca phyd57@art-1.utsc.utoronto.ca:~/dislin_plot.ps ./
+```
