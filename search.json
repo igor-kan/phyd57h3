@@ -21,25 +21,46 @@
     "text": "🚀 Numerical Physics Simulation Suite\nThe repository includes implementations across key computational physics domains:\n\nGPU Computing (CUDA & Fortran): SAXPY kernels, 2D Laplace relaxation solvers (cudafor-laplace3-dp.f95, ifor-laplace3-dp.f90, pgf-laplace3-dp.f95), GPU memory benchmarks.\nAstrophysics & N-Body: Gravitational 4-body tetrahedral choreographies (tetraDc.f90), N-body cluster integrations (simpler-nb-0.f90), exoplanet orbit fits (kepl-GJ-3512b.py).\nWave & PDE Dynamics: 2D wave equations on shallow water surfaces (pond1.py–pond4.py), double-slit wave diffraction (pond4-2slits4.py), 5-point discrete stencils (laplacian-5t.py).\nControl Theory & Chaos: Nonlinear physical pendulum (phys-pendulum.py), broom-balancing inverted pendulums (broom-ctrl-5.f95, inv-pend-ctrl-4a.f95).\nMonte Carlo & Numerical Quadrature: \\(\\pi\\) convergence scaling (simple_mtc_pi.py), random walks, continued fractions, root finding (simple_newton.py, simple_bisec.py)."
   },
   {
-    "objectID": "reference/index.html",
-    "href": "reference/index.html",
-    "title": "Reference & Math",
+    "objectID": "reference/cluster-quick-access-commands.html",
+    "href": "reference/cluster-quick-access-commands.html",
+    "title": "PHYD57 HPC Cluster Quick Access Reference",
     "section": "",
-    "text": "NoteReference Materials Archive\n\n\n\nLinux command guides, cluster connection workflows, and compiler flags are maintained in the private course repository. A static local mirror of the course website is preserved in reference/course-website/."
+    "text": "When using your local configuration in ~/.ssh/config, the connection aliases route traffic through the appropriate gateway and host key algorithms automatically:\n# Gateway GPU node (Rocky Linux / Dual RTX 3090 + RTX 3080 Ti & Intel oneAPI)\nssh phi-10\n\n# Legacy master node (CentOS 6.6, gfortran, DISLIN graphics — jumps through phi-10)\nssh art-1\n\n# Classroom exercise node (CentOS 6.6 — jumps through phi-10)\nssh art-2\n\n# 16-Core modern compute node (Rocky Linux 9.6, internal cluster backplane via art-1)\nssh art-16"
   },
   {
-    "objectID": "reference/index.html#technical-references-documentation",
-    "href": "reference/index.html#technical-references-documentation",
-    "title": "Reference & Math",
-    "section": "📚 Technical References & Documentation",
-    "text": "📚 Technical References & Documentation\n\nCourse Website Mirror: Archived static copies of course home, assignment sheets, syllabi (2024 & 2026), and visual assets in reference/course-website/.\nTextbook & Reading Recommendations: Detailed syllabus-by-syllabus reading list, textbook chapters, and preparation roadmap in Textbook-and-Reading-Recommendations.md.\nTextbooks & Literature: 118 textbook volumes covering History of Computing, Linux HPC, Fortran 90/95/2018, CUDA C/C++, OpenMP, Numerical Analysis, and Machine Learning organized in reference/textbooks/.\nCluster Workflow & Admin: Midterm exam materials, academic integrity guides, and SSH/PuTTY cluster profiles in reference/admin/."
+    "objectID": "reference/cluster-quick-access-commands.html#shorthand-commands-via-.sshconfig",
+    "href": "reference/cluster-quick-access-commands.html#shorthand-commands-via-.sshconfig",
+    "title": "PHYD57 HPC Cluster Quick Access Reference",
+    "section": "",
+    "text": "When using your local configuration in ~/.ssh/config, the connection aliases route traffic through the appropriate gateway and host key algorithms automatically:\n# Gateway GPU node (Rocky Linux / Dual RTX 3090 + RTX 3080 Ti & Intel oneAPI)\nssh phi-10\n\n# Legacy master node (CentOS 6.6, gfortran, DISLIN graphics — jumps through phi-10)\nssh art-1\n\n# Classroom exercise node (CentOS 6.6 — jumps through phi-10)\nssh art-2\n\n# 16-Core modern compute node (Rocky Linux 9.6, internal cluster backplane via art-1)\nssh art-16"
   },
   {
-    "objectID": "index.html#course-roadmap-calendar-fall-2025",
-    "href": "index.html#course-roadmap-calendar-fall-2025",
-    "title": "PHYD57H3: Advanced Computational Methods in Physics",
-    "section": "📅 Course Roadmap & Calendar (Fall 2025)",
-    "text": "📅 Course Roadmap & Calendar (Fall 2025)\nLectures: Fridays 11:00–13:00 in HLB108 · Tutorials: Fridays 13:00–14:00 in HLB108\nAssignment Deadlines (A1–A4) are at 11:00 AM on specified Fridays.\n\n\n\n\n\n\n\n\n\nDate\nEvent\nCore Topics & Compilers\nDeadlines & Milestones\n\n\n\n\n11 Sep\nL1, T1\nScope of HPC; History of Scientific Computing & Architecture\n\n\n\n18 Sep\nL2z\nLinux CLI (CentOS/Rocky), Shells (bash/tcsh), Editors\nSynchronous online (Zoom)\n\n\n25 Sep\nL3, T2\nConnectivity (ssh/sftp); Compilers (gcc, gfortran, ifort, nvcc)\nPython vs C/F95 Benchmarks\n\n\n02 Oct\nL4, T3\nC & Fortran 95 Syntax; 711 Puzzle; Calling C from Python\nAssignment #1 Due (11:00 AM)\n\n\n09 Oct\nL5, T4\nMonte Carlo Methods; OpenMP Fork-Join Parallelism on CPU\n\n\n\n16 Oct\nL6, T5\nMicroprocessor Limits, Multicore Scaling & Moore’s Law\nAssignment #2 Due (Form A4 Groups)\n\n\n23 Oct\nL7, T6\nMany Integrated Cores (MIC / Xeon Phi); UTSC Clusters\nIn-Class Midterm (11:10–12:10)\n\n\n30 Oct\n–\nReading Week (No Classes or Tutorials)\nStudy Break\n\n\n06 Nov\nL8, T7\nOpenMP in C & Fortran; RAM Bandwidth Bottlenecks; DISLIN\nSPH Fluid Dynamics Intro\n\n\n13 Nov\nL9, T8\nCPU vs MIC vs GPU; N-body Solvers; Inverted Broomstick AI\n\n\n\n20 Nov\nL10\nFluid Dynamics (Eulerian vs Lagrangian); FFT Gravitational Solvers\nAssignment #3 Due (11:00 AM)\n\n\n27 Nov\nL11, T9\nGPU Computing in CUDA C/Fortran; Introduction to MPI\nOptimization & Neural Nets\n\n\n04 Dec\nL12, T10\nCapstone Presentation of A4 Group Projects\nAssignment #4 Project Due\n\n\nDec Period\nFinal*\nComprehensive Final Examination (3 Hours: Theory + Coding)\nScheduled by Registrar\n\n\n\n\n\n\n\n\n\nNoteCourse Schedule & Grading Notes\n\n\n\nCourse grading: Assignments A1–A3 (21%), Group Project A4 (23%), Midterm Exam (16%), Final Exam (40%). Detailed policies on cluster usage (art-1, art-2), late submissions, and academic integrity are in the official course syllabus on Quercus and in private course materials."
+    "objectID": "reference/cluster-quick-access-commands.html#direct-cli-commands-bypassing-ssh-config",
+    "href": "reference/cluster-quick-access-commands.html#direct-cli-commands-bypassing-ssh-config",
+    "title": "PHYD57 HPC Cluster Quick Access Reference",
+    "section": "2. Direct CLI Commands (Bypassing SSH Config)",
+    "text": "2. Direct CLI Commands (Bypassing SSH Config)\nIf connecting from a fresh machine, lab workstation, or portable terminal without ~/.ssh/config:\n\nphi-10 (Public Gateway / GPU Node)\nssh -X phyd57@phi-10.utsc.utoronto.ca\n\n\nart-1 (Legacy Master Node — Requires DSA Host Key)\n\nOn-campus / Direct UTSC Network:\nssh -X -o HostKeyAlgorithms=+ssh-dss phyd57@art-1.utsc.utoronto.ca\nOff-campus (Proxy Jump through phi-10):\nssh -J phyd57@phi-10.utsc.utoronto.ca -X -o HostKeyAlgorithms=+ssh-rsa,ssh-dss phyd57@art-1.utsc.utoronto.ca\n\n\n\nart-2 (Exercise Node — Proxy Jump through phi-10)\nssh -J phyd57@phi-10.utsc.utoronto.ca -X -o HostKeyAlgorithms=+ssh-rsa,ssh-dss phyd57@art-2.utsc.utoronto.ca\n\n\nart-16 (16-Core Modern CPU Node — Dual Jump via phi-10 and art-1)\nssh -J phyd57@phi-10.utsc.utoronto.ca,phyd57@art-1.utsc.utoronto.ca -X phyd57@192.168.100.160"
+  },
+  {
+    "objectID": "reference/cluster-quick-access-commands.html#account-credentials",
+    "href": "reference/cluster-quick-access-commands.html#account-credentials",
+    "title": "PHYD57 HPC Cluster Quick Access Reference",
+    "section": "3. Account Credentials",
+    "text": "3. Account Credentials\n\nUsername: phyd57\nClassroom Password: [REDACTED — Provided in class / stored in private draft]"
+  },
+  {
+    "objectID": "reference/cluster-quick-access-commands.html#node-role-specification-matrix",
+    "href": "reference/cluster-quick-access-commands.html#node-role-specification-matrix",
+    "title": "PHYD57 HPC Cluster Quick Access Reference",
+    "section": "4. Node Role & Specification Matrix",
+    "text": "4. Node Role & Specification Matrix\n\n\n\n\n\n\n\n\n\n\nHostname\nRole\nOS\nHardware / Compilers\nAccess Route\n\n\n\n\nphi-10\nGateway & GPU Compute\nRocky Linux\nDual RTX 3090 + RTX 3080 Ti, Intel oneAPI (icx, ifx, MKL)\nPublic IP (142.1.98.212)\n\n\nart-1\nLegacy Master Node\nCentOS 6.6\nGNU Fortran (gfortran), DISLIN graphics, course archives\nJumps through phi-10\n\n\nart-2\nClassroom Exercises\nCentOS 6.6\nGNU Fortran, OpenMP exercises\nJumps through phi-10\n\n\nart-16\nHigh-Throughput CPU\nRocky Linux 9.6\n16-Core CPU, OpenMP / MPI multi-threaded jobs\nBackplane (192.168.100.160) via art-1"
+  },
+  {
+    "objectID": "reference/cluster-quick-access-commands.html#file-synchronization-one-liners",
+    "href": "reference/cluster-quick-access-commands.html#file-synchronization-one-liners",
+    "title": "PHYD57 HPC Cluster Quick Access Reference",
+    "section": "5. File Synchronization One-Liners",
+    "text": "5. File Synchronization One-Liners\n# Upload a Fortran file to art-1\nscp -o ProxyJump=phyd57@phi-10.utsc.utoronto.ca simulation.f95 phyd57@art-1.utsc.utoronto.ca:~/\n\n# Download DISLIN plot outputs from art-1\nscp -o ProxyJump=phyd57@phi-10.utsc.utoronto.ca phyd57@art-1.utsc.utoronto.ca:~/dislin_plot.ps ./"
   },
   {
     "objectID": "problems/index.html",
@@ -54,6 +75,27 @@
     "title": "Problem Sets & Projects",
     "section": "📝 Course Assignments & Projects (Fall 2026)",
     "text": "📝 Course Assignments & Projects (Fall 2026)\n\n\n\n\n\n\n\n\n\nAssessment\nDue Date\nCore Topics\nStatus / Notes\n\n\n\n\nAssignment 1 (A1)\nOct 02, 2026\nFinite difference stencils (\\(O(h^2)\\) second derivatives), truncation vs roundoff error trade-off (\\(h_{opt} \\approx \\epsilon^{1/4}\\)), Maximum subarray algorithm, projectile drag physics\nSucceeded & Solutions Archived\n\n\nAssignment 2 (A2)\nOct 16, 2026\nMonte Carlo integration (\\(\\pi\\) convergence), diffusion equation & OpenMP parallelization\nIn Progress\n\n\nMidterm Exam\nOct 23, 2026\nTheoretical quiz + written problems + computational execution\n2025 Past Exam & Solution in reference/admin/\n\n\nAssignment 3 (A3)\nNov 20, 2026\nGPU acceleration with CUDA (C & Fortran), FFT convolutions\nUpcoming\n\n\nGroup Project (A4)\nDec 04, 2026\nFinal HPC simulation report & presentation (N-body, SPH, aerodynamics, finance)\nGroup formations due Oct 16"
+  },
+  {
+    "objectID": "index.html#course-roadmap-calendar-fall-2025",
+    "href": "index.html#course-roadmap-calendar-fall-2025",
+    "title": "PHYD57H3: Advanced Computational Methods in Physics",
+    "section": "📅 Course Roadmap & Calendar (Fall 2025)",
+    "text": "📅 Course Roadmap & Calendar (Fall 2025)\nLectures: Fridays 11:00–13:00 in HLB108 · Tutorials: Fridays 13:00–14:00 in HLB108\nAssignment Deadlines (A1–A4) are at 11:00 AM on specified Fridays.\n\n\n\n\n\n\n\n\n\nDate\nEvent\nCore Topics & Compilers\nDeadlines & Milestones\n\n\n\n\n11 Sep\nL1, T1\nScope of HPC; History of Scientific Computing & Architecture\n\n\n\n18 Sep\nL2z\nLinux CLI (CentOS/Rocky), Shells (bash/tcsh), Editors\nSynchronous online (Zoom)\n\n\n25 Sep\nL3, T2\nConnectivity (ssh/sftp); Compilers (gcc, gfortran, ifort, nvcc)\nPython vs C/F95 Benchmarks\n\n\n02 Oct\nL4, T3\nC & Fortran 95 Syntax; 711 Puzzle; Calling C from Python\nAssignment #1 Due (11:00 AM)\n\n\n09 Oct\nL5, T4\nMonte Carlo Methods; OpenMP Fork-Join Parallelism on CPU\n\n\n\n16 Oct\nL6, T5\nMicroprocessor Limits, Multicore Scaling & Moore’s Law\nAssignment #2 Due (Form A4 Groups)\n\n\n23 Oct\nL7, T6\nMany Integrated Cores (MIC / Xeon Phi); UTSC Clusters\nIn-Class Midterm (11:10–12:10)\n\n\n30 Oct\n–\nReading Week (No Classes or Tutorials)\nStudy Break\n\n\n06 Nov\nL8, T7\nOpenMP in C & Fortran; RAM Bandwidth Bottlenecks; DISLIN\nSPH Fluid Dynamics Intro\n\n\n13 Nov\nL9, T8\nCPU vs MIC vs GPU; N-body Solvers; Inverted Broomstick AI\n\n\n\n20 Nov\nL10\nFluid Dynamics (Eulerian vs Lagrangian); FFT Gravitational Solvers\nAssignment #3 Due (11:00 AM)\n\n\n27 Nov\nL11, T9\nGPU Computing in CUDA C/Fortran; Introduction to MPI\nOptimization & Neural Nets\n\n\n04 Dec\nL12, T10\nCapstone Presentation of A4 Group Projects\nAssignment #4 Project Due\n\n\nDec Period\nFinal*\nComprehensive Final Examination (3 Hours: Theory + Coding)\nScheduled by Registrar\n\n\n\n\n\n\n\n\n\nNoteCourse Schedule & Grading Notes\n\n\n\nCourse grading: Assignments A1–A3 (21%), Group Project A4 (23%), Midterm Exam (16%), Final Exam (40%). Detailed policies on cluster usage (art-1, art-2), late submissions, and academic integrity are in the official course syllabus on Quercus and in private course materials."
+  },
+  {
+    "objectID": "reference/index.html",
+    "href": "reference/index.html",
+    "title": "Reference & Math",
+    "section": "",
+    "text": "NoteReference Materials Archive\n\n\n\nLinux command guides, cluster connection workflows, and compiler flags are maintained in the private course repository. A static local mirror of the course website is preserved in reference/course-website/."
+  },
+  {
+    "objectID": "reference/index.html#technical-references-documentation",
+    "href": "reference/index.html#technical-references-documentation",
+    "title": "Reference & Math",
+    "section": "📚 Technical References & Documentation",
+    "text": "📚 Technical References & Documentation\n\nCourse Website Mirror: Archived static copies of course home, assignment sheets, syllabi (2024 & 2026), and visual assets in reference/course-website/.\nTextbook & Reading Recommendations: Detailed syllabus-by-syllabus reading list, textbook chapters, and preparation roadmap in Textbook-and-Reading-Recommendations.md.\nTextbooks & Literature: 118 textbook volumes covering History of Computing, Linux HPC, Fortran 90/95/2018, CUDA C/C++, OpenMP, Numerical Analysis, and Machine Learning organized in reference/textbooks/.\nCluster Workflow & Admin: Midterm exam materials, academic integrity guides, and SSH/PuTTY cluster profiles in reference/admin/."
   },
   {
     "objectID": "reference/Textbook-and-Reading-Recommendations.html",

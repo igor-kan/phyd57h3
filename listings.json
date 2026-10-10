@@ -4,12 +4,14 @@
     "items": []
   },
   {
-    "listing": "/reference/index.html",
+    "listing": "/problems/index.html",
     "items": []
   },
   {
-    "listing": "/problems/index.html",
-    "items": []
+    "listing": "/reference/index.html",
+    "items": [
+      "/reference/cluster-quick-access-commands.html"
+    ]
   },
   {
     "listing": "/notes/index.html",
