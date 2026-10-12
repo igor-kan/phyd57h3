@@ -1,0 +1,146 @@
+---
+title: "PHYD57 Programming Languages, Standards, and Compiler Toolchain Reference"
+subtitle: "Definitive breakdown of Fortran, C, C++, CUDA, OpenMP versions, language standards, and cluster compiler flags for PHYD57."
+date: "2026-10-12"
+draft: false
+categories: [PHYD57, HPC, Fortran, C, C++, CUDA, OpenMP, Compilers]
+---
+
+# PHYD57 Programming Languages & Standards Specification
+
+This guide documents the exact language standards, compiler versions, and flag configurations tested and required for **PHYD57 (Advanced Computational Methods in Physics)** under Prof. Pawel Artymowicz.
+
+---
+
+## 1. Definitive Standards & Versions Matrix
+
+| Component | Standard / Dialect | Compiler(s) | Supported Node / Platform | Primary Course Applications |
+| :--- | :--- | :--- | :--- | :--- |
+| **Fortran** | **Fortran 95 / 2003 / 2008** (free-form, lowercase) | `gfortran`, `nvfortran` (PGI `pgf95`), `ifx` / `ifort` | `phi-10`, `art-1`, `art-2`, `art-16`, Local | Numerical root finding, ODE/PDE stencils, Monte Carlo $\pi$, N-body |
+| **C** | **C99 / C11** (ANSI C) | `gcc`, `icc` / `icx` | `phi-10`, `art-1`, `art-2`, `art-16`, Local | 711 puzzle, low-level stencils, Python C-extensions (`.so` via `ctypes`) |
+| **C++** | **C++14 / C++17** (procedural / STL) | `g++`, `icpx` / `icpc` | `phi-10`, `art-16`, Local | High-performance linear algebra, SPH particle tracking |
+| **OpenMP** | **OpenMP 3.1 / 4.5 / 5.0** | GCC (`-fopenmp`), NVHPC (`-mp`), Intel (`-qopenmp`) | CPU nodes (`art-16`, `phi-10`, Local) | Shared-memory loop parallelization (fork-join), 2D diffusion |
+| **CUDA** | **CUDA 11.x / 12.x** (CUDA C/C++ & CUDA Fortran) | `nvcc` (CUDA C), `nvfortran` (CUDA Fortran) | GPU node (`phi-10`, Dual RTX 3090) | SAXPY, 2D Laplace GPU solver, tetrahedrons puzzle, GPU reduction |
+| **Python** | **Python 3.10+ / 3.11+** (NumPy, SciPy, Matplotlib) | `python3` | All nodes & local | Rapid prototyping, A1 problem sets, plotting, orchestrating C shared objects |
+
+---
+
+## 2. Fortran: What Version and Style to Use
+
+### Allowed & Expected Standards
+* **Standards to use**: **Fortran 95 (`.f95`)** and modern **Fortran 2003/2008 (`.f90`)**.
+* **Syntactic Style Rules (Mandatory per Course Policy)**:
+  * **Free-form formatting**: No rigid column 7 statements or fixed-format card conventions.
+  * **Lowercase syntax**: Write all keywords and variables in lowercase (e.g. `subroutine`, `implicit none`, `do i = 1, n`). The course notes explicitly state: *"writing anything in CAPS in the text of a program is outmoded... write everything in the style of Python"*.
+  * **Explicit typing**: Always declare `implicit none` at the top of every module and program unit.
+  * **Modules over Common Blocks**: Store large arrays and global state in Fortran `module` blocks rather than deprecated `common` blocks to avoid stack exhaustion.
+
+### Compiler Invocations & Flags
+
+#### GNU Fortran (`gfortran`)
+```bash
+# Debugging & bounds checking
+gfortran -O0 -g -Wall -fcheck=all -std=f2008 my_prog.f90 -o my_prog.x
+
+# High-performance CPU optimization
+gfortran -O3 -march=native -ffast-math -funroll-loops my_prog.f90 -o my_prog.x
+
+# OpenMP multi-threading
+gfortran -O3 -fopenmp my_prog.f90 -o my_prog.x
+```
+
+#### Nvidia NVHPC (`nvfortran` / `pgf95`)
+* Used on `phi-10` and `art-1`/`art-2`:
+```bash
+# Native cluster compilation flag on phi-10
+nvfortran -Mpreprocess -mp -fast -O4 -Mcache_align -mcmodel=medium my_prog.f90 -o my_prog.nx
+```
+
+---
+
+## 3. C and C++: What Version and Style to Use
+
+### Allowed & Expected Standards
+* **C Standard**: **C99** or **C11** (`-std=c99` or `-std=c11`).
+  * Features expected: `for (int i = 0; ...)` inline declarations, `<stdint.h>`, `<stdbool.h>`, VLA or heap allocations (`malloc`/`calloc`/`free`).
+  * Memory layout awareness: 1D row-major indexing `a[i * cols + j]` vs Fortran column-major `a(j, i)`.
+* **C++ Standard**: **C++14** or **C++17** (`-std=c++17`).
+  * The course primarily tests procedural and numerical algorithms. Avoid heavy template metaprogramming or obscure OOP abstractions. Keep functions transparent, vectorizable, and cache-friendly.
+
+### C-to-Python Integration (`ctypes` / shared libraries)
+A standard course exercise involves offloading CPU-intensive loops from Python to compiled C:
+```bash
+# Compile C shared object
+gcc -O3 -fPIC -shared -o libfun.so libfun.c
+
+# Execute via Python ctypes
+python3 callingC-from-py2.py
+```
+
+### Compiler Invocations & Flags
+```bash
+# GNU C
+gcc -O3 -march=native -Wall -Wextra -std=c11 my_code.c -lm -o my_code.x
+
+# GNU C with OpenMP
+gcc -O3 -march=native -fopenmp -std=c11 my_code.c -lm -o my_code.x
+
+# GNU C++
+g++ -O3 -march=native -std=c++17 my_code.cpp -o my_code.x
+```
+
+---
+
+## 4. OpenMP: Multithreading on Multi-Core CPUs
+
+* **Target version**: **OpenMP 3.1 / 4.5 / 5.0**.
+* **Core concepts tested**:
+  * Fork-join model via `#pragma omp parallel for` (C/C++) or `!$omp parallel do` (Fortran).
+  * Variable scope scoping: `private()`, `shared()`, and race conditions.
+  * Reduction clauses: `reduction(+:sum)` for Monte Carlo and numerical integration.
+  * Stack size overflow prevention (`export OMP_STACKSIZE=64M`).
+
+### Runtime Environment Setup
+Before executing OpenMP binaries on multi-core nodes like `art-16` (16 physical cores) or `phi-10`:
+```bash
+export OMP_NUM_THREADS=16
+export OMP_STACKSIZE=64M
+./my_openmp_prog.x
+```
+
+---
+
+## 5. CUDA: GPU Acceleration (C/C++ & Fortran)
+
+* **Target version**: **CUDA 11.x to 12.x** (Nvidia Ampere architecture, `compute_86` / `sm_86` for RTX 3090 on `phi-10`).
+* **Two distinct flavors used in PHYD57**:
+
+### A. CUDA C/C++ (`.cu`)
+* Direct CUDA kernel programming using `nvcc`:
+```bash
+# Compile SAXPY or stencil kernel targeting phi-10 RTX 3090 (Ampere sm_86)
+nvcc -O3 -arch=sm_86 simple_saxpy_cuda.cu -o simple_saxpy_cuda.x
+```
+
+### B. CUDA Fortran (`.f95` / `.cuf`)
+* Uses Nvidia NVHPC compiler (`nvfortran`):
+* Device memory qualifiers: `real(8), device :: dgrid(0:N+1, 0:M+1)`.
+* Kernel execution via chevron syntax: `call kernel<<<grid, block>>>(...)`.
+* Compilation command:
+```bash
+nvfortran -cuda -gpu=cc86 -fast -O3 cudafor-laplace3-new.f95 -o cudafor-laplace3-new.x
+```
+
+---
+
+## 6. Exam Decision Guide: C(++) vs Fortran
+
+The syllabus explicitly gives you the choice between **C(++)** and **Fortran** for the computing section of the in-person final exam:
+
+* **Choose Fortran (Fortran 95/2008)** if:
+  * The problem is pure multi-dimensional array math (matrices, 2D/3D grids, PDE stencils). Fortran handles multi-dimensional arrays, slicing, and memory contiguous iteration natively without pointer arithmetic.
+* **Choose C (C99 / C11)** if:
+  * The problem involves complex integer logic, bit manipulation, linked lists, pointer tracking, or wrapping custom C algorithms.
+
+---
+© 2026 Igor Kan
